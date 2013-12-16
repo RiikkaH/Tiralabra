@@ -18,8 +18,7 @@ public class Binaarikeko implements Keko{
      * Korjaa kekoehdon solmusta key alaspäin.
      * @param key somu, josta kekoehto halutaan korjata
      */
-    @Override
-    public void heapify(int key) {
+    private void heapify(int key) {
         int l=left(key);
         int r=right(key);
         if(r<=heapSize){
@@ -104,12 +103,10 @@ public class Binaarikeko implements Keko{
     /**
      * Yhdistää kekoon toisen keon k.
      * @param k keko joka halutaan yhtistää
-     * @return palauttaa yhdistetyn keon
      */
-    @Override
-    public Keko merge(Keko k) {
+    
+    public void merge(Keko k) {
         
-        return null;
     }
     /**
      * Palauttaa solmun i vanhemman, tai i:n jos se on juuri
