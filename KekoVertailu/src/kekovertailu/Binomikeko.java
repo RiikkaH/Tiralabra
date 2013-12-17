@@ -7,26 +7,30 @@ package kekovertailu;
  */
 public class Binomikeko implements Keko{
     
-    public Solmu[] keko;
+    public Solmu keko;
     
     public Binomikeko(){
-        keko=new Solmu[0];
+        keko=null;
+    }
+    public Binomikeko(Solmu s){
+        keko=s;
     }
     /**
-     * Etsii ja palauttaa keon pienimmän arvon ja -1 jos keko on tyhjä.
+     * Etsii ja palauttaa keon pienimmän arvon tai -1 jos keko on tyhjä.
      * @return keon pienin arvo tai -1 jos keko on tyhjä
      */
     @Override
     public int findMin() {
-        int pienin=-1;
-        for(int i=0;i<keko.length;i++){
-            if(i==0){
-                pienin=keko[i].getArvo();
-            }else{
-                if(keko[i].getArvo()<pienin){
-                    pienin=keko[i].getArvo();
-                }
+        int pienin=Integer.MAX_VALUE;
+        Solmu k=keko;
+        if(k==null){
+            pienin=-1;
+        }
+        while(k!=null){
+            if(k.getArvo()<pienin){
+                pienin=k.getArvo();
             }
+            k=k.getSeuraava();
         }
         return pienin;
     }
@@ -46,8 +50,8 @@ public class Binomikeko implements Keko{
      */
     @Override
     public void insert(int key) {
-        Binomikeko k=new Binomikeko();
-        k.keko=new Solmu[]{new Solmu(key,null,null)};
+        Solmu s=new Solmu(key,null,new Solmu[0]);
+        Binomikeko k=new Binomikeko(s);
         merge(k);
     }
     
@@ -56,16 +60,11 @@ public class Binomikeko implements Keko{
      * @param k toinen yhdistettävä keko
      */
     public void merge(Binomikeko k) {
-        int i=0;
-        int j=0;
-        while(i<keko.length && j<k.getLength()){
-            Solmu puu=mergeTree(keko[i],k.keko[j]);
-            //.......
-        }
+        
         
     }
     /**
-     * Yhdistää kaksi keon puuta.
+     * Yhdistää kaksi keon puuta. 
      * @param a ensimmäinen yhdistettävä puu
      * @param b toinen yhdistettävä puu
      * @return palauttaa a:sta ja b:stä yhdistetyn puun
@@ -80,7 +79,4 @@ public class Binomikeko implements Keko{
         }
     }
     
-    public int getLength(){
-        return keko.length;
-    }
 }

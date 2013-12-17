@@ -10,11 +10,13 @@ public class Solmu {
     private int arvo;
     private Solmu parent;
     private Solmu[] lapset;
+    private Solmu seuraava;
     
     public Solmu(int arvo, Solmu parent,Solmu[] lapset){
         this.arvo=arvo;
         this.parent=parent;
         this.lapset=lapset;
+        this.seuraava=null;
     }
     
     public Solmu getParent(){
@@ -25,6 +27,9 @@ public class Solmu {
     }
     public Solmu[] getLapset(){
         return lapset;
+    }
+    public Solmu getSeuraava(){
+        return seuraava;
     }
     /**
      * Lisää solmuun lapsen s.
@@ -37,5 +42,13 @@ public class Solmu {
         }
         uusi[lapset.length]=s;
         lapset=uusi;
+    }
+    /**
+     * Asettaa solmulle s seuraavan solmun. Keko toteutetaan juurisolmujen 
+     * linkitettynä listana; tätä käytetään siihen.
+     * @param s Solmu, joka halutaan asettaa seuraavaksi.
+     */
+    public void setSeuraava(Solmu s){
+        seuraava=s;
     }
 }
