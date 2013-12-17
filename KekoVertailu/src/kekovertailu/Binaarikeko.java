@@ -117,7 +117,7 @@ public class Binaarikeko implements Keko{
         return (int)Math.floor(((double)i)/2.0);
     }
     /**
-     * Palauttaa solmun i vasemman lapsen, tai arvon -1 jos sitä ei ole.
+     * Palauttaa solmun i vasemman lapsen indeksin, tai arvon -1 jos sitä ei ole.
      * @param i solmu, jonka vasen lapsi halutaan selvittää
      * @return i:n vasen lapsi tai -1 jos sitä ei ole
      */
@@ -128,7 +128,7 @@ public class Binaarikeko implements Keko{
         return -1;
     }
     /**
-     * Palauttaa solmun i oikean lapsen, tai arvon -1 jos sitä ei ole.
+     * Palauttaa solmun i oikean lapsen indeksin, tai arvon -1 jos sitä ei ole.
      * @param i solmu, jonka oikea lapsi halutaan selvittää
      * @return i:n oikea lapsi tai -1 jos sitä ei ole
      */

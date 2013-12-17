@@ -108,7 +108,7 @@ public class Binomikeko implements Keko {
      */
     @Override
     public void insert(int key) {
-        Solmu s = new Solmu(key, new Solmu[0]);
+        Solmu s = new Solmu(key,null, new Solmu[0]);
         Binomikeko k = new Binomikeko(s);
         merge(k);
     }
@@ -118,7 +118,7 @@ public class Binomikeko implements Keko {
      *
      * @param k toinen yhdistettävä keko
      */
-    public void merge(Binomikeko k) {
+    public void merge(Binomikeko k) { //tämän voisi hajauttaa
         Solmu p = keko;
         Solmu q = k.keko;
         Solmu nykyinen = null;
@@ -162,9 +162,11 @@ public class Binomikeko implements Keko {
         b.setSeuraava(null);
         if (a.getArvo() < b.getArvo()) {
             a.lisaaLapsi(b);
+            b.setParent(a);
             return a;
         } else {
             b.lisaaLapsi(a);
+            a.setParent(b);
             return b;
         }
     }

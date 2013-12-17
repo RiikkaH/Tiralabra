@@ -9,16 +9,21 @@ public class Solmu {
     
     private int arvo;
     private Solmu[] lapset;
+    private Solmu parent;
     private Solmu seuraava;
     
-    public Solmu(int arvo,Solmu[] lapset){
+    public Solmu(int arvo,Solmu parent,Solmu[] lapset){
         this.arvo=arvo;
+        this.parent=parent;
         this.lapset=lapset;
         this.seuraava=null;
     }
 
     public int getArvo(){
         return arvo;
+    }
+    public Solmu getParent(){
+        return parent;
     }
     public Solmu[] getLapset(){
         return lapset;
@@ -37,6 +42,9 @@ public class Solmu {
         }
         uusi[lapset.length]=s;
         lapset=uusi;
+    }
+    public void setParent(Solmu s){
+        parent=s;
     }
     /**
      * Asettaa solmulle s seuraavan solmun. Keko toteutetaan juurisolmujen 

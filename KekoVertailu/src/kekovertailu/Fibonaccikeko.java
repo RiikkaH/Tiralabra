@@ -34,14 +34,29 @@ public class Fibonaccikeko implements Keko{
         }
         return pienin;
     }
-
+    //tämäkin on vähän turhaa toistoa --> oikeasti eroon Keko-rajapinnasta?
+    public Solmu findMinSolmu(){
+        int pienin=Integer.MAX_VALUE;
+        Solmu p=null;
+        Solmu k=keko;
+        while(k!=null){
+            if(k.getArvo()<pienin){
+                pienin=k.getArvo();
+                p=k;
+            }
+            k=k.getSeuraava();
+        }
+        return p;
+    }
+    
     @Override
     public void deleteMin() {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        Solmu poistettava=findMinSolmu();
     }
 
     @Override
     public void decreaseKey(int i, int d) {
+        //tässäkin olisi kiva jos parametrina olisi Solmu....
         throw new UnsupportedOperationException("Not supported yet."); 
     }
     /**
@@ -50,7 +65,7 @@ public class Fibonaccikeko implements Keko{
      */
     @Override
     public void insert(int key) {
-        Solmu s=new Solmu(key,new Solmu[0]);
+        Solmu s=new Solmu(key,null,new Solmu[0]);
         Fibonaccikeko uusi=new Fibonaccikeko(s);
         merge(uusi);
     }
