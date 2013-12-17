@@ -8,20 +8,15 @@ package kekovertailu;
 public class Solmu {
     
     private int arvo;
-    private Solmu parent;
     private Solmu[] lapset;
     private Solmu seuraava;
     
-    public Solmu(int arvo, Solmu parent,Solmu[] lapset){
+    public Solmu(int arvo,Solmu[] lapset){
         this.arvo=arvo;
-        this.parent=parent;
         this.lapset=lapset;
         this.seuraava=null;
     }
-    
-    public Solmu getParent(){
-        return parent;
-    }
+
     public int getArvo(){
         return arvo;
     }
