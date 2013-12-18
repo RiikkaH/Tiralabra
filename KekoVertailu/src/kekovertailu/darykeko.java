@@ -11,6 +11,10 @@ public class darykeko implements Keko{
     private int heapSize;
     private int[] keko;
     
+    /**
+     * Luo uuden d-ary -keon, missä lasten lukumäärä on d
+     * @param d lasten lukumäärä
+     */
     public darykeko(int d){
         this.d=d;
         this.heapSize=0;
@@ -36,15 +40,46 @@ public class darykeko implements Keko{
         heapSize--;
         heapify(0);
     }
-
+    /**
+     * Vähentää indeksin i arvon d:ksi.
+     * @param i indeksi, josta arvo muutetaan
+     * @param d uusi arvo
+     */
     @Override
     public void decreaseKey(int i, int d) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if(keko[i]>d && d>0){
+            keko[i]=d;
+            heapify(i);
+        }
     }
-
+    /**
+     * Lisää kekoon arvon key säilyttäen kekoehdon.
+     * @param key kekoon lisättävä arvo
+     */
     @Override
     public void insert(int key) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        if(heapSize==keko.length){
+            int[] uusikeko=new int[keko.length*2];
+            for(int i=0;i<keko.length;i++){
+                uusikeko[i]=keko[i];
+            }
+            keko=uusikeko;
+        }
+        heapSize++;
+        int i=heapSize;
+        while(i>0 && parent(i)>key){
+            keko[i]=keko[parent(i)];
+            i=parent(i);
+        }
+        keko[i]=key;
+    }
+    /**
+     * Palauttaa indeksin key vanhemman indeksin.
+     * @param key solmu, jonka vanhempi halutaan selvittää
+     * @return vahnemman indeksi
+     */
+    private int parent(int key){
+        return (int)Math.floor((key-1)/d);
     }
     /**
      * Korjaa kekoehdon kohdasta key lähtien.
@@ -53,28 +88,30 @@ public class darykeko implements Keko{
     public void heapify(int key){
         int[] lapset=new int[d];
         for(int i=0;i<d;i++){
-            lapset[i]=d*i+1+i;
+            lapset[i]=d*key+1+i;
+        }
+        int indeksi = etsiSuurin(lapset);
+        if(keko[indeksi]<keko[key]){
+            int apu=keko[indeksi];
+            keko[indeksi]=keko[key];
+            keko[key]=apu;
+            heapify(indeksi);
         }
         
-        /*
-        int l=left(key);
-        int r=right(key);
-        if(r<=heapSize){
-            int smallest;
-            if(keko[l]<keko[r]){
-                smallest=l;
-            }else{
-                smallest=r;
-            }if(keko[key]>smallest){
-                int apu=keko[smallest];
-                keko[smallest]=keko[key];
-                keko[key]=apu;
-                heapify(smallest);
+    }
+
+    private int etsiSuurin(int[] taulukko){
+        int suurin=0;
+        int suurinindeksi=taulukko[0];
+        //taulukossa on siis keon indeksejä
+        for(int i=0;i<taulukko.length;i++){
+            if(taulukko[i]<heapSize){
+                if(keko[taulukko[i]]>suurin){
+                    suurin=keko[taulukko[i]];
+                    suurinindeksi=taulukko[i];
+                }
             }
-        }else if(l==heapSize && keko[key]>keko[l]){
-            int apu=keko[l];
-            keko[l]=keko[key];
-            keko[key]=apu;
-        }*/
+        }
+        return suurinindeksi;
     }
 }

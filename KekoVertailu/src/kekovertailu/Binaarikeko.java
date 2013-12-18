@@ -85,7 +85,7 @@ public class Binaarikeko implements Keko{
     @Override
     public void insert(int key) {
         if(heapSize==keko.length){
-            int[] uusikeko=new int[keko.length];
+            int[] uusikeko=new int[keko.length*2];
             for(int i=0;i<keko.length;i++){
                 uusikeko[i]=keko[i];
             }
@@ -100,14 +100,6 @@ public class Binaarikeko implements Keko{
         keko[i]=key;
     }
 
-    /**
-     * Yhdistää kekoon toisen keon k.
-     * @param k keko joka halutaan yhtistää
-     */
-    
-    public void merge(Keko k) {
-        
-    }
     /**
      * Palauttaa solmun i vanhemman, tai i:n jos se on juuri
      * @param i solmu jonka vanhempi halutaan selvittää
