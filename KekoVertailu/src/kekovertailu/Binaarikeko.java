@@ -5,7 +5,7 @@ package kekovertailu;
  *
  * @author Riikka
  */
-public class Binaarikeko implements Keko{
+public class Binaarikeko{
     
     private int[] keko;
     private int heapSize;
@@ -44,7 +44,6 @@ public class Binaarikeko implements Keko{
      * arvon -1.
      * @return keon pienin alkio tai -1, jos keko on tyhjä
      */
-    @Override
     public int findMin() {
         if(heapSize>0){
             return keko[0];
@@ -54,7 +53,6 @@ public class Binaarikeko implements Keko{
     /**
      * Poistaa keon pienimmän alkion ja korjaa kekoehdon.
      */
-    @Override
     public void deleteMin() {
         keko[0]=keko[heapSize];
         heapSize--;
@@ -66,7 +64,6 @@ public class Binaarikeko implements Keko{
      * @param i solmu, jonka arvoa pienennetään
      * @param d uusi arvo
      */
-    @Override
     public void decreaseKey(int i,int d) {
         if(keko[i]>d && d>0){
             keko[i]=d;
@@ -82,7 +79,6 @@ public class Binaarikeko implements Keko{
      * Lisää kekoon solmun arvolla key.
      * @param key arvo, joka kekoon halutaan lisätä
      */
-    @Override
     public void insert(int key) {
         if(heapSize==keko.length){
             int[] uusikeko=new int[keko.length*2];

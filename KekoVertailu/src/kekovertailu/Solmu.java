@@ -46,11 +46,9 @@ public class Solmu {
     public void setParent(Solmu s){
         parent=s;
     }
-    /**
-     * Asettaa solmulle s seuraavan solmun. Keko toteutetaan juurisolmujen 
-     * linkitettynä listana; tätä käytetään siihen.
-     * @param s Solmu, joka halutaan asettaa seuraavaksi.
-     */
+    public void setArvo(int a){
+        arvo=a;
+    }
     public void setSeuraava(Solmu s){
         seuraava=s;
     }

@@ -5,7 +5,7 @@ package kekovertailu;
  *
  * @author Riikka
  */
-public class darykeko implements Keko{
+public class darykeko {
 
     private int d;
     private int heapSize;
@@ -24,7 +24,6 @@ public class darykeko implements Keko{
      * Palauttaa keon pienimmän alkion.
      * @return keon pienin alkio tai -1 jos keko on tyhjä
      */
-    @Override
     public int findMin() {
         if(heapSize==0){
             return -1;
@@ -34,7 +33,6 @@ public class darykeko implements Keko{
     /**
      * Poistaa keon pienimmän alkion ja korjaa kekoehdon.
      */
-    @Override
     public void deleteMin() {
         keko[0]=keko[heapSize];
         heapSize--;
@@ -45,7 +43,6 @@ public class darykeko implements Keko{
      * @param i indeksi, josta arvo muutetaan
      * @param d uusi arvo
      */
-    @Override
     public void decreaseKey(int i, int d) {
         if(keko[i]>d && d>0){
             keko[i]=d;
@@ -56,7 +53,6 @@ public class darykeko implements Keko{
      * Lisää kekoon arvon key säilyttäen kekoehdon.
      * @param key kekoon lisättävä arvo
      */
-    @Override
     public void insert(int key) {
         if(heapSize==keko.length){
             int[] uusikeko=new int[keko.length*2];

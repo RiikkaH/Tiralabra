@@ -5,7 +5,7 @@ package kekovertailu;
  *
  * @author Riikka
  */
-public class Fibonaccikeko implements Keko{
+public class Fibonaccikeko {
 
     private Solmu keko;//linkitetty lista juurisolmuista
     
@@ -16,26 +16,10 @@ public class Fibonaccikeko implements Keko{
         keko=s;
     }
     /**
-     * Etsii ja palauttaa keon pienimmän arvon. 
-     * @return keon pienin arvo, tai -1 jos keko on tyhjä
+     * Etsii ja palauttaa keon pienimmän solmun. 
+     * @return keon pienin solmu, tai -1 jos keko on tyhjä
      */
-    @Override
-    public int findMin() {
-        int pienin=Integer.MAX_VALUE;
-        if(keko==null){
-            return-1;
-        }
-        Solmu k=keko;
-        while(k!=null){
-            if(k.getArvo()<pienin){
-                pienin=k.getArvo();
-            }
-            k=k.getSeuraava();
-        }
-        return pienin;
-    }
-    //tämäkin on vähän turhaa toistoa --> oikeasti eroon Keko-rajapinnasta?
-    public Solmu findMinSolmu(){
+    public Solmu findMin(){
         int pienin=Integer.MAX_VALUE;
         Solmu p=null;
         Solmu k=keko;
@@ -49,21 +33,18 @@ public class Fibonaccikeko implements Keko{
         return p;
     }
     
-    @Override
     public void deleteMin() {
-        Solmu poistettava=findMinSolmu();
+        Solmu poistettava=findMin();
     }
 
-    @Override
-    public void decreaseKey(int i, int d) {
-        //tässäkin olisi kiva jos parametrina olisi Solmu....
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public void decreaseKey(Solmu s, int d) {
+        
     }
+    
     /**
      * Lisää kekoon uuden solmun arvolla key.
      * @param key kekoon lisättävän solmun arvo
      */
-    @Override
     public void insert(int key) {
         Solmu s=new Solmu(key,null,new Solmu[0]);
         Fibonaccikeko uusi=new Fibonaccikeko(s);

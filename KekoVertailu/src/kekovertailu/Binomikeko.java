@@ -4,7 +4,7 @@ package kekovertailu;
  *
  * @author Riikka
  */
-public class Binomikeko implements Keko {
+public class Binomikeko {
 
     public Solmu keko;
 
@@ -17,31 +17,10 @@ public class Binomikeko implements Keko {
     }
 
     /**
-     * Etsii ja palauttaa keon pienimmän arvon tai -1 jos keko on tyhjä.
-     *
-     * @return keon pienin arvo tai -1 jos keko on tyhjä
-     */
-    @Override
-    public int findMin() {
-        int pienin = Integer.MAX_VALUE;
-        Solmu k = keko;
-        if (k == null) {
-            pienin = -1;
-        }
-        while (k != null) {
-            if (k.getArvo() < pienin) {
-                pienin = k.getArvo();
-            }
-            k = k.getSeuraava();
-        }
-        return pienin;
-    }
-
-    /**
      * Etsii ja palauttaa keon pienimmän solmun
      * @return keon pienin solmu
      */
-    private Solmu etsiPieninSolmu() {
+    private Solmu findMin() {
         int pienin = Integer.MAX_VALUE;
         Solmu p = null;
         Solmu k = keko;
@@ -61,9 +40,8 @@ public class Binomikeko implements Keko {
     /**
      * Poistaa keosta pienimmän alkion säilyttäen kekoehdon.
      */
-    @Override
     public void deleteMin() { 
-        Solmu p = etsiPieninSolmu();
+        Solmu p = findMin();
         Solmu uusikeko = null;
         if (p.getLapset() != null) {
             Solmu[] uudetPuut = p.getLapset();
@@ -95,10 +73,15 @@ public class Binomikeko implements Keko {
         return uusikeko;
     }
 
-    @Override
-    public void decreaseKey(int i, int d) {
-        //hmm.... tarvitsisin tässä kyllä parametrina solmun.. :P 
-        //olikohan keko-interface hyvä idea?
+    public void decreaseKey(Solmu s, int d) {
+        if(s.getArvo()>d&&d>0){
+            s.setArvo(d);
+            while(s.getParent()!=null && s.getParent().getArvo()>d){
+                int apu=s.getArvo();
+                s.setArvo(s.getParent().getArvo());
+                s.getParent().setArvo(apu);
+            }
+        }
     }
 
     /**
@@ -106,7 +89,6 @@ public class Binomikeko implements Keko {
      *
      * @param key kekoon lisättävä arvo
      */
-    @Override
     public void insert(int key) {
         Solmu s = new Solmu(key,null, new Solmu[0]);
         Binomikeko k = new Binomikeko(s);
