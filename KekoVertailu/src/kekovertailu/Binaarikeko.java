@@ -21,19 +21,19 @@ public class Binaarikeko{
     private void heapify(int key) {
         int l=left(key);
         int r=right(key);
-        if(r<=heapSize){
+        if(r<heapSize){
             int smallest;
             if(keko[l]<keko[r]){
                 smallest=l;
             }else{
                 smallest=r;
-            }if(keko[key]>smallest){
+            }if(keko[key]>keko[smallest]){
                 int apu=keko[smallest];
                 keko[smallest]=keko[key];
                 keko[key]=apu;
                 heapify(smallest);
             }
-        }else if(l==heapSize && keko[key]>keko[l]){
+        }else if(l==heapSize-1 && keko[key]>keko[l]){
             int apu=keko[l];
             keko[l]=keko[key];
             keko[key]=apu;
@@ -87,13 +87,13 @@ public class Binaarikeko{
             }
             keko=uusikeko;
         }
-        heapSize++;
         int i=heapSize;
-        while(i>0 && parent(i)<key){
+        while(i>0 && keko[parent(i)]>key){
             keko[i]=keko[parent(i)];
             i=parent(i);
         }
         keko[i]=key;
+        heapSize++;
     }
 
     /**
@@ -102,28 +102,30 @@ public class Binaarikeko{
      * @return i:n vanhempi
      */
     private int parent(int i){
-        return (int)Math.floor(((double)i)/2.0);
+        return (int)Math.floor(((double)i-1)/2.0);
     }
     /**
-     * Palauttaa solmun i vasemman lapsen indeksin, tai arvon -1 jos sitä ei ole.
+     * Palauttaa solmun i vasemman lapsen indeksin.
      * @param i solmu, jonka vasen lapsi halutaan selvittää
-     * @return i:n vasen lapsi tai -1 jos sitä ei ole
+     * @return i:n vasen lapsi
      */
     private int left(int i){
-        if(2*i<=heapSize){
-            return 2*i;
-        }
-        return -1;
+        return 2*i+1;
     }
     /**
-     * Palauttaa solmun i oikean lapsen indeksin, tai arvon -1 jos sitä ei ole.
+     * Palauttaa solmun i oikean lapsen indeksin.
      * @param i solmu, jonka oikea lapsi halutaan selvittää
-     * @return i:n oikea lapsi tai -1 jos sitä ei ole
+     * @return i:n oikea lapsi
      */
     private int right(int i){
-        if(2*i+1<=heapSize){
-            return 2*i+1;
-        }
-        return -1;
+        return 2*i+2;
+    }
+    //metodi testejä varten
+    public int[] getKeko(){
+        return keko;
+    }
+    //metodi testejä varten
+    public int getSize(){
+        return heapSize;
     }
 }
