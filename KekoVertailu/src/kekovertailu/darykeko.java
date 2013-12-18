@@ -110,4 +110,12 @@ public class darykeko {
         }
         return suurinindeksi;
     }
+    //metodi testejä varten
+    public int[] getKeko(){
+        return keko;
+    }
+    //metodi testejä varten
+    public int getSize(){
+        return heapSize;
+    }
 }
