@@ -46,7 +46,12 @@ public class darykeko {
     public void decreaseKey(int i, int d) {
         if(keko[i]>d && d>0){
             keko[i]=d;
-            heapify(i);
+            while(i>0&&keko[parent(i)]>keko[i]){
+                int apu=keko[i];
+                keko[i]=keko[parent(i)];
+                keko[parent(i)]=apu;
+                i=parent(i);
+            }
         }
     }
     /**
@@ -81,13 +86,13 @@ public class darykeko {
      * Korjaa kekoehdon kohdasta key lähtien.
      * @param key kohta, josta lähtien kekoehto korjataan
      */
-    public void heapify(int key){
+    private void heapify(int key){
         int[] lapset=new int[d];
         for(int i=0;i<d;i++){
             lapset[i]=d*key+1+i;
         }
-        int indeksi = etsiSuurin(lapset);
-        if(keko[indeksi]<keko[key]){
+        int indeksi = etsiPienin(lapset);
+        if(indeksi!=-1 && keko[indeksi]<keko[key]){
             int apu=keko[indeksi];
             keko[indeksi]=keko[key];
             keko[key]=apu;
@@ -95,20 +100,23 @@ public class darykeko {
         }
         
     }
-
-    private int etsiSuurin(int[] taulukko){
-        int suurin=0;
-        int suurinindeksi=-1;
-        //taulukossa on siis keon indeksejä
-        for(int i=0;i<taulukko.length;i++){
+    /**
+     * Metodi etsii indeksitaulukon indeksin, jolla on keossa pienin arvo.
+     * @param taulukko indeksitaulukko
+     * @return indeksin, jollaon keossa pienin arvo
+     */
+    private int etsiPienin(int[] taulukko){
+        int pienin=Integer.MAX_VALUE;
+        int pienindeksi=-1;
+        for(int i=0;i<d;i++){
             if(taulukko[i]<heapSize){
-                if(keko[taulukko[i]]>suurin){
-                    suurin=keko[taulukko[i]];
-                    suurinindeksi=taulukko[i];
+                if(keko[taulukko[i]]<pienin){
+                    pienin=keko[taulukko[i]];
+                    pienindeksi=taulukko[i];
                 }
             }
         }
-        return suurinindeksi;
+        return pienindeksi;
     }
     //metodi testejä varten
     public int[] getKeko(){

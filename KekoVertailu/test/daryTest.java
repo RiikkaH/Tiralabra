@@ -91,9 +91,6 @@ public class daryTest {
         keko.insert(16);
         keko.insert(2);
         keko.deleteMin();
-        for(int i=0;i<3;i++){
-            System.out.println(keko.getKeko()[i]);
-        }
         assertTrue(keko.getKeko()[0]==4);
         assertTrue(keko.getKeko()[1]==12);
         assertTrue(keko.getKeko()[2]==16);
@@ -114,5 +111,32 @@ public class daryTest {
         assertTrue(keko.getKeko()[2]==16);
         assertTrue(keko.getKeko()[6]==9);
         assertTrue(keko.getSize()==7);
+    }
+    @Test
+    public void toimiikoDecreaseKeyPienellaKeolla(){
+        keko.insert(12);
+        keko.insert(4);
+        keko.insert(16);
+        keko.insert(2);
+        keko.decreaseKey(2, 1);
+        assertTrue(keko.getSize()==4);
+        assertTrue(keko.findMin()==1);
+        assertTrue(keko.getKeko()[2]==2);
+    }
+    @Test
+    public void toimiikoDecreaseKeyVahanIsommallaKeolla(){
+        keko.insert(12);
+        keko.insert(4);
+        keko.insert(16);
+        keko.insert(3);
+        keko.insert(8);
+        keko.insert(1);
+        keko.insert(9);
+        keko.insert(6);
+        keko.decreaseKey(5, 2);
+        assertTrue(keko.getSize()==8);
+        assertTrue(keko.findMin()==1);
+        assertTrue(keko.getKeko()[1]==2);
+        assertTrue(keko.getKeko()[5]==3);
     }
 }
