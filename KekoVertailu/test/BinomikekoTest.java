@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import kekovertailu.Binomikeko;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,6 +17,8 @@ import static org.junit.Assert.*;
  * @author Riikka
  */
 public class BinomikekoTest {
+    
+    private Binomikeko keko;
     
     public BinomikekoTest() {
     }
@@ -30,6 +33,7 @@ public class BinomikekoTest {
     
     @Before
     public void setUp() {
+        keko=new Binomikeko();
     }
     
     @After
@@ -38,10 +42,20 @@ public class BinomikekoTest {
 
     @Test
     public void testaaLisaysPienellaMaaralla(){
-        
+        keko.insert(1);
+        keko.insert(4);
+        keko.insert(6);
+        keko.insert(2);
     }
     @Test
     public void testaaLisaysVahanSuuremmallaMaaralla(){
-        
+        keko.insert(1);
+        keko.insert(4);
+        keko.insert(6);
+        keko.insert(2);
+        keko.insert(14);
+        keko.insert(8);
+        keko.insert(5);
+        keko.insert(10);
     }
 }

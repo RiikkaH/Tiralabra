@@ -100,7 +100,7 @@ public class Binomikeko {
      *
      * @param k toinen yhdistettävä keko
      */
-    public void merge(Binomikeko k) { //tämän voisi hajauttaa
+    public void merge(Binomikeko k) { //tämän voisi hajauttaa, pitkä metodi
         Solmu p = keko;
         Solmu q = k.keko;
         Solmu nykyinen = null;
@@ -152,5 +152,8 @@ public class Binomikeko {
             return b;
         }
     }
-
+    //metodi testejä varten
+    public Solmu getKeko(){
+        return keko;
+    }
 }
