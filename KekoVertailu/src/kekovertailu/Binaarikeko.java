@@ -54,7 +54,7 @@ public class Binaarikeko{
      * Poistaa keon pienimmän alkion ja korjaa kekoehdon.
      */
     public void deleteMin() {
-        keko[0]=keko[heapSize];
+        keko[0]=keko[heapSize-1];
         heapSize--;
         heapify(0);
     }
@@ -70,7 +70,7 @@ public class Binaarikeko{
             while(i>0 && keko[parent(i)]>keko[i]){
                 int apu=keko[i];
                 keko[i]= keko[parent(i)];
-                keko[parent(i)]=keko[i];
+                keko[parent(i)]=apu;
                 i=parent(i);
             }
         }
