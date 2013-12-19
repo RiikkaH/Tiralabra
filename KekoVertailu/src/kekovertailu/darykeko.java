@@ -34,7 +34,7 @@ public class darykeko {
      * Poistaa keon pienimmän alkion ja korjaa kekoehdon.
      */
     public void deleteMin() {
-        keko[0]=keko[heapSize];
+        keko[0]=keko[heapSize-1];
         heapSize--;
         heapify(0);
     }
@@ -61,13 +61,13 @@ public class darykeko {
             }
             keko=uusikeko;
         }
-        heapSize++;
         int i=heapSize;
-        while(i>0 && parent(i)>key){
+        while(i>0 && keko[parent(i)]>key){
             keko[i]=keko[parent(i)];
             i=parent(i);
         }
         keko[i]=key;
+        heapSize++;
     }
     /**
      * Palauttaa indeksin key vanhemman indeksin.
@@ -98,7 +98,7 @@ public class darykeko {
 
     private int etsiSuurin(int[] taulukko){
         int suurin=0;
-        int suurinindeksi=taulukko[0];
+        int suurinindeksi=-1;
         //taulukossa on siis keon indeksejä
         for(int i=0;i<taulukko.length;i++){
             if(taulukko[i]<heapSize){
