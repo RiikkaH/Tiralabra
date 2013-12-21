@@ -46,6 +46,7 @@ public class BinomikekoTest {
         keko.insert(4);
         keko.insert(6);
         keko.insert(2);
+        //yksi kahden asteen puu, juuressa yksi, lapsina 4 ja 2, jolla vielä lapsi 6
     }
     @Test
     public void testaaLisaysVahanSuuremmallaMaaralla(){

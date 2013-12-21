@@ -1,4 +1,3 @@
-
 package kekovertailu;
 
 /**
@@ -6,50 +5,61 @@ package kekovertailu;
  * @author Riikka
  */
 public class Solmu {
-    
+
     private int arvo;
-    private Solmu[] lapset;
+    private int aste;
+    private Solmu lapsi;
     private Solmu parent;
     private Solmu seuraava;
-    
-    public Solmu(int arvo,Solmu parent,Solmu[] lapset){
-        this.arvo=arvo;
-        this.parent=parent;
-        this.lapset=lapset;
-        this.seuraava=null;
+
+    /**
+     * Luo uuden solmun.
+     * @param arvo solmun arvo
+     * @param parent solmun vanhempi
+     * @param lapsi solmun ensimmäinen lapsi
+     * @param aste solmun lasten lukumäärä
+     */
+    public Solmu(int arvo, Solmu parent, Solmu lapsi, int aste) {
+        this.arvo = arvo;
+        this.aste = aste;
+        this.parent = parent;
+        this.lapsi = lapsi;
+        this.seuraava = null;
     }
 
-    public int getArvo(){
+    public int getAste() {
+        return aste;
+    }
+
+    public int getArvo() {
         return arvo;
     }
-    public Solmu getParent(){
+
+    public Solmu getParent() {
         return parent;
     }
-    public Solmu[] getLapset(){
-        return lapset;
+
+    public Solmu getLapsi() {
+        return lapsi;
     }
-    public Solmu getSeuraava(){
+
+    public Solmu getSeuraava() {
         return seuraava;
     }
-    /**
-     * Lisää solmuun lapsen s.
-     * @param s lisättävä lapsi
-     */
-    public void lisaaLapsi(Solmu s){
-        Solmu[] uusi=new Solmu[lapset.length+1];
-        for(int i=0;i<lapset.length;i++){
-            uusi[i]=lapset[i];
-        }
-        uusi[lapset.length]=s;
-        lapset=uusi;
+
+    public void setParent(Solmu s) {
+        parent = s;
     }
-    public void setParent(Solmu s){
-        parent=s;
+
+    public void setArvo(int a) {
+        arvo = a;
     }
-    public void setArvo(int a){
-        arvo=a;
+
+    public void setSeuraava(Solmu s) {
+        seuraava = s;
     }
-    public void setSeuraava(Solmu s){
-        seuraava=s;
+    
+    public void setLapsi(Solmu s){
+        lapsi=s;
     }
 }
