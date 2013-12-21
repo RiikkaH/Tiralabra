@@ -88,7 +88,7 @@ public class Binomikeko {
         Solmu uusipuu=null;
         Solmu ed=null; //HUOM AINAKIN TÄMÄ VIELÄ VÄÄRIN, KEKSI PAREMPI JUTTU
         Binomikeko uusikeko=new Binomikeko(uusipuu);
-        while(s1.getSeuraava()!=null && s2.getSeuraava()!=null){
+        while(s1!=null && s2!=null && s1.getSeuraava()!=null && s2.getSeuraava()!=null){
             if(s2.getAste()<s1.getAste()){
                 if(uusipuu==null){
                     uusipuu=s2;
@@ -129,12 +129,18 @@ public class Binomikeko {
             ed=uusipuu;
         }
         
-        if(s1.getSeuraava()!=null){
-            uusipuu.setSeuraava(s1);
-        }else if(s2.getSeuraava()!=null){
-            uusipuu.setSeuraava(s2);
-        }else{
-            uusipuu.setSeuraava(null);
+        if(s1!=null && s1.getSeuraava()!=null){
+            if(uusipuu!=null){
+                uusipuu.setSeuraava(s1);
+            }else{
+                uusipuu=s1;
+            }
+        }else if(s2!=null && s2.getSeuraava()!=null){
+            if(uusipuu!=null){
+                uusipuu.setSeuraava(s2);
+            }else{
+                uusipuu=s2;
+            }
         }
 
     }
