@@ -47,6 +47,14 @@ public class BinomikekoTest {
         keko.insert(6);
         keko.insert(2);
         //yksi kahden asteen puu, juuressa yksi, lapsina 4 ja 2, jolla vielä lapsi 6
+        assertTrue(keko.getKeko().getAste()==2);
+        assertTrue(keko.getKeko().getArvo()==1);
+        assertTrue(keko.getKeko().getSeuraava()==null);
+        assertTrue(keko.getKeko().getLapsi().getArvo()==4);
+        assertTrue(keko.getKeko().getLapsi().getAste()==0);
+        assertTrue(keko.getKeko().getLapsi().getSeuraava().getArvo()==2);
+        assertTrue(keko.getKeko().getLapsi().getSeuraava().getAste()==1);
+        assertTrue(keko.getKeko().getLapsi().getSeuraava().getLapsi().getArvo()==6);
     }
     @Test
     public void testaaLisaysVahanSuuremmallaMaaralla(){
@@ -57,6 +65,31 @@ public class BinomikekoTest {
         keko.insert(14);
         keko.insert(8);
         keko.insert(5);
-        keko.insert(10);
+        assertTrue(keko.getKeko().getArvo()==5);
+        assertTrue(keko.getKeko().getAste()==0);
+        assertTrue(keko.getKeko().getSeuraava().getAste()==1);
+        assertTrue(keko.getKeko().getSeuraava().getArvo()==8);
+        assertTrue(keko.getKeko().getSeuraava().getSeuraava().getAste()==2);
+        assertTrue(keko.getKeko().getSeuraava().getSeuraava().getArvo()==1);
     }
+    @Test
+    public void testaaFindMinPienella(){
+        keko.insert(1);
+        keko.insert(4);
+        keko.insert(6);
+        keko.insert(2);
+        assertTrue(keko.findMin().getArvo()==1);
+    }
+    @Test
+    public void testaaFindMinVahanIsommalla(){
+        keko.insert(1);
+        keko.insert(4);
+        keko.insert(6);
+        keko.insert(2);
+        keko.insert(14);
+        keko.insert(8);
+        keko.insert(5);
+        assertTrue(keko.findMin().getArvo()==1);
+    }
+    
 }

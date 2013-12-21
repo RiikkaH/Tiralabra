@@ -27,7 +27,7 @@ public class Binomikeko {
      * Etsii ja palauttaa keon pienimmän solmun
      * @return keon pienin solmu
      */
-    private Solmu findMin() {
+    public Solmu findMin() {
         int pienin = Integer.MAX_VALUE;
         Solmu k = keko;
         if (k == null) {
@@ -82,8 +82,61 @@ public class Binomikeko {
      * Yhdistää kaksi binomikekoa.
      * @param k toinen yhdistettävä keko
      */
-    public void merge(Binomikeko k) { //tämän voisi hajauttaa, pitkä metodi
+    public void merge(Binomikeko k) { //huhhuh, järkyttävän pitkä, voisi hajauttaa
+        Solmu s1=keko;
+        Solmu s2=k.getKeko();
+        Solmu uusipuu=null;
+        Solmu ed=null; //HUOM AINAKIN TÄMÄ VIELÄ VÄÄRIN, KEKSI PAREMPI JUTTU
+        Binomikeko uusikeko=new Binomikeko(uusipuu);
+        while(s1.getSeuraava()!=null && s2.getSeuraava()!=null){
+            if(s2.getAste()<s1.getAste()){
+                if(uusipuu==null){
+                    uusipuu=s2;
+                }else if(uusipuu.getAste()==s2.getAste()){
+                    Solmu uusi=mergeTree(uusipuu,s2);
+                    ed.setSeuraava(uusi);
+                    uusipuu=uusi;
+                }else{
+                    uusipuu.setSeuraava(s2);
+                    uusipuu=uusipuu.getSeuraava();
+                }
+                s2=s2.getSeuraava();
+            }else if(s2.getAste()>s1.getAste()){
+                if(uusipuu==null){
+                    uusipuu=s1;
+                }else if(uusipuu.getAste()==s1.getAste()){
+                    Solmu uusi=mergeTree(uusipuu,s1);
+                    ed.setSeuraava(uusi);
+                    uusipuu=uusi;
+                }else{
+                    uusipuu.setSeuraava(s1);
+                    uusipuu=uusipuu.getSeuraava();
+                }
+                s1=s1.getSeuraava();
+            }else{
+                Solmu uusi=mergeTree(s1,s2);
+                if(uusipuu.getAste()==uusi.getAste()){
+                    Solmu vielauusi=mergeTree(uusipuu,uusi);
+                    ed.setSeuraava(vielauusi);
+                    uusipuu=vielauusi;
+                }else{
+                    uusipuu.setSeuraava(uusi);
+                    uusipuu=uusipuu.getSeuraava();
+                }
+                s1=s1.getSeuraava();
+                s2=s2.getSeuraava();
+            }
+            ed=uusipuu;
+        }
         
+        if(s1.getSeuraava()!=null){
+            uusipuu.setSeuraava(s1);
+        }else if(s2.getSeuraava()!=null){
+            uusipuu.setSeuraava(s2);
+        }else{
+            uusipuu.setSeuraava(null);
+        }
+
     }
 
     /**
@@ -121,7 +174,6 @@ public class Binomikeko {
             s.setSeuraava(l);
         }
     }
-    //metodi testejä varten
     public Solmu getKeko(){
         return keko;
     }
