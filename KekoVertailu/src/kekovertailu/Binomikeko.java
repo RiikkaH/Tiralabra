@@ -97,6 +97,7 @@ public class Binomikeko {
         Solmu s2=k.getKeko();
         Solmu uusipuu=null;
         Solmu ed=null; //HUOM AINAKIN TÄMÄ VIELÄ VÄÄRIN, KEKSI PAREMPI JUTTU
+        //kahteen suuntaan linkitetty lista?
         Binomikeko uusikeko=new Binomikeko(uusipuu);
         while(s1!=null && s2!=null && s1.getSeuraava()!=null && s2.getSeuraava()!=null){
             if(s2.getAste()<s1.getAste()){
@@ -172,7 +173,7 @@ public class Binomikeko {
         return t;
     }
     /**
-     * Sisää solmulle p lapsen l
+     * Lisää solmulle p lapsen l
      * @param p solmu, johon lapsi lisätään
      * @param l lisättävä lapsi
      */
