@@ -30,7 +30,9 @@ public class Fibonaccikeko {
     public Solmu findMin() {
         return min;
     }
-
+    /**
+     * Poistaa keon pienimmän alkion ja tiivistää keon.
+     */
     public void deleteMin() {
         poistaMinLisaaLapset();
         paivitaMin();
@@ -123,7 +125,11 @@ public class Fibonaccikeko {
             s.setSeuraava(uudetpuut); 
         }
     }
-
+    /**
+     * Vähentää solmun s arvon d:hen.
+     * @param s solmu, jonka arvoa vähennetään
+     * @param d solmun uusi arvo
+     */
     public void decreaseKey(Solmu s, int d) {
         
     }
@@ -146,7 +152,10 @@ public class Fibonaccikeko {
         }
         solmuja++;
     }
-
+    /**
+     * Yhdistää kaksi fibonaccikekoa.
+     * @param k toinen yhdistettävä keko
+     */
     public void merge(Fibonaccikeko k) {
         if (keko == null) {
             keko = k.keko;
