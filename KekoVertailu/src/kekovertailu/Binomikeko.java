@@ -50,10 +50,20 @@ public class Binomikeko {
     public void deleteMin() { 
         Solmu p = findMin();
         if (p.getAste()>0) {
+            p.getLapsi().setParent(null);
             Solmu uusikeko=p.getLapsi();
             Binomikeko uusi =new Binomikeko(uusikeko);
+            poistaKeostaPuu(p);
             merge(uusi);
         }
+    }
+    
+    private void poistaKeostaPuu(Solmu s){
+        Solmu p=keko;
+        while(p.getSeuraava()!=s){
+            p=s.getSeuraava();
+        }
+        p.setSeuraava(s.getSeuraava());
     }
 
     public void decreaseKey(Solmu s, int d) {
@@ -179,6 +189,7 @@ public class Binomikeko {
             }
             s.setSeuraava(l);
         }
+        p.setAste(p.getAste()+1);
     }
     public Solmu getKeko(){
         return keko;

@@ -62,4 +62,7 @@ public class Solmu {
     public void setLapsi(Solmu s){
         lapsi=s;
     }
+    public void setAste(int a){
+        aste=a;
+    }
 }
