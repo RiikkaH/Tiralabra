@@ -48,15 +48,15 @@ public class FibonaccikekoTest {
     public void testaaLisaysPienellaMaaralla(){
         assertTrue(keko.getKeko().getArvo()==3);
         assertTrue(keko.getKeko().getAste()==0);
-        assertTrue(keko.getKeko().getSeuraava().getArvo()==5);
-        assertTrue(keko.getKeko().getSeuraava().getSeuraava().getArvo()==1);
+        assertTrue(keko.getKeko().getSeuraava().getArvo()==1);
+        assertTrue(keko.getKeko().getSeuraava().getSeuraava().getArvo()==5);
     }
     @Test
     public void testaaLisaysVahanSuuremmallaMaaralla(){
         keko.insert(8);
         keko.insert(4);
         keko.insert(2);
-        assertTrue(keko.getKeko().getSeuraava().getSeuraava().getSeuraava().getSeuraava().getArvo()==4);
+        assertTrue(keko.getKeko().getSeuraava().getSeuraava().getSeuraava().getSeuraava().getArvo()==1);
     }
     @Test
     public void testaaFindMinPikkuruisellaKeolla(){

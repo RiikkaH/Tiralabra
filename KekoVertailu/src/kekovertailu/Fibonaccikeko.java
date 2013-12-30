@@ -136,19 +136,27 @@ public class Fibonaccikeko {
 
     /**
      * Lisää kekoon uuden solmun arvolla key.
-     *
      * @param key kekoon lisättävän solmun arvo
      */
     public void insert(int key) {
         Solmu s = new Solmu(key, null, null, 0);
-        if (keko.getSeuraava() != null) {
-            s.setSeuraava(keko.getSeuraava());
-            keko.setSeuraava(s);
-        } else {
-            keko.setSeuraava(s);
-        }
-        if (key < min.getArvo()) {
-            min = s;
+        if(keko==null){
+            keko=s;
+            min=s;
+        }else{
+            if(keko.getSeuraava()!=null){
+                Solmu apu=keko.getSeuraava();
+                keko.setSeuraava(s);
+                s.setSeuraava(apu);
+                apu.setEdellinen(s);
+                s.setEdellinen(keko);
+            }else{
+                keko.setSeuraava(s);
+                s.setEdellinen(keko);
+            }
+            if (key < min.getArvo()) {
+                min = s;
+            }
         }
         solmuja++;
     }
