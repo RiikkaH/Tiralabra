@@ -85,6 +85,7 @@ public class Binomikeko {
                 int apu = s.getArvo();
                 s.setArvo(s.getParent().getArvo());
                 s.getParent().setArvo(apu);
+                s=s.getParent();
             }
         }
     }
@@ -110,7 +111,7 @@ public class Binomikeko {
         Solmu b = k.getKeko();
         Solmu uusi = null;
         while (a != null || b != null) {
-            Solmu lisattava;
+            Solmu lisattava = null;
             //sekä a että b ovat olemassa
             if (a != null && b != null) {
                 //a on pienempi kuin b
@@ -125,18 +126,18 @@ public class Binomikeko {
                 else {
                     Solmu aa = a;
                     Solmu bb = b;
-                    lisattava = mergeTree(aa, bb);
                     a = a.getSeuraava();
                     b = b.getSeuraava();
+                    lisattava = mergeTree(aa, bb);
                 }
-            }
-            //vain a:ssa on enää solmuja jäljellä
-            else if(a!=null){
-                lisattava=a;
-            }
-            //enää b:ssä on solmuja jäljellä
-            else{
-                lisattava=b;
+            } //vain a:ssa on enää solmuja jäljellä
+            else if (a != null) {
+                lisattava = a;
+                a = a.getSeuraava();
+            } //enää b:ssä on solmuja jäljellä
+            else if (b != null) {
+                lisattava = b;
+                b = b.getSeuraava();
             }
             //nyt on selvillä mikä solmu uuteen kekoon pitää lisätä
             //uusi on tyhjä; lisätään ensimmäiseksi alkioksi
@@ -144,27 +145,31 @@ public class Binomikeko {
                 lisattava.setEdellinen(null);
                 lisattava.setSeuraava(null);
                 uusi = lisattava;
-            } 
-            //entä jos lisattava on samanasteinen kuin uusi?
+            } //entä jos lisattava on samanasteinen kuin uusi?
             else if (lisattava.getAste() == uusi.getAste()) {
                 Solmu s = uusi;
+                if(uusi.getEdellinen()!=null){
+                    uusi=uusi.getEdellinen();
+                }else{
+                    uusi=null;
+                }
                 lisattava = mergeTree(lisattava, s);
-                if (uusi.getEdellinen() != null) {
-                    uusi = uusi.getEdellinen();
-                    uusi.setSeuraava(lisattava);
-                    lisattava.setEdellinen(uusi);
-                    uusi = uusi.getSeuraava();
-                } else {
-                    uusi = lisattava;
+                if(uusi==null){
+                    uusi=lisattava;
                     uusi.setEdellinen(null);
                     uusi.setSeuraava(null);
+                }else{
+                    uusi.setSeuraava(lisattava);
+                    lisattava.setEdellinen(uusi);
+                    lisattava.setSeuraava(null);
+                    uusi=uusi.getSeuraava();
                 }
-            } 
-            //lisättävä on isompi, voidaan vain laittaa jatkoksi
+            } //lisättävä on isompi, voidaan vain laittaa jatkoksi
             else {
                 lisattava.setEdellinen(uusi);
                 lisattava.setSeuraava(null);
                 uusi.setSeuraava(lisattava);
+                uusi=uusi.getSeuraava();
             }
         }
         //looppi loppui, enää ei ole lisättäviä solmuja
@@ -211,6 +216,7 @@ public class Binomikeko {
             while (s.getSeuraava() != null) {
                 s = s.getSeuraava();
             }
+            l.setParent(p);
             s.setSeuraava(l);
             l.setEdellinen(s);
             l.setSeuraava(null);
