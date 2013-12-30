@@ -34,6 +34,9 @@ public class FibonaccikekoTest {
     @Before
     public void setUp() {
         keko=new Fibonaccikeko();
+        keko.insert(3);
+        keko.insert(5);
+        keko.insert(1);
     }
     
     @After
@@ -43,9 +46,6 @@ public class FibonaccikekoTest {
     
     @Test
     public void testaaLisaysPienellaMaaralla(){
-        keko.insert(3);
-        keko.insert(5);
-        keko.insert(1);
         assertTrue(keko.getKeko().getArvo()==3);
         assertTrue(keko.getKeko().getAste()==0);
         assertTrue(keko.getKeko().getSeuraava().getArvo()==5);
@@ -53,9 +53,6 @@ public class FibonaccikekoTest {
     }
     @Test
     public void testaaLisaysVahanSuuremmallaMaaralla(){
-        keko.insert(3);
-        keko.insert(5);
-        keko.insert(1);
         keko.insert(8);
         keko.insert(4);
         keko.insert(2);
@@ -63,16 +60,10 @@ public class FibonaccikekoTest {
     }
     @Test
     public void testaaFindMinPikkuruisellaKeolla(){
-        keko.insert(3);
-        keko.insert(5);
-        keko.insert(1);
         assertTrue(keko.findMin().getArvo()==1);
     }
     @Test
     public void testaaFindMinVahanIsommalla(){
-        keko.insert(3);
-        keko.insert(5);
-        keko.insert(1);
         keko.insert(8);
         keko.insert(4);
         keko.insert(2);
@@ -80,9 +71,6 @@ public class FibonaccikekoTest {
     }
     @Test
     public void testaaDeleteMinPikkuisellaKeolla(){
-        keko.insert(3);
-        keko.insert(5);
-        keko.insert(1);
         keko.deleteMin();
         assertTrue(keko.getKeko().getAste()==1);
         assertTrue(keko.getKeko().getArvo()==3);
@@ -90,9 +78,6 @@ public class FibonaccikekoTest {
     }
     @Test
     public void testaaDeleteMinAavistuksenIsommalla(){
-        keko.insert(3);
-        keko.insert(5);
-        keko.insert(1);
         keko.insert(8);
         keko.insert(4);
         keko.insert(2);

@@ -7,16 +7,17 @@ package kekovertailu;
 public class Binomikeko {
 
     public Solmu keko;
-    
+
     /**
      * Luo uuden tyhjän binomikeon.
      */
     public Binomikeko() {
         keko = null;
     }
-    
+
     /**
      * Luo uuden binomikeon, aloitussolmuna s.
+     *
      * @param s uuden binomikeon aloitussolmu
      */
     public Binomikeko(Solmu s) {
@@ -25,6 +26,7 @@ public class Binomikeko {
 
     /**
      * Etsii ja palauttaa keon pienimmän solmun
+     *
      * @return keon pienin solmu
      */
     public Solmu findMin() {
@@ -47,30 +49,40 @@ public class Binomikeko {
     /**
      * Poistaa keosta pienimmän alkion säilyttäen kekoehdon.
      */
-    public void deleteMin() { 
+    public void deleteMin() {
         Solmu p = findMin();
-        if (p.getAste()>0) {
+        if (p.getAste() > 0) {
             p.getLapsi().setParent(null);
-            Solmu uusikeko=p.getLapsi();
-            Binomikeko uusi =new Binomikeko(uusikeko);
+            Solmu uusikeko = p.getLapsi();
+            Binomikeko uusi = new Binomikeko(uusikeko);
             poistaKeostaPuu(p);
             merge(uusi);
+        } else {
+            poistaKeostaPuu(p);
         }
     }
-    
-    private void poistaKeostaPuu(Solmu s){
-        Solmu p=keko;
-        while(p.getSeuraava()!=s){
-            p=s.getSeuraava();
+
+    private void poistaKeostaPuu(Solmu s) {
+        Solmu ed = s.getEdellinen();
+        Solmu se = s.getSeuraava();
+        if (ed == null) {
+            keko = se;
+            if (se != null) {
+                se.setEdellinen(null);
+            }
+        } else {
+            ed.setSeuraava(se);
+            if (se != null) {
+                se.setEdellinen(ed);
+            }
         }
-        p.setSeuraava(s.getSeuraava());
     }
 
     public void decreaseKey(Solmu s, int d) {
-        if(s.getArvo()>d&&d>0){
+        if (s.getArvo() > d && d > 0) {
             s.setArvo(d);
-            while(s.getParent()!=null && s.getParent().getArvo()>d){
-                int apu=s.getArvo();
+            while (s.getParent() != null && s.getParent().getArvo() > d) {
+                int apu = s.getArvo();
                 s.setArvo(s.getParent().getArvo());
                 s.getParent().setArvo(apu);
             }
@@ -83,77 +95,84 @@ public class Binomikeko {
      * @param key kekoon lisättävä arvo
      */
     public void insert(int key) {
-        Solmu s = new Solmu(key,null,null,0);
+        Solmu s = new Solmu(key, null, null, 0);
         Binomikeko k = new Binomikeko(s);
         merge(k);
     }
 
     /**
      * Yhdistää kaksi binomikekoa.
+     *
      * @param k toinen yhdistettävä keko
      */
-    public void merge(Binomikeko k) { //huhhuh, järkyttävän pitkä, voisi hajauttaa
-        Solmu s1=keko;
-        Solmu s2=k.getKeko();
-        Solmu uusipuu=null;
-        Solmu ed=null; //HUOM AINAKIN TÄMÄ VIELÄ VÄÄRIN, KEKSI PAREMPI JUTTU
-        //kahteen suuntaan linkitetty lista?
-        Binomikeko uusikeko=new Binomikeko(uusipuu);
-        while(s1!=null && s2!=null && s1.getSeuraava()!=null && s2.getSeuraava()!=null){
-            if(s2.getAste()<s1.getAste()){
-                if(uusipuu==null){
-                    uusipuu=s2;
-                }else if(uusipuu.getAste()==s2.getAste()){
-                    Solmu uusi=mergeTree(uusipuu,s2);
-                    ed.setSeuraava(uusi);
-                    uusipuu=uusi;
-                }else{
-                    uusipuu.setSeuraava(s2);
-                    uusipuu=uusipuu.getSeuraava();
+    public void merge(Binomikeko k) {
+        Solmu a = keko;
+        Solmu b = k.getKeko();
+        Solmu uusi = null;
+        while (a != null || b != null) {
+            Solmu lisattava;
+            //sekä a että b ovat olemassa
+            if (a != null && b != null) {
+                //a on pienempi kuin b
+                if (a.getAste() < b.getAste()) {
+                    lisattava = a;
+                    a = a.getSeuraava();
+                } //b on pienempi kuin a
+                else if (b.getAste() < a.getAste()) {
+                    lisattava = b;
+                    b = b.getSeuraava();
+                } //a ja b ovat samankokoisia, pitää yhdistää
+                else {
+                    Solmu aa = a;
+                    Solmu bb = b;
+                    lisattava = mergeTree(aa, bb);
+                    a = a.getSeuraava();
+                    b = b.getSeuraava();
                 }
-                s2=s2.getSeuraava();
-            }else if(s2.getAste()>s1.getAste()){
-                if(uusipuu==null){
-                    uusipuu=s1;
-                }else if(uusipuu.getAste()==s1.getAste()){
-                    Solmu uusi=mergeTree(uusipuu,s1);
-                    ed.setSeuraava(uusi);
-                    uusipuu=uusi;
-                }else{
-                    uusipuu.setSeuraava(s1);
-                    uusipuu=uusipuu.getSeuraava();
-                }
-                s1=s1.getSeuraava();
-            }else{
-                Solmu uusi=mergeTree(s1,s2);
-                if(uusipuu.getAste()==uusi.getAste()){
-                    Solmu vielauusi=mergeTree(uusipuu,uusi);
-                    ed.setSeuraava(vielauusi);
-                    uusipuu=vielauusi;
-                }else{
-                    uusipuu.setSeuraava(uusi);
-                    uusipuu=uusipuu.getSeuraava();
-                }
-                s1=s1.getSeuraava();
-                s2=s2.getSeuraava();
             }
-            ed=uusipuu;
+            //vain a:ssa on enää solmuja jäljellä
+            else if(a!=null){
+                lisattava=a;
+            }
+            //enää b:ssä on solmuja jäljellä
+            else{
+                lisattava=b;
+            }
+            //nyt on selvillä mikä solmu uuteen kekoon pitää lisätä
+            //uusi on tyhjä; lisätään ensimmäiseksi alkioksi
+            if (uusi == null) {
+                lisattava.setEdellinen(null);
+                lisattava.setSeuraava(null);
+                uusi = lisattava;
+            } 
+            //entä jos lisattava on samanasteinen kuin uusi?
+            else if (lisattava.getAste() == uusi.getAste()) {
+                Solmu s = uusi;
+                lisattava = mergeTree(lisattava, s);
+                if (uusi.getEdellinen() != null) {
+                    uusi = uusi.getEdellinen();
+                    uusi.setSeuraava(lisattava);
+                    lisattava.setEdellinen(uusi);
+                    uusi = uusi.getSeuraava();
+                } else {
+                    uusi = lisattava;
+                    uusi.setEdellinen(null);
+                    uusi.setSeuraava(null);
+                }
+            } 
+            //lisättävä on isompi, voidaan vain laittaa jatkoksi
+            else {
+                lisattava.setEdellinen(uusi);
+                lisattava.setSeuraava(null);
+                uusi.setSeuraava(lisattava);
+            }
         }
-        
-        if(s1!=null && s1.getSeuraava()!=null){
-            if(uusipuu!=null){
-                uusipuu.setSeuraava(s1);
-            }else{
-                uusipuu=s1;
-            }
-        }else if(s2!=null && s2.getSeuraava()!=null){
-            if(uusipuu!=null){
-                uusipuu.setSeuraava(s2);
-            }else{
-                uusipuu=s2;
-            }
+        //looppi loppui, enää ei ole lisättäviä solmuja
+        //nyt siirrytään uuden ensimmäiseen solmuun ja asetetaan se keoksi
+        while (uusi != null && uusi.getEdellinen() != null) {
+            uusi = uusi.getEdellinen();
         }
-
+        keko = uusi;
     }
 
     /**
@@ -164,35 +183,42 @@ public class Binomikeko {
      * @return palauttaa s:stä ja t:stä yhdistetyn puun
      */
     private Solmu mergeTree(Solmu s, Solmu t) {
-        if(s.getArvo()<t.getArvo()){
-            Solmu apu=s;
-            s=t;
-            t=apu;
+        if (s.getArvo() < t.getArvo()) {
+            Solmu apu = s;
+            s = t;
+            t = apu;
         }
-        lisaaLapsi(t,s);
+        lisaaLapsi(t, s);
         return t;
     }
+
     /**
      * Lisää solmulle p lapsen l
+     *
      * @param p solmu, johon lapsi lisätään
      * @param l lisättävä lapsi
      */
-    //lisättävä tulee aina lapsista viimeiseksi
-    private void lisaaLapsi(Solmu p,Solmu l){
-        if(p.getAste()==0){
+    //lisättävä tulee aina lapsista viimeiseksi, koska tämä on apumetodi
+    //kahden samankokoisen puun yhdistämiseen
+    private void lisaaLapsi(Solmu p, Solmu l) {
+        if (p.getAste() == 0) {
             l.setParent(p);
             p.setLapsi(l);
-        }
-        else {
-            Solmu s=p.getLapsi();
-            while(s.getSeuraava()!=null){
-                s=s.getSeuraava();
+            l.setEdellinen(null);
+            l.setSeuraava(null);
+        } else {
+            Solmu s = p.getLapsi();
+            while (s.getSeuraava() != null) {
+                s = s.getSeuraava();
             }
             s.setSeuraava(l);
+            l.setEdellinen(s);
+            l.setSeuraava(null);
         }
-        p.setAste(p.getAste()+1);
+        p.setAste(p.getAste() + 1);
     }
-    public Solmu getKeko(){
+
+    public Solmu getKeko() {
         return keko;
     }
 }
