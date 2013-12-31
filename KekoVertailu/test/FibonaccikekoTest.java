@@ -56,6 +56,7 @@ public class FibonaccikekoTest {
         keko.insert(8);
         keko.insert(4);
         keko.insert(2);
+        assertTrue(keko.getKeko().getSeuraava().getArvo()==2);
         assertTrue(keko.getKeko().getSeuraava().getSeuraava().getSeuraava().getSeuraava().getArvo()==1);
     }
     @Test
@@ -83,10 +84,21 @@ public class FibonaccikekoTest {
         keko.insert(2);
         keko.deleteMin();
         assertTrue(keko.findMin().getArvo()==2);
+        assertTrue(keko.getKeko().getArvo()==2);
+        assertTrue(keko.getKeko().getAste()==2);
+        assertTrue(keko.getKeko().getSeuraava().getArvo()==5);
+        assertTrue(keko.getKeko().getSeuraava().getAste()==0);
+    }
+    @Test
+    public void testaaDeleteMinVielaKerran(){
+        keko.insert(8);
+        keko.insert(4);
+        keko.insert(2);
+        keko.deleteMin();
+        keko.deleteMin();
+        assertTrue(keko.findMin().getArvo()==3);
         assertTrue(keko.getKeko().getArvo()==3);
         assertTrue(keko.getKeko().getAste()==2);
-        assertTrue(keko.getKeko().getSeuraava().getArvo()==2);
-        assertTrue(keko.getKeko().getSeuraava().getAste()==0);
     }
     //en ole vielä toteuttanut tätä metodia, en ole aivan selvittänyt miten toimii
     @Test

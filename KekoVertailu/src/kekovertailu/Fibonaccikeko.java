@@ -45,11 +45,13 @@ public class Fibonaccikeko {
      * astetta.
      */
     private void yhdistaKeonPuut() {
-        Solmu[] lista = new Solmu[(int) Math.log(solmuja) + 1];//mikähän logaritmi pitäisi olla?
+        Solmu[] lista = new Solmu[solmuja];
+        Solmu edellinen=null;
         Solmu nyk = keko;
         while (nyk != null) {
             if (lista[nyk.getAste()] == null) {
                 lista[nyk.getAste()] = nyk;
+                edellinen=nyk;
                 nyk = nyk.getSeuraava();
             } else {
                 Solmu s=lista[nyk.getAste()];
@@ -60,12 +62,29 @@ public class Fibonaccikeko {
                     s.getSeuraava().setEdellinen(null);
                 }
                 Solmu ed=nyk.getEdellinen();
+                Solmu seur=nyk.getSeuraava();
+                lista[nyk.getAste()]=null;
                 //nyt yhdistetään nyk ja s, ja laitetaan yhdistetty ed:istä 
                 //seuraavaksi. s on jo poistettu nätisti, siitä vois tehdä oman metodin.
                 //sitten uusi yhdistetty solmu laitetaan nyk:in paikalle,
                 //ja se on seuraava nyk.
+                Solmu uusi=yhdistaPuut(nyk,s);
+                edellinen=uusi;
+                uusi.setEdellinen(ed);
+                uusi.setSeuraava(seur);
+                if(seur!=null){
+                    seur.setEdellinen(uusi);
+                }if(ed!=null){
+                    ed.setSeuraava(uusi);
+                }
+                nyk=uusi;
             }
         }
+        
+        while(edellinen!=null&&edellinen.getEdellinen()!=null){
+            edellinen=edellinen.getEdellinen();
+        }
+        keko=edellinen;
     }
 
     private Solmu yhdistaPuut(Solmu s, Solmu t) {
@@ -89,12 +108,17 @@ public class Fibonaccikeko {
         if (p.getAste() == 0) {
             l.setParent(p);
             p.setLapsi(l);
+            l.setEdellinen(null);
+            l.setSeuraava(null);
         } else {
             Solmu s = p.getLapsi();
             while (s.getSeuraava() != null) {
                 s = s.getSeuraava();
             }
+            l.setParent(p);
             s.setSeuraava(l);
+            l.setEdellinen(s);
+            l.setSeuraava(null);
         }
         p.setAste(p.getAste() + 1);
     }
@@ -124,24 +148,40 @@ public class Fibonaccikeko {
     private void poistaMinLisaaLapset() {
         Solmu uudetpuut = min.getLapsi();
         Solmu s = keko;
-        while (s.getSeuraava() != min) {
+        while (s != min) {
             s = s.getSeuraava();
         }
-        if (s.getSeuraava().getSeuraava() != null) {
-            Solmu apu=s.getSeuraava().getSeuraava();
-            s.setSeuraava(apu);
-            apu.setEdellinen(s);
-            
-        }else{
-            s.setSeuraava(null);
+        Solmu ed=s.getEdellinen();
+        Solmu seur=s.getSeuraava();
+        s=null;
+        if(ed!=null){
+            ed.setSeuraava(seur);
+            s=ed;
+        }if(seur!=null){
+            seur.setEdellinen(ed);
+            s=seur;
         }
+        //jos min oli ainoa solmu
+        if(s==null){
+            keko=uudetpuut;
+            return;
+        }
+        //min on poistettu, siirrytään listan loppuun ja lisätään uudetpuut sinne
         if (uudetpuut != null) {
             while (s.getSeuraava() != null) {
                 s = s.getSeuraava();
             }
-            uudetpuut.setParent(null);//pitääkö asettaa jokaisen parent, onko jokaisella parent?
+            uudetpuut.setParent(null);
             uudetpuut.setEdellinen(s);
             s.setSeuraava(uudetpuut);
+            while(s!=null){
+                s.setParent(null);
+                s=s.getSeuraava();
+            }
+            while(uudetpuut.getEdellinen()!=null){
+                uudetpuut=uudetpuut.getEdellinen();
+            }
+            keko=uudetpuut;
         }
     }
 
