@@ -12,6 +12,7 @@ public class Solmu {
     private Solmu parent;
     private Solmu seuraava;
     private Solmu edellinen;
+    private int marked;
 
     /**
      * Luo uuden solmun.
@@ -28,6 +29,7 @@ public class Solmu {
         this.lapsi = lapsi;
         this.seuraava = null;
         this.edellinen = null;
+        marked=0;
     }
 
     public int getAste() {
@@ -53,6 +55,10 @@ public class Solmu {
     public Solmu getEdellinen() {
         return edellinen;
     }
+    
+    public int getMarked(){
+        return marked;
+    }
 
     public void setParent(Solmu s) {
         parent = s;
@@ -76,5 +82,11 @@ public class Solmu {
 
     public void setAste(int a) {
         aste = a;
+    }
+    public void mark(){
+        marked=1;
+    }
+    public void unmark(){
+        marked=0;
     }
 }

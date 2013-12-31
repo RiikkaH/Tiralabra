@@ -6,7 +6,7 @@ package kekovertailu;
  */
 public class Fibonaccikeko {
 
-    private Solmu keko;//linkitetty lista juurisolmuista
+    private Solmu keko;//linkitetty lista juurisolmuista, osoittaa ensimmäiseen
     private Solmu min;
     private int solmuja;
 
@@ -25,7 +25,7 @@ public class Fibonaccikeko {
     /**
      * Etsii ja palauttaa keon pienimmän solmun.
      *
-     * @return keon pienin solmu, tai -1 jos keko on tyhjä
+     * @return keon pienin solmu
      */
     public Solmu findMin() {
         return min;
@@ -46,45 +46,46 @@ public class Fibonaccikeko {
      */
     private void yhdistaKeonPuut() {
         Solmu[] lista = new Solmu[solmuja];
-        Solmu edellinen=null;
+        Solmu edellinen = null;
         Solmu nyk = keko;
         while (nyk != null) {
+            //keossa ei ole ennestään tämänasteista solmua
             if (lista[nyk.getAste()] == null) {
                 lista[nyk.getAste()] = nyk;
-                edellinen=nyk;
+                edellinen = nyk;
                 nyk = nyk.getSeuraava();
-            } else {
-                Solmu s=lista[nyk.getAste()];
-                if(s.getEdellinen()!=null){
+            }//keossa on tämänasteinen solmu 
+            else {
+                Solmu s = lista[nyk.getAste()];
+                //irrotetaan samanasteinen solmu keosta
+                if (s.getEdellinen() != null) {
                     s.getEdellinen().setSeuraava(s.getSeuraava());
                     s.getSeuraava().setEdellinen(s.getEdellinen());
-                }else{
+                } else {
                     s.getSeuraava().setEdellinen(null);
                 }
-                Solmu ed=nyk.getEdellinen();
-                Solmu seur=nyk.getSeuraava();
-                lista[nyk.getAste()]=null;
-                //nyt yhdistetään nyk ja s, ja laitetaan yhdistetty ed:istä 
-                //seuraavaksi. s on jo poistettu nätisti, siitä vois tehdä oman metodin.
-                //sitten uusi yhdistetty solmu laitetaan nyk:in paikalle,
-                //ja se on seuraava nyk.
-                Solmu uusi=yhdistaPuut(nyk,s);
-                edellinen=uusi;
+                Solmu ed = nyk.getEdellinen();
+                Solmu seur = nyk.getSeuraava();
+                lista[nyk.getAste()] = null;
+                //yhdistetään nyk ja s ja korvataan uudella nyk
+                Solmu uusi = yhdistaPuut(nyk, s);
+                edellinen = uusi;
                 uusi.setEdellinen(ed);
                 uusi.setSeuraava(seur);
-                if(seur!=null){
+                if (seur != null) {
                     seur.setEdellinen(uusi);
-                }if(ed!=null){
+                }
+                if (ed != null) {
                     ed.setSeuraava(uusi);
                 }
-                nyk=uusi;
+                nyk = uusi;
             }
         }
-        
-        while(edellinen!=null&&edellinen.getEdellinen()!=null){
-            edellinen=edellinen.getEdellinen();
+        //päivitetään keko osoittamaan oikeaa kohtaa
+        while (edellinen != null && edellinen.getEdellinen() != null) {
+            edellinen = edellinen.getEdellinen();
         }
-        keko=edellinen;
+        keko = edellinen;
     }
 
     private Solmu yhdistaPuut(Solmu s, Solmu t) {
@@ -148,25 +149,29 @@ public class Fibonaccikeko {
     private void poistaMinLisaaLapset() {
         Solmu uudetpuut = min.getLapsi();
         Solmu s = keko;
+        //etsitään min
         while (s != min) {
             s = s.getSeuraava();
         }
-        Solmu ed=s.getEdellinen();
-        Solmu seur=s.getSeuraava();
-        s=null;
-        if(ed!=null){
+        //poistetaan se eli päivitetään pointterit
+        Solmu ed = s.getEdellinen();
+        Solmu seur = s.getSeuraava();
+        s = null;
+        if (ed != null) {
             ed.setSeuraava(seur);
-            s=ed;
-        }if(seur!=null){
-            seur.setEdellinen(ed);
-            s=seur;
+            s = ed;
         }
-        //jos min oli ainoa solmu
-        if(s==null){
-            keko=uudetpuut;
+        if (seur != null) {
+            seur.setEdellinen(ed);
+            s = seur;
+        }
+        //jos min oli ainoa solmu, voidaan uudetpuut laittaa suoraan keoksi
+        if (s == null) {
+            keko = uudetpuut;
             return;
         }
-        //min on poistettu, siirrytään listan loppuun ja lisätään uudetpuut sinne
+        //min ei ollut ainoa
+        //se on poistettu, siirrytään listan loppuun ja lisätään uudetpuut sinne
         if (uudetpuut != null) {
             while (s.getSeuraava() != null) {
                 s = s.getSeuraava();
@@ -174,14 +179,15 @@ public class Fibonaccikeko {
             uudetpuut.setParent(null);
             uudetpuut.setEdellinen(s);
             s.setSeuraava(uudetpuut);
-            while(s!=null){
+            while (s != null) {
                 s.setParent(null);
-                s=s.getSeuraava();
+                s = s.getSeuraava();
             }
-            while(uudetpuut.getEdellinen()!=null){
-                uudetpuut=uudetpuut.getEdellinen();
+            //päivitetään keko osoittamaan ensimmäistä solmua
+            while (uudetpuut.getEdellinen() != null) {
+                uudetpuut = uudetpuut.getEdellinen();
             }
-            keko=uudetpuut;
+            keko = uudetpuut;
         }
     }
 
@@ -192,16 +198,52 @@ public class Fibonaccikeko {
      * @param d solmun uusi arvo
      */
     public void decreaseKey(Solmu s, int d) {
+        if (d < s.getArvo() && d > 0) {
+            s.setArvo(d);
+            //jos kekoehto rikkoutuu
+            if (s.getParent() != null && s.getParent().getArvo() > d) {
+                Solmu p =leikkaaJaLiita(s);
+                //jos parent ei ole merkattu, se merkataan. jos se on merkattu, sekin
+                //leikataan pois
+                if (p != null) {
+                    if (p.getMarked() == 0) {
+                        p.mark();
+                    } else {
+                        //looppi
+                    }
+                }
+            } //jos kekoehto ei rikkoudu, päivitetään kaiken varuilta min
+            else {
+                paivitaMin();
+            }
+        }
+    }
 
+    private Solmu leikkaaJaLiita(Solmu s) {
+        Solmu p = s.getParent();
+        //pitää tarkistaa onko ainoa lapsi, pitääkö vanhemman lapsipointteria siirtää
+        //parent osoittaa tähän, mutta sisaruksia on: parentin pointteria pitää siirtää
+        if (p != null && s.getSeuraava() != null) {
+            p.setLapsi(s.getSeuraava());
+        } //tämä on ainoa
+        else if (p != null && p.getAste() == 1) {
+            p.setLapsi(null);
+        }
+        if (p != null) {
+            p.setAste(p.getAste() - 1);
+        }
+        //jos parent osoittaa muualle tai sitä ei ole, sille ei tarvitse tehdä mitään
+        s.setParent(null);
+        s.unmark();
+        insert(s);
+        return p;
     }
 
     /**
-     * Lisää kekoon uuden solmun arvolla key.
-     *
-     * @param key kekoon lisättävän solmun arvo
+     * Lisää kekoon uuden solmun. Paivittaa myös minin arvon.
+     * @param s kekoon lisättävä solmu
      */
-    public void insert(int key) {
-        Solmu s = new Solmu(key, null, null, 0);
+    public void insert(Solmu s) {
         if (keko == null) {
             keko = s;
             min = s;
@@ -216,11 +258,19 @@ public class Fibonaccikeko {
                 keko.setSeuraava(s);
                 s.setEdellinen(keko);
             }
-            if (key < min.getArvo()) {
+            if (s.getArvo() < min.getArvo()) {
                 min = s;
             }
         }
         solmuja++;
+    }
+    /**
+     * Lisää kekoon uuden solmun arvolla key.
+     * @param key uuden solmun arvo
+     */
+    public void insert(int key){
+        Solmu s=new Solmu(key,null,null,0);
+        insert(s);
     }
 
     /**
