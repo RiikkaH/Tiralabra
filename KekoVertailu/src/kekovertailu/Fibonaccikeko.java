@@ -205,14 +205,18 @@ public class Fibonaccikeko {
                 Solmu p =leikkaaJaLiita(s);
                 //jos parent ei ole merkattu, se merkataan. jos se on merkattu, sekin
                 //leikataan pois
-                if (p != null) {
-                    if (p.getMarked() == 0) {
+                boolean jatkuu=true;
+                while(p!=null && jatkuu){
+                    if(p.getParent()==null){
+                        jatkuu=false;
+                    }else if(p.getMarked()==0){
                         p.mark();
-                    } else {
-                        //looppi
+                        jatkuu=false;
+                    }else if(p.getMarked()==1){
+                        p=leikkaaJaLiita(p);
                     }
                 }
-            } //jos kekoehto ei rikkoudu, päivitetään kaiken varuilta min
+            } //jos kekoehto ei rikkoudu, päivitetään vain kaiken varuilta min
             else {
                 paivitaMin();
             }
@@ -235,7 +239,7 @@ public class Fibonaccikeko {
         //jos parent osoittaa muualle tai sitä ei ole, sille ei tarvitse tehdä mitään
         s.setParent(null);
         s.unmark();
-        insert(s);
+        insert(s);//tämä päivittää minin
         return p;
     }
 
