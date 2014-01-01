@@ -103,10 +103,62 @@ public class FibonaccikekoTest {
     //en ole vielä toteuttanut tätä metodia, en ole aivan selvittänyt miten toimii
     @Test
     public void testaaDecreaseKeyPikkukeolla(){
-        
+        keko.decreaseKey(keko.getKeko(), 2);
+        assertTrue(keko.getKeko().getArvo()==2);
+        assertTrue(keko.getKeko().getAste()==0);
+        assertTrue(keko.getKeko().getSeuraava().getArvo()==1);
+        assertTrue(keko.getKeko().getSeuraava().getSeuraava().getArvo()==5);
     }
     @Test
-    public void testaaDecreaseKeyIsommalla(){
-        
+    public void testaaDecreaseKeyMonimutkaisemmalla(){
+        keko.insert(8);
+        keko.insert(4);
+        keko.insert(2);
+        keko.deleteMin();
+        keko.decreaseKey(keko.getKeko().getLapsi().getSeuraava().getLapsi(), 1);
+        assertTrue(keko.getKeko().getArvo()==2);
+        assertTrue(keko.findMin().getArvo()==1);
+        assertTrue(keko.getKeko().getAste()==2);
+        assertTrue(keko.getKeko().getMarked()==0);
+        assertTrue(keko.getKeko().getLapsi().getSeuraava().getMarked()==1);
+        assertTrue(keko.getKeko().getSeuraava().getArvo()==1);
+        assertTrue(keko.getKeko().getSeuraava().getAste()==0);
+        assertTrue(keko.getKeko().getSeuraava().getSeuraava().getArvo()==5);
+    }
+    @Test
+    public void testaaDecreaseKeyJaSolmujenMerkkaaminen(){
+        keko.insert(8);
+        keko.insert(4);
+        keko.insert(2);
+        keko.insert(6);
+        keko.insert(12);
+        keko.insert(10);
+        keko.insert(9);
+        keko.deleteMin();
+        keko.decreaseKey(keko.getKeko().getLapsi().getSeuraava().getSeuraava().getLapsi(), 2);
+        assertTrue(keko.getKeko().getLapsi().getSeuraava().getSeuraava().getMarked()==1);
+        assertTrue(keko.getKeko().getSeuraava().getArvo()==2);
+        assertTrue(keko.getKeko().getMarked()==0);
+    }
+    @Test
+    public void testaaDecreaseKeyTosiMonimutkaisellaKeolla(){
+        keko.insert(8);
+        keko.insert(4);
+        keko.insert(2);
+        keko.insert(6);
+        keko.insert(12);
+        keko.insert(10);
+        keko.insert(9);
+        keko.deleteMin();
+        keko.decreaseKey(keko.getKeko().getLapsi().getSeuraava().getSeuraava().getLapsi(), 2);
+        keko.decreaseKey(keko.getKeko().getLapsi().getSeuraava().getSeuraava().getLapsi(), 1);
+        assertTrue(keko.findMin().getArvo()==1);
+        assertTrue(keko.getKeko().getArvo()==2);
+        assertTrue(keko.getKeko().getAste()==2);
+        assertTrue(keko.getKeko().getSeuraava().getArvo()==3);
+        assertTrue(keko.getKeko().getSeuraava().getAste()==0);
+        assertTrue(keko.getKeko().getSeuraava().getMarked()==0);
+        assertTrue(keko.getKeko().getSeuraava().getSeuraava().getArvo()==1);
+        assertTrue(keko.getKeko().getSeuraava().getSeuraava().getAste()==1);
     }
 }
