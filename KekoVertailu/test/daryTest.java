@@ -1,6 +1,6 @@
 
 
-import kekovertailu.darykeko;
+import keot.darykeko;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
