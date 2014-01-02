@@ -12,9 +12,9 @@ public class Kekovertailu {
     }
     
     public static void mittaaJarjestamisenAikoja(){
-        int[] taulukko=new int[10000];
-        for(int i=0;i<10000;i++){
-            taulukko[i]=(int)Math.random()*10000;
+        int[] taulukko=new int[100000];
+        for(int i=0;i<100000;i++){
+            taulukko[i]=(int)Math.random()*100000+1;
         }
         Kekojarjestaminen jarjesta=new Kekojarjestaminen(taulukko);
         
