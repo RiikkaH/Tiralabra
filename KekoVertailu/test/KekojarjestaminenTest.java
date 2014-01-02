@@ -33,7 +33,7 @@ public class KekojarjestaminenTest {
     
     @Before
     public void setUp() {
-        jarjesta=new Kekojarjestaminen(new int[]{2,47,5,12,37,53,9,3,6,38,4,1,35,7,8,0,21});
+        jarjesta=new Kekojarjestaminen(new int[]{2,47,5,12,38,53,9,3,6,38,4,1,35,7,8,0,21});
     }
     
     @After
@@ -87,9 +87,7 @@ public class KekojarjestaminenTest {
     @Test
     public void testaaJarjestaminenFibonaccikeolla(){
         boolean jarjestyksessa=true;
-        System.out.println("_____ALKAA TÄSTÄ_____");
         int[] t=jarjesta.jarjestaFibonaccikeolla();
-        System.out.println("_____LOPPUU TÄHÄN_____");
         for(int i=0;i<t.length-1;i++){
             if(t[i+1]<t[i]){
                 jarjestyksessa=false;

@@ -35,11 +35,9 @@ public class Fibonaccikeko {
      * Poistaa keon pienimmän alkion ja tiivistää keon.
      */
     public void deleteMin() {
-        System.out.println("poistetaan min: "+min.getArvo()/*+", keko: "+keko.getArvo()+","+keko.getAste()+". Solmuja: "+solmuja*/);
         poistaMinLisaaLapset();
         paivitaMin();
         yhdistaKeonPuut();
-        paivitaMin();
         solmuja--;
     }
 
@@ -143,6 +141,10 @@ public class Fibonaccikeko {
             }
             s = s.getSeuraava();
         }
+        //viimeisen solmun tarkistaminen voisi myös olla hyödyllistä
+        if(s!=null&&s.getArvo()<uusimin.getArvo()){
+            uusimin=s;
+        }
         min = uusimin;
     }
 
@@ -151,8 +153,8 @@ public class Fibonaccikeko {
      */
     private void poistaMinLisaaLapset() {
         Solmu uudetpuut = min.getLapsi();
-        Solmu s = findMin();
-        //poistetaan min eli päivitetään pointterit
+        Solmu s = min;
+        //poistetaan min eli päivitetään pointterit sen ohi
         Solmu ed = s.getEdellinen();
         Solmu seur = s.getSeuraava();
         s = null;
