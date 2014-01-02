@@ -98,6 +98,7 @@ public class FibonaccikekoTest {
         keko.deleteMin();
         assertTrue(keko.findMin().getArvo()==3);
         assertTrue(keko.getKeko().getArvo()==3);
+        assertTrue(keko.getKeko()==keko.findMin());
         assertTrue(keko.getKeko().getAste()==2);
     }
     //en ole vielä toteuttanut tätä metodia, en ole aivan selvittänyt miten toimii

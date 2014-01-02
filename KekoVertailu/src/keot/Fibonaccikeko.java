@@ -35,9 +35,12 @@ public class Fibonaccikeko {
      * Poistaa keon pienimmän alkion ja tiivistää keon.
      */
     public void deleteMin() {
+        System.out.println("poistetaan min: "+min.getArvo()/*+", keko: "+keko.getArvo()+","+keko.getAste()+". Solmuja: "+solmuja*/);
         poistaMinLisaaLapset();
         paivitaMin();
         yhdistaKeonPuut();
+        paivitaMin();
+        solmuja--;
     }
 
     /**
@@ -134,7 +137,7 @@ public class Fibonaccikeko {
     private void paivitaMin() {
         Solmu uusimin = keko;
         Solmu s = keko;
-        while (s.getSeuraava() != null) {
+        while (s!=null&&s.getSeuraava() != null) {
             if (s.getArvo() < uusimin.getArvo()) {
                 uusimin = s;
             }
@@ -148,12 +151,8 @@ public class Fibonaccikeko {
      */
     private void poistaMinLisaaLapset() {
         Solmu uudetpuut = min.getLapsi();
-        Solmu s = keko;
-        //etsitään min
-        while (s != min) {
-            s = s.getSeuraava();
-        }
-        //poistetaan se eli päivitetään pointterit
+        Solmu s = findMin();
+        //poistetaan min eli päivitetään pointterit
         Solmu ed = s.getEdellinen();
         Solmu seur = s.getSeuraava();
         s = null;
@@ -170,8 +169,9 @@ public class Fibonaccikeko {
             keko = uudetpuut;
             return;
         }
-        //min ei ollut ainoa
-        //se on poistettu, siirrytään listan loppuun ja lisätään uudetpuut sinne
+        Solmu tallennettu=s;//s ei ole null
+        //min ei ollut ainoa ja lapsia on
+        //min on poistettu, siirrytään listan loppuun ja lisätään uudetpuut sinne
         if (uudetpuut != null) {
             while (s.getSeuraava() != null) {
                 s = s.getSeuraava();
@@ -183,12 +183,13 @@ public class Fibonaccikeko {
                 s.setParent(null);
                 s = s.getSeuraava();
             }
-            //päivitetään keko osoittamaan ensimmäistä solmua
-            while (uudetpuut.getEdellinen() != null) {
-                uudetpuut = uudetpuut.getEdellinen();
-            }
-            keko = uudetpuut;
+            tallennettu=uudetpuut;
         }
+        //päivitetään kekopointteri osoittamaan oikein
+        while(tallennettu.getEdellinen()!=null){
+            tallennettu=tallennettu.getEdellinen();
+        }
+        keko=tallennettu;
     }
 
     /**
