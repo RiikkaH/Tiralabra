@@ -9,14 +9,30 @@ import keot.Binaarikeko;
  */
 public class Dijkstra {
     
-    //miten voisi toteuttaa niin että tämän voisi ajaa millä keolla tahtoo
-    //ilman että jokaiselle oma koodi? kekojen interface kun ei toimi...
-    public Dijkstra(/*verkko,aloitussolmu*/){
-        //verkko voisi olla vierusmatriisi
+    private final int[][] verkko;
+    private final int alku;
+    
+    
+    //verkko vierusmatriisina
+    public Dijkstra(int[][] verkko,int alku){
+        this.verkko=verkko;
+        this.alku=alku;
     }
     
     public void etsiReittiBinaarikeolla(){
+        //alustus
         Binaarikeko keko=new Binaarikeko();
+        int[] dist =new int[verkko.length];
+        int[] edellinen=new int[verkko.length];
+        for(int i=0;i<dist.length;i++){
+            if(i!=alku){
+                dist[i]=Integer.MAX_VALUE;
+            }
+            edellinen[i]=-1;
+            //ongelma: keko pitäisi toimia etäisyyksien perusteella mutta 
+            //muistissa pitäisi olla mihin solmuun etäisyys liittyy
+        }
+        //varsinainen työ
         
     }
 }
