@@ -36,7 +36,7 @@ public class KekojarjestaminenTest {
     public void setUp() {
         int[] taulukko=new int[100];
         for(int i=0;i<100;i++){
-            taulukko[i]=(int)Math.random()*100+1;
+            taulukko[i]=(int)(Math.random()*100+1);
         }
         jarjesta=new Kekojarjestaminen(new int[]{2,47,5,12,38,53,9,3,6,38,4,1,35,7,8,0,21});
         jarjesta2=new Kekojarjestaminen(taulukko);
@@ -147,6 +147,7 @@ public class KekojarjestaminenTest {
     }
     @Test
     public void testaaJarjestaminenSatunnaisellaFibonaccikeolla(){
+        System.out.println("");
         boolean jarjestyksessa=true;
         int[] t=jarjesta2.jarjestaFibonaccikeolla();
         for(int i=0;i<t.length-1;i++){

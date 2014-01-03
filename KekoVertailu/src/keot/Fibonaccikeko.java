@@ -38,7 +38,11 @@ public class Fibonaccikeko {
         poistaMinLisaaLapset();
         paivitaMin();
         yhdistaKeonPuut();
+        paivitaMin();
         solmuja--;
+        if(keko==null&&solmuja>0){
+            System.out.println("keko on null kun solmuja on "+solmuja);
+        }
     }
 
     /**
@@ -46,7 +50,7 @@ public class Fibonaccikeko {
      * astetta.
      */
     private void yhdistaKeonPuut() {
-        Solmu[] lista = new Solmu[solmuja];
+        Solmu[] lista = new Solmu[solmuja];//listassa kohdassa n on viite kekoon, jonka aste on n
         Solmu edellinen = null;
         Solmu nyk = keko;
         while (nyk != null) {
@@ -68,9 +72,8 @@ public class Fibonaccikeko {
                 Solmu ed = nyk.getEdellinen();
                 Solmu seur = nyk.getSeuraava();
                 lista[nyk.getAste()] = null;
-                //yhdistetään nyk ja s ja korvataan uudella nyk
+                //yhdistetään nyk ja s ja korvataan nyk solmulla uusi
                 Solmu uusi = yhdistaPuut(nyk, s);
-                edellinen = uusi;
                 uusi.setEdellinen(ed);
                 uusi.setSeuraava(seur);
                 if (seur != null) {
@@ -79,6 +82,7 @@ public class Fibonaccikeko {
                 if (ed != null) {
                     ed.setSeuraava(uusi);
                 }
+                edellinen = uusi;
                 nyk = uusi;
             }
         }
@@ -86,7 +90,7 @@ public class Fibonaccikeko {
         while (edellinen != null && edellinen.getEdellinen() != null) {
             edellinen = edellinen.getEdellinen();
         }
-        keko = edellinen;
+        keko = edellinen;//edellinen==null vain jos keko==null alussa
     }
 
     private Solmu yhdistaPuut(Solmu s, Solmu t) {
@@ -169,6 +173,14 @@ public class Fibonaccikeko {
         //jos min oli ainoa solmu, voidaan uudetpuut laittaa suoraan keoksi
         if (s == null) {
             keko = uudetpuut;
+            if(uudetpuut!=null){
+                //uusillapuilla ei tietenkään ole enää parent:ia.
+                uudetpuut.setParent(null);
+                while(uudetpuut.getSeuraava()!=null){
+                    uudetpuut=uudetpuut.getSeuraava();
+                    uudetpuut.setParent(null);
+                }
+            }
             return;
         }
         Solmu tallennettu=s;//s ei ole null
@@ -185,7 +197,6 @@ public class Fibonaccikeko {
                 s.setParent(null);
                 s = s.getSeuraava();
             }
-            tallennettu=uudetpuut;
         }
         //päivitetään kekopointteri osoittamaan oikein
         while(tallennettu.getEdellinen()!=null){
