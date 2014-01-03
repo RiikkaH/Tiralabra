@@ -38,11 +38,8 @@ public class Fibonaccikeko {
         poistaMinLisaaLapset();
         paivitaMin();
         yhdistaKeonPuut();
-        paivitaMin();
+        paivitaMin();//onko turha?
         solmuja--;
-        if(keko==null&&solmuja>0){
-            System.out.println("keko on null kun solmuja on "+solmuja);
-        }
     }
 
     /**

@@ -155,6 +155,6 @@ public class KekojarjestaminenTest {
                 jarjestyksessa=false;
             }
         }
-        assertTrue(jarjestyksessa);//mitä ihmettä, mikä nullPointerException?
+        assertTrue(jarjestyksessa);
     }
 }
