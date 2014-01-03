@@ -18,6 +18,8 @@ public class Kekovertailu {
         }
         Kekojarjestaminen jarjesta=new Kekojarjestaminen(taulukko);
         
+        System.out.println("Kekojärjestämisen viemä aika eri keoilla");
+        
         long alku=System.currentTimeMillis();
         jarjesta.jarjestaBinaarikeolla();
         System.out.println("Binäärikeko: "+(System.currentTimeMillis()-alku)+" ms");
