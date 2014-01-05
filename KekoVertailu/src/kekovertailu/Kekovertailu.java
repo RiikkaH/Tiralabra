@@ -20,21 +20,21 @@ public class Kekovertailu {
         
         System.out.println("Kekojärjestämisen viemä aika eri keoilla");
         
-        long alku=System.currentTimeMillis();
+        long alku=System.nanoTime();
         jarjesta.jarjestaBinaarikeolla();
-        System.out.println("Binäärikeko: "+(System.currentTimeMillis()-alku)+" ms");
+        System.out.println("Binäärikeko: "+(System.nanoTime()-alku)+" ms");
         
-        alku=System.currentTimeMillis();
+        alku=System.nanoTime();
         jarjesta.jarjestaDarykeolla(4);
-        System.out.println("d-arykeko(4): "+(System.currentTimeMillis()-alku)+" ms");
+        System.out.println("d-arykeko(4): "+(System.nanoTime()-alku)+" ms");
         
-        alku=System.currentTimeMillis();
+        alku=System.nanoTime();
         jarjesta.jarjestaBinomikeolla();
-        System.out.println("Binomikeko: "+(System.currentTimeMillis()-alku)+" ms");
+        System.out.println("Binomikeko: "+(System.nanoTime()-alku)+" ms");
         
-        alku=System.currentTimeMillis();
-        jarjesta.jarjestaFibonaccikeolla();//ja miksi ihmeessä ei muka toimi??
-        System.out.println("Fibonaccikeko: "+(System.currentTimeMillis()-alku)+" ms");
+        alku=System.nanoTime();
+        jarjesta.jarjestaFibonaccikeolla();
+        System.out.println("Fibonaccikeko: "+(System.nanoTime()-alku)+" ms");
     }
     
 }

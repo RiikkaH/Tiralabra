@@ -1,3 +1,5 @@
+package keot;
+
 
 import keot.Binomikeko;
 import org.junit.After;
