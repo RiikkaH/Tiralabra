@@ -22,19 +22,19 @@ public class Kekovertailu {
         
         long alku=System.nanoTime();
         jarjesta.jarjestaBinaarikeolla();
-        System.out.println("Binäärikeko: "+(System.nanoTime()-alku)+" ms");
+        System.out.println("Binäärikeko: "+(System.nanoTime()-alku)/1000000+" ms");
         
         alku=System.nanoTime();
         jarjesta.jarjestaDarykeolla(4);
-        System.out.println("d-arykeko(4): "+(System.nanoTime()-alku)+" ms");
+        System.out.println("d-arykeko(4): "+(System.nanoTime()-alku)/1000000+" ms");
         
         alku=System.nanoTime();
         jarjesta.jarjestaBinomikeolla();
-        System.out.println("Binomikeko: "+(System.nanoTime()-alku)+" ms");
+        System.out.println("Binomikeko: "+(System.nanoTime()-alku)/1000000+" ms");
         
         alku=System.nanoTime();
         jarjesta.jarjestaFibonaccikeolla();
-        System.out.println("Fibonaccikeko: "+(System.nanoTime()-alku)+" ms");
+        System.out.println("Fibonaccikeko: "+(System.nanoTime()-alku)/1000000+" ms");
     }
     
 }
