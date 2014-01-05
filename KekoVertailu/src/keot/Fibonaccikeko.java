@@ -4,7 +4,7 @@ package keot;
  *
  * @author Riikka
  */
-public class Fibonaccikeko {
+public class Fibonaccikeko implements Keko{
 
     private Solmu keko;//linkitetty lista juurisolmuista, osoittaa ensimmäiseen
     private Solmu min;
@@ -27,13 +27,22 @@ public class Fibonaccikeko {
      *
      * @return keon pienin solmu
      */
-    public Solmu findMin() {
+    public Solmu findMinSolmu() {
         return min;
+    }
+    /**
+     * Palauttaa keon pienimmän solmun arvon.
+     * @return keon pienimmän solmun arvo
+     */
+    @Override
+    public int findMin(){
+        return min.getArvo();
     }
 
     /**
      * Poistaa keon pienimmän alkion ja tiivistää keon.
      */
+    @Override
     public void deleteMin() {
         poistaMinLisaaLapset();
         paivitaMin();
@@ -283,6 +292,7 @@ public class Fibonaccikeko {
      * Lisää kekoon uuden solmun arvolla key.
      * @param key uuden solmun arvo
      */
+    @Override
     public void insert(int key){
         Solmu s=new Solmu(key,null,null,0);
         insert(s);

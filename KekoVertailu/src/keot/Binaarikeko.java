@@ -5,7 +5,7 @@ package keot;
  *
  * @author Riikka
  */
-public class Binaarikeko{
+public class Binaarikeko implements Keko{
     
     private int[] keko;
     private int heapSize;
@@ -44,6 +44,7 @@ public class Binaarikeko{
      * arvon -1.
      * @return keon pienin alkio tai -1, jos keko on tyhjä
      */
+    @Override
     public int findMin() {
         if(heapSize>0){
             return keko[0];
@@ -53,6 +54,7 @@ public class Binaarikeko{
     /**
      * Poistaa keon pienimmän alkion ja korjaa kekoehdon.
      */
+    @Override
     public void deleteMin() {
         keko[0]=keko[heapSize-1];
         heapSize--;
@@ -79,6 +81,7 @@ public class Binaarikeko{
      * Lisää kekoon solmun arvolla key.
      * @param key arvo, joka kekoon halutaan lisätä
      */
+    @Override
     public void insert(int key) {
         if(heapSize==keko.length){
             int[] uusikeko=new int[keko.length*2];

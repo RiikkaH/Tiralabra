@@ -73,7 +73,7 @@ public class BinomikekoTest {
         keko.insert(4);
         keko.insert(6);
         keko.insert(2);
-        assertTrue(keko.findMin().getArvo()==1);
+        assertTrue(keko.findMinSolmu().getArvo()==1);
     }
     @Test
     public void testaaFindMinVahanIsommalla(){
@@ -84,7 +84,7 @@ public class BinomikekoTest {
         keko.insert(14);
         keko.insert(8);
         keko.insert(5);
-        assertTrue(keko.findMin().getArvo()==1);
+        assertTrue(keko.findMinSolmu().getArvo()==1);
     }
     @Test
     public void testaaDeleteMinPikkuisellaKeolla(){

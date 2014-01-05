@@ -4,7 +4,7 @@ package keot;
  *
  * @author Riikka
  */
-public class Binomikeko {
+public class Binomikeko implements Keko{
 
     public Solmu keko;
 
@@ -29,7 +29,7 @@ public class Binomikeko {
      *
      * @return keon pienin solmu
      */
-    public Solmu findMin() {
+    public Solmu findMinSolmu() {
         int pienin = Integer.MAX_VALUE;
         Solmu k = keko;
         if (k == null) {
@@ -45,12 +45,21 @@ public class Binomikeko {
         }
         return p;
     }
+    /**
+     * Etsii ja palauttaa keon pienimmän solmun arvon.
+     * @return keon pienimmän solmun arvo
+     */
+    @Override
+    public int findMin(){
+        return findMinSolmu().getArvo();
+    }
 
     /**
      * Poistaa keosta pienimmän alkion säilyttäen kekoehdon.
      */
+    @Override
     public void deleteMin() {
-        Solmu p = findMin();
+        Solmu p = findMinSolmu();
         if (p.getAste() > 0) {
             p.getLapsi().setParent(null);
             Solmu uusikeko = p.getLapsi();
@@ -95,6 +104,7 @@ public class Binomikeko {
      *
      * @param key kekoon lisättävä arvo
      */
+    @Override
     public void insert(int key) {
         Solmu s = new Solmu(key, null, null, 0);
         Binomikeko k = new Binomikeko(s);

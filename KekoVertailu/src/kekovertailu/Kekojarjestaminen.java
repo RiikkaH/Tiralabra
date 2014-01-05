@@ -4,6 +4,7 @@ package kekovertailu;
 import keot.Binaarikeko;
 import keot.Binomikeko;
 import keot.Fibonaccikeko;
+import keot.Keko;
 import keot.darykeko;
 
 /**
@@ -17,13 +18,9 @@ public class Kekojarjestaminen {
     public Kekojarjestaminen(int[] taulukko){
         this.taulukko=taulukko;
     }
-    /**
-     * Järjestää taulukon binäärikeon avulla.
-     * @return järjestetty taulukko
-     */
-    public int[] jarjestaBinaarikeolla(){
+    
+    private int[] jarjesta(Keko keko){
         int[] uusi=new int[taulukko.length];
-        Binaarikeko keko=new Binaarikeko();
         for(int i=0;i<taulukko.length;i++){
             keko.insert(taulukko[i]);
         }
@@ -34,20 +31,18 @@ public class Kekojarjestaminen {
         return uusi;
     }
     /**
+     * Järjestää taulukon binäärikeon avulla.
+     * @return järjestetty taulukko
+     */
+    public int[] jarjestaBinaarikeolla(){
+        return jarjesta(new Binaarikeko());
+    }
+    /**
      * Järjestää taulukon binomikeon avulla.
      * @return järjestetty taulukko
      */
     public int[] jarjestaBinomikeolla(){
-        int[] uusi=new int[taulukko.length];
-        Binomikeko keko=new Binomikeko();
-        for(int i=0;i<taulukko.length;i++){
-            keko.insert(taulukko[i]);
-        }
-        for(int j=0;j<taulukko.length;j++){
-            uusi[j]=keko.findMin().getArvo();
-            keko.deleteMin();
-        }
-        return uusi;
+        return jarjesta(new Binomikeko());
     }
     /**
      * Järjestää taulukon d-ary -keon avulla.
@@ -55,31 +50,13 @@ public class Kekojarjestaminen {
      * @return järjestetty taulukko
      */
     public int[] jarjestaDarykeolla(int aste){
-        int[] uusi=new int[taulukko.length];
-        darykeko keko=new darykeko(aste);
-        for(int i=0;i<taulukko.length;i++){
-            keko.insert(taulukko[i]);
-        }
-        for(int j=0;j<taulukko.length;j++){
-            uusi[j]=keko.findMin();
-            keko.deleteMin();
-        }
-        return uusi;
+        return jarjesta(new darykeko(aste));
     }
     /**
      * Järjestää taulukon fibonaccikeon avulla.
      * @return järjestetty taulukko
      */
     public int[] jarjestaFibonaccikeolla(){
-        int[] uusi=new int[taulukko.length];
-        Fibonaccikeko keko=new Fibonaccikeko();
-        for(int i=0;i<taulukko.length;i++){
-            keko.insert(taulukko[i]);
-        }
-        for(int j=0;j<taulukko.length;j++){
-            uusi[j]=keko.findMin().getArvo();
-            keko.deleteMin();
-        }
-        return uusi;
+        return jarjesta(new Fibonaccikeko());
     }
 }

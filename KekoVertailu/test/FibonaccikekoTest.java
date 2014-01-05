@@ -61,14 +61,14 @@ public class FibonaccikekoTest {
     }
     @Test
     public void testaaFindMinPikkuruisellaKeolla(){
-        assertTrue(keko.findMin().getArvo()==1);
+        assertTrue(keko.findMinSolmu().getArvo()==1);
     }
     @Test
     public void testaaFindMinVahanIsommalla(){
         keko.insert(8);
         keko.insert(4);
         keko.insert(2);
-        assertTrue(keko.findMin().getArvo()==1);
+        assertTrue(keko.findMinSolmu().getArvo()==1);
     }
     @Test
     public void testaaDeleteMinPikkuisellaKeolla(){
@@ -83,7 +83,7 @@ public class FibonaccikekoTest {
         keko.insert(4);
         keko.insert(2);
         keko.deleteMin();
-        assertTrue(keko.findMin().getArvo()==2);
+        assertTrue(keko.findMinSolmu().getArvo()==2);
         assertTrue(keko.getKeko().getArvo()==2);
         assertTrue(keko.getKeko().getAste()==2);
         assertTrue(keko.getKeko().getSeuraava().getArvo()==5);
@@ -96,9 +96,9 @@ public class FibonaccikekoTest {
         keko.insert(2);
         keko.deleteMin();
         keko.deleteMin();
-        assertTrue(keko.findMin().getArvo()==3);
+        assertTrue(keko.findMinSolmu().getArvo()==3);
         assertTrue(keko.getKeko().getArvo()==3);
-        assertTrue(keko.getKeko()==keko.findMin());
+        assertTrue(keko.getKeko()==keko.findMinSolmu());
         assertTrue(keko.getKeko().getAste()==2);
     }
     //en ole vielä toteuttanut tätä metodia, en ole aivan selvittänyt miten toimii
@@ -118,7 +118,7 @@ public class FibonaccikekoTest {
         keko.deleteMin();
         keko.decreaseKey(keko.getKeko().getLapsi().getSeuraava().getLapsi(), 1);
         assertTrue(keko.getKeko().getArvo()==2);
-        assertTrue(keko.findMin().getArvo()==1);
+        assertTrue(keko.findMinSolmu().getArvo()==1);
         assertTrue(keko.getKeko().getAste()==2);
         assertTrue(keko.getKeko().getMarked()==0);
         assertTrue(keko.getKeko().getLapsi().getSeuraava().getMarked()==1);
@@ -153,7 +153,7 @@ public class FibonaccikekoTest {
         keko.deleteMin();
         keko.decreaseKey(keko.getKeko().getLapsi().getSeuraava().getSeuraava().getLapsi(), 2);
         keko.decreaseKey(keko.getKeko().getLapsi().getSeuraava().getSeuraava().getLapsi(), 1);
-        assertTrue(keko.findMin().getArvo()==1);
+        assertTrue(keko.findMinSolmu().getArvo()==1);
         assertTrue(keko.getKeko().getArvo()==2);
         assertTrue(keko.getKeko().getAste()==2);
         assertTrue(keko.getKeko().getSeuraava().getArvo()==3);

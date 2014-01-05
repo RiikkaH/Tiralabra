@@ -5,9 +5,9 @@ package keot;
  *
  * @author Riikka
  */
-public class darykeko {
+public class darykeko implements Keko{
 
-    private int d;
+    private final int d;
     private int heapSize;
     private int[] keko;
     
@@ -24,6 +24,7 @@ public class darykeko {
      * Palauttaa keon pienimmän alkion.
      * @return keon pienin alkio tai -1 jos keko on tyhjä
      */
+    @Override
     public int findMin() {
         if(heapSize==0){
             return -1;
@@ -33,6 +34,7 @@ public class darykeko {
     /**
      * Poistaa keon pienimmän alkion ja korjaa kekoehdon.
      */
+    @Override
     public void deleteMin() {
         keko[0]=keko[heapSize-1];
         heapSize--;
@@ -58,6 +60,7 @@ public class darykeko {
      * Lisää kekoon arvon key säilyttäen kekoehdon.
      * @param key kekoon lisättävä arvo
      */
+    @Override
     public void insert(int key) {
         if(heapSize==keko.length){
             int[] uusikeko=new int[keko.length*2];
