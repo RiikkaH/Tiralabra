@@ -18,6 +18,34 @@ public class Binaarikeko implements Keko{
         heapSize=0;
     }
     
+    private void heapifyWithNode(int key){
+        int l=left(key);
+        int r=right(key);
+        if(r<heapSize){
+            int smallest;
+            if(keko[l]<keko[r]){
+                smallest=l;
+            }else{
+                smallest=r;
+            }if(keko[key]>keko[smallest]){
+                int apu=keko[smallest];
+                int apunode=node[smallest];
+                keko[smallest]=keko[key];
+                node[smallest]=node[key];
+                keko[key]=apu;
+                node[key]=apunode;
+                heapifyWithNode(smallest);
+            }
+        }else if(l==heapSize-1 && keko[key]>keko[l]){
+            int apu=keko[l];
+            int apunode=node[l];
+            keko[l]=keko[key];
+            node[l]=node[key];
+            keko[key]=apu;
+            node[key]=apunode;
+        }
+    }
+    
     /**
      * Korjaa kekoehdon solmusta key alaspäin.
      * @param key somu, josta kekoehto halutaan korjata
@@ -55,12 +83,25 @@ public class Binaarikeko implements Keko{
         }
         return -1;
     }
+    public int findMinNode(){
+        if(heapSize>0){
+            return node[0];
+        }
+        return -1;
+    }
     /**
      * Poistaa keon pienimmän alkion ja korjaa kekoehdon.
      */
     @Override
     public void deleteMin() {
         keko[0]=keko[heapSize-1];
+        heapSize--;
+        heapify(0);
+    }
+    
+    public void deleteMinJaNode(){
+        keko[0]=keko[heapSize-1];
+        node[0]=node[heapSize-1];
         heapSize--;
         heapify(0);
     }
@@ -125,7 +166,22 @@ public class Binaarikeko implements Keko{
         keko[i]=key;
         heapSize++;
     }
-
+    /**
+     * Etsii keosta noden arvoa n vastaavan somun.
+     * @param n noden arvo jonka perusteella arvoa etsitään
+     * @return keon indeksi, josta n löytyy
+     */
+    public int etsiKeosta(int n){
+        int indeksi=0;
+        for(int i=0;i<heapSize;i++){
+            if(node[i]==n){
+                indeksi=i;
+                return indeksi;
+            }
+        }
+        return indeksi;
+    }
+    
     /**
      * Palauttaa solmun i vanhemman, tai i:n jos se on juuri
      * @param i solmu jonka vanhempi halutaan selvittää

@@ -75,11 +75,25 @@ public class Dijkstra {
                 dist[i] = Integer.MAX_VALUE - 100;
             }
             //edellinen[i]=-1;
-            
+            keko.insertWithNode(dist[i], i);
         }
         //varsinainen työ
-        
-        
+        while(keko.getSize()>0){
+            int etaisyys=keko.findMin();
+            int node=keko.findMinNode();
+            keko.deleteMinJaNode();
+            for(int i=0;i<verkko.length;i++){
+                if(verkko[node][i]>0){
+                    int uusietaisyys=dist[node]+verkko[node][i];
+                    if(uusietaisyys<dist[i]){
+                        dist[i]=uusietaisyys;
+                        //vähennetään i:tä vastaavaa key:tä
+                        int indeksi=keko.etsiKeosta(i);
+                        keko.decreaseKey(indeksi,uusietaisyys);
+                    }
+                }
+            }
+        }
         return dist;
     }
 }
