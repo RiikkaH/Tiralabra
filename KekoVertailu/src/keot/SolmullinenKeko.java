@@ -10,8 +10,10 @@ package keot;
  *
  * @author Asennus
  */
-public interface Keko {
-    public void deleteMin(); 
-    public void insert(int key);
-    public int findMin();
+public interface SolmullinenKeko {
+    public void deleteMin();
+    public Solmu etsiKeosta(int node);
+    public void insertWithNode(int key, int node);
+    public Solmu findMinSolmu();
+    public void decreaseKey(Solmu s,int d);
 }

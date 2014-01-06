@@ -4,7 +4,7 @@ package keot;
  *
  * @author Riikka
  */
-public class Fibonaccikeko implements Keko{
+public class Fibonaccikeko implements Keko, SolmullinenKeko {
 
     private Solmu keko;//linkitetty lista juurisolmuista, osoittaa ensimmäiseen
     private Solmu min;
@@ -31,12 +31,14 @@ public class Fibonaccikeko implements Keko{
     public Solmu findMinSolmu() {
         return min;
     }
+
     /**
      * Palauttaa keon pienimmän solmun arvon.
+     *
      * @return keon pienimmän solmun arvo
      */
     @Override
-    public int findMin(){
+    public int findMin() {
         return min.getArvo();
     }
 
@@ -146,15 +148,15 @@ public class Fibonaccikeko implements Keko{
     private void paivitaMin() {
         Solmu uusimin = keko;
         Solmu s = keko;
-        while (s!=null&&s.getSeuraava() != null) {
+        while (s != null && s.getSeuraava() != null) {
             if (s.getArvo() < uusimin.getArvo()) {
                 uusimin = s;
             }
             s = s.getSeuraava();
         }
         //viimeisen solmun tarkistaminen voisi myös olla hyödyllistä
-        if(s!=null&&s.getArvo()<uusimin.getArvo()){
-            uusimin=s;
+        if (s != null && s.getArvo() < uusimin.getArvo()) {
+            uusimin = s;
         }
         min = uusimin;
     }
@@ -180,17 +182,17 @@ public class Fibonaccikeko implements Keko{
         //jos min oli ainoa solmu, voidaan uudetpuut laittaa suoraan keoksi
         if (s == null) {
             keko = uudetpuut;
-            if(uudetpuut!=null){
+            if (uudetpuut != null) {
                 //uusillapuilla ei tietenkään ole enää parent:ia.
                 uudetpuut.setParent(null);
-                while(uudetpuut.getSeuraava()!=null){
-                    uudetpuut=uudetpuut.getSeuraava();
+                while (uudetpuut.getSeuraava() != null) {
+                    uudetpuut = uudetpuut.getSeuraava();
                     uudetpuut.setParent(null);
                 }
             }
             return;
         }
-        Solmu tallennettu=s;//s ei ole null
+        Solmu tallennettu = s;//s ei ole null
         //min ei ollut ainoa ja lapsia on
         //min on poistettu, siirrytään listan loppuun ja lisätään uudetpuut sinne
         if (uudetpuut != null) {
@@ -206,10 +208,10 @@ public class Fibonaccikeko implements Keko{
             }
         }
         //päivitetään kekopointteri osoittamaan oikein
-        while(tallennettu.getEdellinen()!=null){
-            tallennettu=tallennettu.getEdellinen();
+        while (tallennettu.getEdellinen() != null) {
+            tallennettu = tallennettu.getEdellinen();
         }
-        keko=tallennettu;
+        keko = tallennettu;
     }
 
     /**
@@ -218,23 +220,24 @@ public class Fibonaccikeko implements Keko{
      * @param s solmu, jonka arvoa vähennetään
      * @param d solmun uusi arvo
      */
+    @Override
     public void decreaseKey(Solmu s, int d) {
         if (d < s.getArvo() && d > 0) {
             s.setArvo(d);
             //jos kekoehto rikkoutuu
             if (s.getParent() != null && s.getParent().getArvo() > d) {
-                Solmu p =leikkaaJaLiita(s);
+                Solmu p = leikkaaJaLiita(s);
                 //jos parent ei ole merkattu, se merkataan. jos se on merkattu, sekin
                 //leikataan pois
-                boolean jatkuu=true;
-                while(p!=null && jatkuu){
-                    if(p.getParent()==null){
-                        jatkuu=false;
-                    }else if(p.getMarked()==0){
+                boolean jatkuu = true;
+                while (p != null && jatkuu) {
+                    if (p.getParent() == null) {
+                        jatkuu = false;
+                    } else if (p.getMarked() == 0) {
                         p.mark();
-                        jatkuu=false;
-                    }else if(p.getMarked()==1){
-                        p=leikkaaJaLiita(p);
+                        jatkuu = false;
+                    } else if (p.getMarked() == 1) {
+                        p = leikkaaJaLiita(p);
                     }
                 }
             } //jos kekoehto ei rikkoudu, päivitetään vain kaiken varuilta min
@@ -243,10 +246,12 @@ public class Fibonaccikeko implements Keko{
             }
         }
     }
+
     /**
      * Irrottaa solmun vanhemmastaan ja lisää kekoon.
+     *
      * @param s
-     * @return 
+     * @return
      */
     private Solmu leikkaaJaLiita(Solmu s) {
         Solmu p = s.getParent();
@@ -270,6 +275,7 @@ public class Fibonaccikeko implements Keko{
 
     /**
      * Lisää kekoon uuden solmun. Paivittaa myös minin arvon.
+     *
      * @param s kekoon lisättävä solmu
      */
     public void insert(Solmu s) {
@@ -293,17 +299,25 @@ public class Fibonaccikeko implements Keko{
         }
         solmuja++;
     }
+
     /**
      * Lisää kekoon uuden solmun arvolla key.
+     *
      * @param key uuden solmun arvo
      */
     @Override
-    public void insert(int key){
-        Solmu s=new Solmu(key,null,null,0);
+    public void insert(int key) {
+        Solmu s = new Solmu(key, null, null, 0);
         insert(s);
     }
-    public void insertWithNode(int key,int node){
-        Solmu s=new Solmu(key,null,null,0);
+    /**
+     * Lisää kekoon uudon solmun arvolla key, ja kenttä node=node.
+     * @param key uuden solmun arvo
+     * @param node uuden solmun node
+     */
+    @Override
+    public void insertWithNode(int key, int node) {
+        Solmu s = new Solmu(key, null, null, 0);
         s.setNode(node);
         insert(s);
     }
@@ -323,20 +337,27 @@ public class Fibonaccikeko implements Keko{
         }
         s.setSeuraava(k.keko);
     }
-        public Solmu etsiKeosta(int node){
-        etsitty=null;
-        etsiRekursiivisesti(keko,node);
+    /**
+     * Etsii keosta solmun, jonka kenttä node on parametrina saatu node.
+     * @param node tämänarvoista Solmua etsitään
+     * @return Solmu jonka kenttä node=parametrina saatu node
+     */
+    @Override
+    public Solmu etsiKeosta(int node) {
+        etsitty = null;
+        etsiRekursiivisesti(keko, node);
         return etsitty;
     }
-    
-    private void etsiRekursiivisesti(Solmu alku,int node){
-        if(alku!=null&&alku.getNode()==node){
-            etsitty=alku;
-        }else if(alku!=null){
-            if(alku.getSeuraava()!=null){
-                etsiRekursiivisesti(alku.getSeuraava(),node);
-            }if(alku.getLapsi()!=null){
-                etsiRekursiivisesti(alku.getLapsi(),node);
+
+    private void etsiRekursiivisesti(Solmu alku, int node) {
+        if (alku != null && alku.getNode() == node) {
+            etsitty = alku;
+        } else if (alku != null) {
+            if (alku.getSeuraava() != null) {
+                etsiRekursiivisesti(alku.getSeuraava(), node);
+            }
+            if (alku.getLapsi() != null) {
+                etsiRekursiivisesti(alku.getLapsi(), node);
             }
         }
     }

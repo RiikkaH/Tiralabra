@@ -8,19 +8,16 @@ package keot;
 public class Binaarikeko implements Keko{
     
     private int[] keko;
+    //ellen sitten tekisi vierekkäistä int[]:iä johon laittaisin solmujen numerot?
+    private int[] node;
     private int heapSize;
     
     public Binaarikeko(){
         keko=new int[20];
+        node=new int[20];
         heapSize=0;
     }
     
-    public void insertWithNode(int key, int node){
-        
-    }
-    public Solmu findMinSolmu(){
-        return null;
-    }
     /**
      * Korjaa kekoehdon solmusta key alaspäin.
      * @param key somu, josta kekoehto halutaan korjata
@@ -67,6 +64,7 @@ public class Binaarikeko implements Keko{
         heapSize--;
         heapify(0);
     }
+    
     /**
      * Korvaa keon somun i arvon d:llä (jos on pienempi kuin keon i:nnes alkio)
      * ja korjaa kekoehdon.
@@ -83,6 +81,28 @@ public class Binaarikeko implements Keko{
                 i=parent(i);
             }
         }
+    }
+    
+    public void insertWithNode(int key, int n){
+        if(heapSize==keko.length){
+            int[] uusikeko=new int[keko.length*2];
+            int[] uusinode=new int[keko.length*2];
+            for(int i=0;i<keko.length;i++){
+                uusikeko[i]=keko[i];
+                uusinode[i]=node[i];
+            }
+            keko=uusikeko;
+            node=uusinode;
+        }
+        int i=heapSize;
+        while(i>0 && keko[parent(i)]>key){
+            keko[i]=keko[parent(i)];
+            node[i]=node[parent(i)];
+            i=parent(i);
+        }
+        keko[i]=key;
+        node[i]=n;
+        heapSize++;
     }
     /**
      * Lisää kekoon solmun arvolla key.
@@ -137,15 +157,5 @@ public class Binaarikeko implements Keko{
     //metodi testejä varten
     public int getSize(){
         return heapSize;
-    }
-
-    @Override
-    public Solmu etsiKeosta(int node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void decreaseKey(Solmu s, int d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -4,7 +4,7 @@ package keot;
  *
  * @author Riikka
  */
-public class Binomikeko implements Keko{
+public class Binomikeko implements Keko,SolmullinenKeko{
 
     public Solmu keko;
     private Solmu etsitty;
@@ -90,6 +90,7 @@ public class Binomikeko implements Keko{
      * @param s solmu jonka arvoa vähennetään
      * @param d uusi arvo
      */
+    @Override
     public void decreaseKey(Solmu s, int d) {
         if (s.getArvo() > d && d > 0) {
             s.setArvo(d);

@@ -5,6 +5,7 @@ import keot.Binomikeko;
 import keot.Fibonaccikeko;
 import keot.Keko;
 import keot.Solmu;
+import keot.SolmullinenKeko;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Dijkstra {
         this.alku = alku;
     }
     
-    public int[] etsiReittiBinomiJaFibonacci(Keko keko){
+    public int[] etsiReittiBinomiJaFibonacci(SolmullinenKeko keko){
         //alustus
         int[] dist = new int[verkko.length];//etäisyydet
         //int[] edellinen=new int[verkko.length];//edelliset solmut
@@ -62,5 +63,23 @@ public class Dijkstra {
 
     public int[] etsiReittiFibonaccikeolla() {
         return etsiReittiBinomiJaFibonacci(new Fibonaccikeko());
+    }
+    
+    public int[] etsiReittiBinaarikeolla(){
+        //alustus
+        Binaarikeko keko=new Binaarikeko();
+        int[] dist = new int[verkko.length];//etäisyydet
+        //int[] edellinen=new int[verkko.length];//edelliset solmut
+        for (int i = 0; i < dist.length; i++) {
+            if (i != alku) {
+                dist[i] = Integer.MAX_VALUE - 100;
+            }
+            //edellinen[i]=-1;
+            
+        }
+        //varsinainen työ
+        
+        
+        return dist;
     }
 }

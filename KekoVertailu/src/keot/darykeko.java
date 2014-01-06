@@ -20,14 +20,7 @@ public class darykeko implements Keko{
         this.heapSize=0;
         this.keko=new int[20];
     }
-    
-    public void insertWithNode(int key, int node){
-        
-    }
-    public Solmu findMinSolmu(){
-        return null;
-    }
-    
+
     /**
      * Palauttaa keon pienimmän alkion.
      * @return keon pienin alkio tai -1 jos keko on tyhjä
@@ -138,13 +131,4 @@ public class darykeko implements Keko{
         return heapSize;
     }
 
-    @Override
-    public Solmu etsiKeosta(int node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void decreaseKey(Solmu s, int d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
