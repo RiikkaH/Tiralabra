@@ -42,7 +42,7 @@ public class DijkstraTest {
         verkko[2][3]=verkko[3][2]=11;
         verkko[2][5]=verkko[5][2]=2;
         verkko[3][4]=verkko[4][3]=6;
-        verkko[4][5]=verkko[4][4]=9;
+        verkko[4][5]=verkko[5][4]=9;
         return verkko;
     }
     
@@ -63,5 +63,18 @@ public class DijkstraTest {
         assertTrue(etaisyydet[4]==20);
         assertTrue(etaisyydet[5]==11);
     }
-    
+    @Test
+    public void testaaEtaisyyksiaPienellaVerkollaJaFibonaccikeolla(){
+        int[] etaisyydet =dijkstra1.etsiReittiFibonaccikeolla();
+        for(int i=0;i<etaisyydet.length;i++){
+            System.out.print(etaisyydet[i]+" ");
+        }
+        System.out.println("");
+        assertTrue(etaisyydet[0]==0);
+        assertTrue(etaisyydet[1]==7);
+        assertTrue(etaisyydet[2]==9);
+        assertTrue(etaisyydet[3]==20);
+        assertTrue(etaisyydet[4]==20);
+        assertTrue(etaisyydet[5]==11);
+    }
 }

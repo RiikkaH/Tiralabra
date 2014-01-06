@@ -151,6 +151,14 @@ public class BinomikekoTest {
         keko.insertWithNode(8,6);
         keko.insertWithNode(5,7);
         Solmu s=keko.etsiKeosta(3);
+        Solmu o=keko.etsiKeosta(7);
+        Solmu l=keko.etsiKeosta(1);
+        Solmu m=keko.etsiKeosta(5);
+        Solmu u=keko.etsiKeosta(4);
         assertTrue(s!=null&&s.getArvo()==6);
+        assertTrue(o!=null&&o.getArvo()==5);
+        assertTrue(l!=null&&l.getArvo()==1);
+        assertTrue(m!=null&&m.getArvo()==14);
+        assertTrue(u!=null&&u.getArvo()==2);
     }
 }

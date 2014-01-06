@@ -9,6 +9,7 @@ public class Fibonaccikeko implements Keko{
     private Solmu keko;//linkitetty lista juurisolmuista, osoittaa ensimmäiseen
     private Solmu min;
     private int solmuja;
+    private Solmu etsitty;
 
     public Fibonaccikeko() {
         keko = null;
@@ -297,6 +298,11 @@ public class Fibonaccikeko implements Keko{
         Solmu s=new Solmu(key,null,null,0);
         insert(s);
     }
+    public void insertWithNode(int key,int node){
+        Solmu s=new Solmu(key,null,null,0);
+        s.setNode(node);
+        insert(s);
+    }
 
     /**
      * Yhdistää kaksi fibonaccikekoa.
@@ -312,5 +318,22 @@ public class Fibonaccikeko implements Keko{
             s = s.getSeuraava();
         }
         s.setSeuraava(k.keko);
+    }
+        public Solmu etsiKeosta(int node){
+        etsitty=null;
+        etsiRekursiivisesti(keko,node);
+        return etsitty;
+    }
+    
+    private void etsiRekursiivisesti(Solmu alku,int node){
+        if(alku!=null&&alku.getNode()==node){
+            etsitty=alku;
+        }else if(alku!=null){
+            if(alku.getSeuraava()!=null){
+                etsiRekursiivisesti(alku.getSeuraava(),node);
+            }if(alku.getLapsi()!=null){
+                etsiRekursiivisesti(alku.getLapsi(),node);
+            }
+        }
     }
 }

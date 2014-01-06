@@ -33,9 +33,6 @@ public class Binomikeko implements Keko{
     public Solmu findMinSolmu() {
         int pienin = Integer.MAX_VALUE;
         Solmu k = keko;
-        if (k == null) {
-            pienin = -1;
-        }
         Solmu p = keko;
         while (k != null) {
             if (k.getArvo() < pienin) {
