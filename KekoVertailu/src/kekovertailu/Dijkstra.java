@@ -21,17 +21,17 @@ public class Dijkstra {
         this.alku=alku;
     }
     
-    public void etsiReittiBinomikeolla(){
+    public int[] etsiReittiBinomikeolla(){
         //alustus
         Binomikeko keko=new Binomikeko();
         int[] dist =new int[verkko.length];//etäisyydet
-        int[] edellinen=new int[verkko.length];//edelliset solmut
+        //int[] edellinen=new int[verkko.length];//edelliset solmut
         for(int i=0;i<dist.length;i++){
             if(i!=alku){
-                dist[i]=Integer.MAX_VALUE;
+                dist[i]=Integer.MAX_VALUE-100;
             }
-            edellinen[i]=-1;
-            keko.insertWithNode(i,dist[i]);
+            //edellinen[i]=-1;
+            keko.insertWithNode(dist[i],i);
             //tässä lisätään kekoon solmut
             //ongelma: keko pitäisi toimia etäisyyksien perusteella mutta 
             //muistissa pitäisi olla mihin solmuun etäisyys liittyy
@@ -47,15 +47,18 @@ public class Dijkstra {
                     int uusiEtaisyys=dist[s.getNode()]+verkko[s.getNode()][i];//uusi etäisyys i:hin
                     if(uusiEtaisyys<dist[i]){
                         dist[i]=uusiEtaisyys;
-                        edellinen[i]=s.getNode();
+                        //edellinen[i]=s.getNode();
                         //etsitään solmu i keosta
+                        Solmu o=keko.etsiKeosta(i);
                         //keolla ei kyllä ole kovin tehokasta etsiä joku muu 
                         //solmu kuin min...
-                        //decreaseKey(etsittysolmu,uusiEtaisyys);
+                        if(o!=null){
+                            keko.decreaseKey(o,uusiEtaisyys);
+                        }
                     }
                 }
             }
         }
-        
+        return dist;
     }
 }

@@ -141,4 +141,16 @@ public class BinomikekoTest {
         assertTrue(keko.getKeko().getSeuraava().getLapsi().getArvo()==8);
         assertTrue(keko.getKeko().getSeuraava().getSeuraava().getArvo()==1);
     }
+    @Test
+    public void testaaEtsimista(){
+        keko.insertWithNode(1,1);
+        keko.insertWithNode(4,2);
+        keko.insertWithNode(6,3);
+        keko.insertWithNode(2,4);
+        keko.insertWithNode(14,5);
+        keko.insertWithNode(8,6);
+        keko.insertWithNode(5,7);
+        Solmu s=keko.etsiKeosta(3);
+        assertTrue(s!=null&&s.getArvo()==6);
+    }
 }

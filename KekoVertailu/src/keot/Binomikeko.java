@@ -7,6 +7,7 @@ package keot;
 public class Binomikeko implements Keko{
 
     public Solmu keko;
+    private Solmu etsitty;
 
     /**
      * Luo uuden tyhjän binomikeon.
@@ -86,7 +87,11 @@ public class Binomikeko implements Keko{
             }
         }
     }
-
+    /**
+     * Vähentää solmun s arvon d:hen jos d>0 ja d<nykyinen arvo.
+     * @param s solmu jonka arvoa vähennetään
+     * @param d uusi arvo
+     */
     public void decreaseKey(Solmu s, int d) {
         if (s.getArvo() > d && d > 0) {
             s.setArvo(d);
@@ -251,28 +256,20 @@ public class Binomikeko implements Keko{
     }
     
     public Solmu etsiKeosta(int node){
-        //huom tämä ei ole vielä oikein!
-        Solmu s=keko;
-        while(s!=null){//käydään läpi jokainen keko
-            if(s.getNode()==node){
-                return s;
+        etsitty=null;
+        etsiRekursiivisesti(keko,node);
+        return etsitty;
+    }
+    
+    private void etsiRekursiivisesti(Solmu alku,int node){
+        if(alku!=null&&alku.getNode()==node){
+            etsitty=alku;
+        }else if(alku!=null){
+            if(alku.getSeuraava()!=null){
+                etsiRekursiivisesti(alku.getSeuraava(),node);
+            }if(alku.getLapsi()!=null){
+                etsiRekursiivisesti(alku.getLapsi(),node);
             }
-            Solmu l=s.getLapsi();//jokainen taso
-            while(l!=null){
-                if(l.getNode()==node){
-                    return l;
-                }
-                Solmu p=l.getSeuraava();
-                while(p!=null){//jokainen solmu tasolla
-                    if(p.getNode()==node){
-                        return p;
-                    }
-                    p=p.getSeuraava();
-                }
-                l=l.getLapsi();
-            }
-            s=s.getSeuraava();
         }
-        return null;
     }
 }
