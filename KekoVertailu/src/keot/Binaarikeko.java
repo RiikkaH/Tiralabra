@@ -14,6 +14,13 @@ public class Binaarikeko implements Keko{
         keko=new int[20];
         heapSize=0;
     }
+    
+    public void insertWithNode(int key, int node){
+        
+    }
+    public Solmu findMinSolmu(){
+        return null;
+    }
     /**
      * Korjaa kekoehdon solmusta key alaspäin.
      * @param key somu, josta kekoehto halutaan korjata
@@ -130,5 +137,15 @@ public class Binaarikeko implements Keko{
     //metodi testejä varten
     public int getSize(){
         return heapSize;
+    }
+
+    @Override
+    public Solmu etsiKeosta(int node) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void decreaseKey(Solmu s, int d) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

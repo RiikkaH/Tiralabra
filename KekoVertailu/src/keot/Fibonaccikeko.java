@@ -243,7 +243,11 @@ public class Fibonaccikeko implements Keko{
             }
         }
     }
-
+    /**
+     * Irrottaa solmun vanhemmastaan ja lisää kekoon.
+     * @param s
+     * @return 
+     */
     private Solmu leikkaaJaLiita(Solmu s) {
         Solmu p = s.getParent();
         //pitää tarkistaa onko ainoa lapsi, pitääkö vanhemman lapsipointteria siirtää

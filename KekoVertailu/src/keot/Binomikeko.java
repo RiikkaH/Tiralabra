@@ -30,6 +30,7 @@ public class Binomikeko implements Keko{
      *
      * @return keon pienin solmu
      */
+    @Override
     public Solmu findMinSolmu() {
         int pienin = Integer.MAX_VALUE;
         Solmu k = keko;
@@ -94,8 +95,11 @@ public class Binomikeko implements Keko{
             s.setArvo(d);
             while (s.getParent() != null && s.getParent().getArvo() > d) {
                 int apu = s.getArvo();
+                int apuNode=s.getNode();
                 s.setArvo(s.getParent().getArvo());
+                s.setNode(s.getParent().getNode());
                 s.getParent().setArvo(apu);
+                s.getParent().setNode(apuNode);
                 s=s.getParent();
             }
         }
@@ -118,6 +122,7 @@ public class Binomikeko implements Keko{
      * @param key arvo, joka kekoon lisätään
      * @param node kekoon lisättävän solmun arvo node
      */
+    @Override
     public void insertWithNode(int key, int node){
         Solmu s=new Solmu(key,null,null,0);
         s.setNode(node);
@@ -252,6 +257,7 @@ public class Binomikeko implements Keko{
         return keko;
     }
     
+    @Override
     public Solmu etsiKeosta(int node){
         etsitty=null;
         etsiRekursiivisesti(keko,node);
