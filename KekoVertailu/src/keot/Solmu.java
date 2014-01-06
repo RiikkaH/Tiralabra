@@ -13,6 +13,7 @@ public class Solmu {
     private Solmu seuraava;
     private Solmu edellinen;
     private int marked;
+    private int node;//dijkstraan, solmun 'nimi'. arvo=etäisyys
 
     /**
      * Luo uuden solmun.
@@ -30,6 +31,7 @@ public class Solmu {
         this.seuraava = null;
         this.edellinen = null;
         marked=0;
+        node=0;
     }
 
     public int getAste() {
@@ -58,6 +60,14 @@ public class Solmu {
     
     public int getMarked(){
         return marked;
+    }
+    
+    public int getNode(){
+        return node;
+    }
+    
+    public void setNode(int n){
+        node=n;
     }
 
     public void setParent(Solmu s) {

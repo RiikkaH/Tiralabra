@@ -110,6 +110,18 @@ public class Binomikeko implements Keko{
         Binomikeko k = new Binomikeko(s);
         merge(k);
     }
+    /**
+     * Lisää kekoon arvon key. Käytetään Dijkstran algoritmin kanssa, node
+     * merkitsee lisättävää solmua ja key etäisyyttä.
+     * @param key arvo, joka kekoon lisätään
+     * @param node kekoon lisättävän solmun arvo node
+     */
+    public void insertWithNode(int key, int node){
+        Solmu s=new Solmu(key,null,null,0);
+        s.setNode(node);
+        Binomikeko k=new Binomikeko(s);
+        merge(k);
+    }
 
     /**
      * Yhdistää kaksi binomikekoa.
@@ -236,5 +248,31 @@ public class Binomikeko implements Keko{
 
     public Solmu getKeko() {
         return keko;
+    }
+    
+    public Solmu etsiKeosta(int node){
+        //huom tämä ei ole vielä oikein!
+        Solmu s=keko;
+        while(s!=null){//käydään läpi jokainen keko
+            if(s.getNode()==node){
+                return s;
+            }
+            Solmu l=s.getLapsi();//jokainen taso
+            while(l!=null){
+                if(l.getNode()==node){
+                    return l;
+                }
+                Solmu p=l.getSeuraava();
+                while(p!=null){//jokainen solmu tasolla
+                    if(p.getNode()==node){
+                        return p;
+                    }
+                    p=p.getSeuraava();
+                }
+                l=l.getLapsi();
+            }
+            s=s.getSeuraava();
+        }
+        return null;
     }
 }
