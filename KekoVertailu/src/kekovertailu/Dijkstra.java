@@ -21,8 +21,8 @@ public class Dijkstra {
         this.verkko = verkko;
         this.alku = alku;
     }
-    
-    public int[] etsiReittiBinomiJaFibonacci(SolmullinenKeko keko){
+
+    public int[] etsiReittiBinomiJaFibonacci(SolmullinenKeko keko) {
         //alustus
         int[] dist = new int[verkko.length];//etäisyydet
         //int[] edellinen=new int[verkko.length];//edelliset solmut
@@ -64,10 +64,10 @@ public class Dijkstra {
     public int[] etsiReittiFibonaccikeolla() {
         return etsiReittiBinomiJaFibonacci(new Fibonaccikeko());
     }
-    
-    public int[] etsiReittiBinaarikeolla(){
+
+    public int[] etsiReittiBinaarikeolla() {
         //alustus
-        Binaarikeko keko=new Binaarikeko();
+        Binaarikeko keko = new Binaarikeko();
         int[] dist = new int[verkko.length];//etäisyydet
         //int[] edellinen=new int[verkko.length];//edelliset solmut
         for (int i = 0; i < dist.length; i++) {
@@ -78,18 +78,19 @@ public class Dijkstra {
             keko.insertWithNode(dist[i], i);
         }
         //varsinainen työ
-        while(keko.getSize()>0){
-            int etaisyys=keko.findMin();
-            int node=keko.findMinNode();
+        System.out.println("kaikki solmut lisätty");
+        while (keko.getSize() > 0) {
+            int etaisyys = keko.findMin();
+            int node = keko.findMinNode();
             keko.deleteMinJaNode();
-            for(int i=0;i<verkko.length;i++){
-                if(verkko[node][i]>0){
-                    int uusietaisyys=dist[node]+verkko[node][i];
-                    if(uusietaisyys<dist[i]){
-                        dist[i]=uusietaisyys;
+            for (int i = 0; i < verkko.length; i++) {
+                if (verkko[node][i] > 0) {
+                    int uusietaisyys = dist[node] + verkko[node][i];
+                    if (uusietaisyys < dist[i]) {
+                        dist[i] = uusietaisyys;
                         //vähennetään i:tä vastaavaa key:tä
-                        int indeksi=keko.etsiKeosta(i);
-                        keko.decreaseKey(indeksi,uusietaisyys);
+                        int indeksi = keko.etsiKeosta(i);
+                        keko.decreaseKeyWithNode(indeksi, uusietaisyys);
                     }
                 }
             }

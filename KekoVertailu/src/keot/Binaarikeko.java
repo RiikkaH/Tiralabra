@@ -124,6 +124,21 @@ public class Binaarikeko implements Keko{
         }
     }
     
+    public void decreaseKeyWithNode(int i,int d){
+        if(keko[i]>d && d>0){
+            keko[i]=d;
+            while(i>0 && keko[parent(i)]>keko[i]){
+                int apu=keko[i];
+                int apunode=node[i];
+                keko[i]= keko[parent(i)];
+                node[i]=node[parent(i)];
+                keko[parent(i)]=apu;
+                node[parent(i)]=apunode;
+                i=parent(i);
+            }
+        }
+    }
+    
     public void insertWithNode(int key, int n){
         if(heapSize==keko.length){
             int[] uusikeko=new int[keko.length*2];
