@@ -72,10 +72,6 @@ public class DijkstraTest {
     @Test
     public void testaaEtaisyyksiaPienellaVerkollaJaBinaarikeolla(){
         int[] etaisyydet =dijkstra1.etsiReittiBinaarikeolla();
-        for(int i=0;i<etaisyydet.length;i++){
-            System.out.print(etaisyydet[i]+" ");
-        }
-        System.out.println("");
         assertTrue(etaisyydet[0]==0);
         assertTrue(etaisyydet[1]==7);
         assertTrue(etaisyydet[2]==9);

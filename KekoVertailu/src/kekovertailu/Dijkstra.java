@@ -78,7 +78,6 @@ public class Dijkstra {
             keko.insertWithNode(dist[i], i);
         }
         //varsinainen työ
-        System.out.println("kaikki solmut lisätty");
         while (keko.getSize() > 0) {
             int etaisyys = keko.findMin();
             int node = keko.findMinNode();
@@ -90,7 +89,7 @@ public class Dijkstra {
                         dist[i] = uusietaisyys;
                         //vähennetään i:tä vastaavaa key:tä
                         int indeksi = keko.etsiKeosta(i);
-                        keko.decreaseKeyWithNode(indeksi, uusietaisyys);
+                        keko.decreaseKeyWithNode(indeksi, uusietaisyys,true);
                     }
                 }
             }
