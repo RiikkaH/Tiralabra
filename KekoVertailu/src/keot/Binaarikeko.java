@@ -211,6 +211,10 @@ public class Binaarikeko implements Keko{
         return keko;
     }
     //metodi testejä varten
+    public int[] getNode(){
+        return node;
+    }
+    //metodi testejä varten
     public int getSize(){
         return heapSize;
     }
