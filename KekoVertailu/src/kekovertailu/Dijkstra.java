@@ -3,9 +3,10 @@ package kekovertailu;
 import keot.Binaarikeko;
 import keot.Binomikeko;
 import keot.Fibonaccikeko;
-import keot.Keko;
 import keot.Solmu;
 import keot.SolmullinenKeko;
+import keot.SolmutonKeko;
+import keot.darykeko;
 
 /**
  *
@@ -22,15 +23,13 @@ public class Dijkstra {
         this.alku = alku;
     }
 
-    public int[] etsiReittiBinomiJaFibonacci(SolmullinenKeko keko) {
+    private int[] etsiReittiBinomiTaiFibonacci(SolmullinenKeko keko) {
         //alustus
         int[] dist = new int[verkko.length];//etäisyydet
-        //int[] edellinen=new int[verkko.length];//edelliset solmut
         for (int i = 0; i < dist.length; i++) {
             if (i != alku) {
                 dist[i] = Integer.MAX_VALUE - 100;
             }
-            //edellinen[i]=-1;
             keko.insertWithNode(dist[i], i);
         }
         //varsinainen työ
@@ -42,11 +41,8 @@ public class Dijkstra {
                     int uusiEtaisyys = dist[s.getNode()] + verkko[s.getNode()][i];//uusi etäisyys i:hin
                     if (uusiEtaisyys < dist[i]) {
                         dist[i] = uusiEtaisyys;
-                        //edellinen[i]=s.getNode();
                         //etsitään solmu i keosta
                         Solmu o = keko.etsiKeosta(i);
-                        //keolla ei kyllä ole kovin tehokasta etsiä joku muu 
-                        //solmu kuin min...
                         if (o != null) {
                             keko.decreaseKey(o, uusiEtaisyys);
                         }
@@ -56,25 +52,28 @@ public class Dijkstra {
         }
         return dist;
     }
-
+    /**
+     * Etsii lyhyimpien reittien pituudet alkusolmusta kaikkiin solmuihin binomikeolla.
+     * @return Taulukko, jonka kohdassa i on lyhyimmän matkan pituus siihen solmuun.
+     */
     public int[] etsiReittiBinomikeolla() {
-        return etsiReittiBinomiJaFibonacci(new Binomikeko());
+        return etsiReittiBinomiTaiFibonacci(new Binomikeko());
     }
-
+    /**
+     * Etsii lyhyimpien reittien pituudet alkusolmusta kaikkiin solmuihin fibonaccikeolla.
+     * @return Taulukko, jonka kohdassa i on lyhyimmän matkan pituus siihen solmuun.
+     */
     public int[] etsiReittiFibonaccikeolla() {
-        return etsiReittiBinomiJaFibonacci(new Fibonaccikeko());
+        return etsiReittiBinomiTaiFibonacci(new Fibonaccikeko());
     }
-
-    public int[] etsiReittiBinaarikeolla() {
+    
+    private int[] etsiReittiBinaariTaiDarykeolla(SolmutonKeko keko){
         //alustus
-        Binaarikeko keko = new Binaarikeko();
         int[] dist = new int[verkko.length];//etäisyydet
-        //int[] edellinen=new int[verkko.length];//edelliset solmut
         for (int i = 0; i < dist.length; i++) {
             if (i != alku) {
                 dist[i] = Integer.MAX_VALUE - 100;
             }
-            //edellinen[i]=-1;
             keko.insertWithNode(dist[i], i);
         }
         //varsinainen työ
@@ -95,5 +94,19 @@ public class Dijkstra {
             }
         }
         return dist;
+    }
+    /**
+     * Etsii lyhyimpien reittien pituudet alkusolmusta kaikkiin solmuihin binäärikeolla.
+     * @return Taulukko, jonka kohdassa i on lyhyimmän matkan pituus siihen solmuun.
+     */
+    public int[] etsiReittiBinaarikeolla() {
+        return etsiReittiBinaariTaiDarykeolla(new Binaarikeko());
+    }
+    /**
+     * Etsii lyhyimpien reittien pituudet alkusolmusta kaikkiin solmuihin d-ary -keolla.
+     * @return Taulukko, jonka kohdassa i on lyhyimmän matkan pituus siihen solmuun.
+     */
+    public int[] etsiReittiDarykeolla() {
+        return etsiReittiBinaariTaiDarykeolla(new darykeko(4));
     }
 }

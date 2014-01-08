@@ -79,4 +79,14 @@ public class DijkstraTest {
         assertTrue(etaisyydet[4]==20);
         assertTrue(etaisyydet[5]==11);
     }
+    @Test
+    public void testaaEtaisyyksiaPienellaVerkollaJaDarykeolla(){
+        int[] etaisyydet=dijkstra1.etsiReittiDarykeolla();
+        assertTrue(etaisyydet[0]==0);
+        assertTrue(etaisyydet[1]==7);
+        assertTrue(etaisyydet[2]==9);
+        assertTrue(etaisyydet[3]==20);
+        assertTrue(etaisyydet[4]==20);
+        assertTrue(etaisyydet[5]==11);
+    }
 }

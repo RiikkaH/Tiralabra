@@ -4,7 +4,7 @@ package keot;
  *
  * @author Riikka
  */
-public class Binaarikeko implements Keko {
+public class Binaarikeko implements Keko,SolmutonKeko {
 
     private int[] keko;
     //ellen sitten tekisi vierekkäistä int[]:iä johon laittaisin solmujen numerot?
@@ -75,6 +75,7 @@ public class Binaarikeko implements Keko {
         return -1;
     }
 
+    @Override
     public int findMinNode() {
         if (heapSize > 0) {
             return node[0];
@@ -92,6 +93,7 @@ public class Binaarikeko implements Keko {
         heapify(0);
     }
 
+    @Override
     public void deleteMinJaNode() {
         keko[0] = keko[heapSize - 1];
         node[0] = node[heapSize - 1];
@@ -116,6 +118,7 @@ public class Binaarikeko implements Keko {
      * @param d uusi arvo
      * @param onkoNode päivitetäänkö nodetaulukko
      */
+    @Override
     public void decreaseKeyWithNode(int i, int d, boolean onkoNode) {
         if (keko[i] > d && d > 0) {
             keko[i] = d;
@@ -137,6 +140,7 @@ public class Binaarikeko implements Keko {
      * @param key Kekoon lisättävä arvo
      * @param n key:tä vastaava node-arvo
      */
+    @Override
     public void insertWithNode(int key, int n) {
         if (heapSize == keko.length) {
             if (n != -1) {
@@ -187,6 +191,7 @@ public class Binaarikeko implements Keko {
      * @param n noden arvo jonka perusteella arvoa etsitään
      * @return keon indeksi, josta n löytyy
      */
+    @Override
     public int etsiKeosta(int n) {
         int indeksi = 0;
         for (int i = 0; i < heapSize; i++) {
