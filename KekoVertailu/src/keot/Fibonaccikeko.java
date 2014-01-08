@@ -28,6 +28,7 @@ public class Fibonaccikeko implements Keko, SolmullinenKeko {
      *
      * @return keon pienin solmu
      */
+    @Override
     public Solmu findMinSolmu() {
         return min;
     }
@@ -48,9 +49,8 @@ public class Fibonaccikeko implements Keko, SolmullinenKeko {
     @Override
     public void deleteMin() {
         poistaMinLisaaLapset();
-        paivitaMin();
         yhdistaKeonPuut();
-        paivitaMin();//onko turha?
+        paivitaMin();
         solmuja--;
     }
 
@@ -194,17 +194,17 @@ public class Fibonaccikeko implements Keko, SolmullinenKeko {
         }
         Solmu tallennettu = s;//s ei ole null
         //min ei ollut ainoa ja lapsia on
-        //min on poistettu, siirrytään listan loppuun ja lisätään uudetpuut sinne
+        //min on poistettu, laitetaan lapset listaan
         if (uudetpuut != null) {
-            while (s.getSeuraava() != null) {
-                s = s.getSeuraava();
-            }
-            uudetpuut.setParent(null);
-            uudetpuut.setEdellinen(s);
+            seur=s.getSeuraava();
             s.setSeuraava(uudetpuut);
-            while (s != null) {
-                s.setParent(null);
-                s = s.getSeuraava();
+            uudetpuut.setEdellinen(s);
+            while(uudetpuut.getSeuraava()!=null){
+                uudetpuut=uudetpuut.getSeuraava();
+            }
+            uudetpuut.setSeuraava(seur);
+            if(seur!=null){
+                seur.setEdellinen(uudetpuut);
             }
         }
         //päivitetään kekopointteri osoittamaan oikein
@@ -240,9 +240,6 @@ public class Fibonaccikeko implements Keko, SolmullinenKeko {
                         p = leikkaaJaLiita(p);
                     }
                 }
-            } //jos kekoehto ei rikkoudu, päivitetään vain kaiken varuilta min
-            else {
-                paivitaMin();
             }
         }
     }

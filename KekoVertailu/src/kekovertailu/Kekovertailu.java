@@ -7,8 +7,8 @@ package kekovertailu;
 public class Kekovertailu {
 
     public static void main(String[] args) {
-        mittaaDijkstranAikoja(10000);
-        //mittaaJarjestamisenAikoja(1000);
+        //mittaaDijkstranAikoja(10000);
+        mittaaJarjestamisenAikoja(10000);
     }
     
     /**
