@@ -244,6 +244,7 @@ public class Binaarikeko implements Keko,SolmutonKeko {
     }
     //metodi testejä varten
 
+    @Override
     public int getSize() {
         return heapSize;
     }

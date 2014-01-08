@@ -7,7 +7,8 @@ package kekovertailu;
 public class Kekovertailu {
 
     public static void main(String[] args) {
-        mittaaJarjestamisenAikoja(1000);
+        mittaaDijkstranAikoja(10000);
+        //mittaaJarjestamisenAikoja(1000);
     }
     
     /**
@@ -41,10 +42,10 @@ public class Kekovertailu {
             jarjesta.jarjestaFibonaccikeolla();
             fibo += (System.nanoTime() - alku);
         }
-        binaari/=10*100000;
-        binomi/=10*100000;
-        fibo/=10*100000;
-        dary/=10*100000;
+        binaari/=10*1000000;
+        binomi/=10*1000000;
+        fibo/=10*1000000;
+        dary/=10*1000000;
         System.out.println("Järjestämiseen keskimäärin kuluneita aikoja eri keoilla kun "
                 + "\n järjestettävän taulukon pituus oli "+taulukonpituus+":");
         System.out.println("Binäärikeko: "+binaari+" ms");
@@ -52,12 +53,60 @@ public class Kekovertailu {
         System.out.println("Binomikeko: "+binomi+" ms");
         System.out.println("Fibonaccikeko: "+fibo+" ms");
     }
+    
+    
+    public static void mittaaDijkstranAikoja(int matriisinpituus){
+        long binaari = 0;
+        long dary = 0;
+        long binomi = 0;
+        long fibo = 0;
+        
+        for(int i=0;i<10;i++){
+            
+            Dijkstra dijkstra=new Dijkstra(luoSatunnainenMatriisi(matriisinpituus),0);
+            
+            long alku = System.nanoTime();
+            dijkstra.etsiReittiBinaarikeolla();
+            binaari += (System.nanoTime() - alku);
 
-    public static int[] luoSatunnainenTaulukko(int pituus) {
+            alku = System.nanoTime();
+            dijkstra.etsiReittiDarykeolla();
+            dary += (System.nanoTime() - alku);
+
+            alku = System.nanoTime();
+            //dijkstra.etsiReittiBinomikeolla();
+            binomi += (System.nanoTime() - alku);
+
+            alku = System.nanoTime();
+            //dijkstra.etsiReittiFibonaccikeolla();
+            fibo += (System.nanoTime() - alku);
+        }
+        
+        binaari/=10*1000000;
+        binomi/=10*1000000;
+        fibo/=10*1000000;
+        dary/=10*1000000;
+        System.out.println("Lyhyimpien matkojen etsimiseen kuluneita aikoja eri "
+                + "\n keoilla, kun matriisin sivunpituus oli "+matriisinpituus+":");
+        System.out.println("Binäärikeko: "+binaari+" ms");
+        System.out.println("d-ary -keko: "+dary+" ms");
+        System.out.println("Binomikeko: "+binomi+" ms");
+        System.out.println("Fibonaccikeko: "+fibo+" ms");
+    }
+
+    private static int[] luoSatunnainenTaulukko(int pituus) {
         int[] taulukko = new int[pituus];
         for (int i = 0; i < pituus; i++) {
             taulukko[i] = (int) (Math.random() * pituus + 1);
         }
         return taulukko;
+    }
+    
+    private static int[][] luoSatunnainenMatriisi(int pituus){
+        int[][] matriisi=new int[pituus][pituus];
+        for(int i=0;i<pituus;i++){
+            matriisi[i]=luoSatunnainenTaulukko(pituus);
+        }
+        return matriisi;
     }
 }

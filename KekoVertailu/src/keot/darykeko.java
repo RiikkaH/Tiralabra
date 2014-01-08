@@ -135,6 +135,7 @@ public class darykeko implements Keko, SolmutonKeko {
     public int[] getKeko() {
         return keko;
     }
+    @Override
     public int getSize() {
         return heapSize;
     }
