@@ -7,7 +7,7 @@ package keot;
 public class Binomikeko implements Keko,SolmullinenKeko{
 
     public Solmu keko;
-    private Solmu etsitty;
+    private Solmu[] nodelista;
 
     /**
      * Luo uuden tyhjän binomikeon.
@@ -101,6 +101,11 @@ public class Binomikeko implements Keko,SolmullinenKeko{
                 s.setNode(s.getParent().getNode());
                 s.getParent().setArvo(apu);
                 s.getParent().setNode(apuNode);
+                if(nodelista!=null){
+                    Solmu apusolmu=nodelista[s.getNode()];
+                    nodelista[s.getNode()]=nodelista[s.getParent().getNode()];
+                    nodelista[s.getParent().getNode()]=apusolmu;
+                }
                 s=s.getParent();
             }
         }
@@ -127,6 +132,8 @@ public class Binomikeko implements Keko,SolmullinenKeko{
     public void insertWithNode(int key, int node){
         Solmu s=new Solmu(key,null,null,0);
         s.setNode(node);
+        //pointteri 
+        nodelista[node]=s;
         Binomikeko k=new Binomikeko(s);
         merge(k);
     }
@@ -260,20 +267,14 @@ public class Binomikeko implements Keko,SolmullinenKeko{
     
     @Override
     public Solmu etsiKeosta(int node){
-        etsitty=null;
-        etsiRekursiivisesti(keko,node);
-        return etsitty;
+        return nodelista[node];
     }
-    
-    private void etsiRekursiivisesti(Solmu alku,int node){
-        if(alku!=null&&alku.getNode()==node){
-            etsitty=alku;
-        }else if(alku!=null){
-            if(alku.getSeuraava()!=null){
-                etsiRekursiivisesti(alku.getSeuraava(),node);
-            }if(alku.getLapsi()!=null){
-                etsiRekursiivisesti(alku.getLapsi(),node);
-            }
-        }
+    /**
+     * Luo taulukon, jonka perusteella löydetään etsittävä Solmu.
+     * @param pituus taulukon pituus
+     */
+    @Override
+    public void luoPointteritaulukko(int pituus){
+        this.nodelista=new Solmu[pituus];
     }
 }

@@ -26,6 +26,7 @@ public class Dijkstra {
     private int[] etsiReittiBinomiTaiFibonacci(SolmullinenKeko keko) {
         //alustus
         int[] dist = new int[verkko.length];//etäisyydet
+        keko.luoPointteritaulukko(verkko.length);
         for (int i = 0; i < dist.length; i++) {
             if (i != alku) {
                 dist[i] = Integer.MAX_VALUE - 100;

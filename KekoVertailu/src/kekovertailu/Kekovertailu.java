@@ -7,8 +7,8 @@ package kekovertailu;
 public class Kekovertailu {
 
     public static void main(String[] args) {
-        //mittaaDijkstranAikoja(10000);
-        mittaaJarjestamisenAikoja(10000);
+        mittaaDijkstranAikoja(10);
+        //mittaaJarjestamisenAikoja(10000);
     }
     
     /**
@@ -74,12 +74,14 @@ public class Kekovertailu {
             dary += (System.nanoTime() - alku);
 
             alku = System.nanoTime();
-            //dijkstra.etsiReittiBinomikeolla();
+            dijkstra.etsiReittiBinomikeolla();
             binomi += (System.nanoTime() - alku);
 
             alku = System.nanoTime();
-            //dijkstra.etsiReittiFibonaccikeolla();
+            dijkstra.etsiReittiFibonaccikeolla();
             fibo += (System.nanoTime() - alku);
+            
+            System.out.println(i);
         }
         
         binaari/=10*1000000;

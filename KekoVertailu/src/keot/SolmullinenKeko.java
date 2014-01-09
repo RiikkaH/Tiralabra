@@ -16,4 +16,5 @@ public interface SolmullinenKeko {
     public void insertWithNode(int key, int node);
     public Solmu findMinSolmu();
     public void decreaseKey(Solmu s,int d);
+    public void luoPointteritaulukko(int pituus);
 }

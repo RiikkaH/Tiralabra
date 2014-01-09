@@ -143,6 +143,7 @@ public class BinomikekoTest {
     }
     @Test
     public void testaaEtsimista(){
+        keko.luoPointteritaulukko(8);
         keko.insertWithNode(1,1);
         keko.insertWithNode(4,2);
         keko.insertWithNode(6,3);

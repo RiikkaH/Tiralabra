@@ -9,7 +9,7 @@ public class Fibonaccikeko implements Keko, SolmullinenKeko {
     private Solmu keko;//linkitetty lista juurisolmuista, osoittaa ensimmäiseen
     private Solmu min;
     private int solmuja;
-    private Solmu etsitty;
+    private Solmu[] nodelista;
 
     public Fibonaccikeko() {
         keko = null;
@@ -316,6 +316,8 @@ public class Fibonaccikeko implements Keko, SolmullinenKeko {
     public void insertWithNode(int key, int node) {
         Solmu s = new Solmu(key, null, null, 0);
         s.setNode(node);
+        //laitetaan nodelistan kohta node osoittamaan tähän solmuun
+        nodelista[node]=s;
         insert(s);
     }
 
@@ -341,21 +343,14 @@ public class Fibonaccikeko implements Keko, SolmullinenKeko {
      */
     @Override
     public Solmu etsiKeosta(int node) {
-        etsitty = null;
-        etsiRekursiivisesti(keko, node);
-        return etsitty;
+        return nodelista[node];
     }
-
-    private void etsiRekursiivisesti(Solmu alku, int node) {
-        if (alku != null && alku.getNode() == node) {
-            etsitty = alku;
-        } else if (alku != null) {
-            if (alku.getSeuraava() != null) {
-                etsiRekursiivisesti(alku.getSeuraava(), node);
-            }
-            if (alku.getLapsi() != null) {
-                etsiRekursiivisesti(alku.getLapsi(), node);
-            }
-        }
+    /**
+     * Luo taulukon, jonka perusteella löydetään etsittävä Solmu.
+     * @param pituus taulukon pituus
+     */
+    @Override
+    public void luoPointteritaulukko(int pituus){
+        this.nodelista=new Solmu[pituus];
     }
 }
