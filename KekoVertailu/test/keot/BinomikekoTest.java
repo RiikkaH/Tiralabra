@@ -141,25 +141,4 @@ public class BinomikekoTest {
         assertTrue(keko.getKeko().getSeuraava().getLapsi().getArvo()==8);
         assertTrue(keko.getKeko().getSeuraava().getSeuraava().getArvo()==1);
     }
-    @Test
-    public void testaaEtsimista(){
-        keko.luoPointteritaulukko(8);
-        keko.insertWithNode(1,1);
-        keko.insertWithNode(4,2);
-        keko.insertWithNode(6,3);
-        keko.insertWithNode(2,4);
-        keko.insertWithNode(14,5);
-        keko.insertWithNode(8,6);
-        keko.insertWithNode(5,7);
-        Solmu s=keko.etsiKeosta(3);
-        Solmu o=keko.etsiKeosta(7);
-        Solmu l=keko.etsiKeosta(1);
-        Solmu m=keko.etsiKeosta(5);
-        Solmu u=keko.etsiKeosta(4);
-        assertTrue(s!=null&&s.getArvo()==6);
-        assertTrue(o!=null&&o.getArvo()==5);
-        assertTrue(l!=null&&l.getArvo()==1);
-        assertTrue(m!=null&&m.getArvo()==14);
-        assertTrue(u!=null&&u.getArvo()==2);
-    }
 }

@@ -4,12 +4,11 @@ package keot;
  *
  * @author Riikka
  */
-public class Fibonaccikeko implements Keko, SolmullinenKeko {
+public class Fibonaccikeko implements Keko {
 
     private Solmu keko;//linkitetty lista juurisolmuista, osoittaa ensimmäiseen
     private Solmu min;
     private int solmuja;
-    private Solmu[] nodelista;
 
     public Fibonaccikeko() {
         keko = null;
@@ -307,19 +306,6 @@ public class Fibonaccikeko implements Keko, SolmullinenKeko {
         Solmu s = new Solmu(key, null, null, 0);
         insert(s);
     }
-    /**
-     * Lisää kekoon uudon solmun arvolla key, ja kenttä node=node.
-     * @param key uuden solmun arvo
-     * @param node uuden solmun node
-     */
-    @Override
-    public void insertWithNode(int key, int node) {
-        Solmu s = new Solmu(key, null, null, 0);
-        s.setNode(node);
-        //laitetaan nodelistan kohta node osoittamaan tähän solmuun
-        nodelista[node]=s;
-        insert(s);
-    }
 
     /**
      * Yhdistää kaksi fibonaccikekoa.
@@ -335,22 +321,5 @@ public class Fibonaccikeko implements Keko, SolmullinenKeko {
             s = s.getSeuraava();
         }
         s.setSeuraava(k.keko);
-    }
-    /**
-     * Etsii keosta solmun, jonka kenttä node on parametrina saatu node.
-     * @param node tämänarvoista Solmua etsitään
-     * @return Solmu jonka kenttä node=parametrina saatu node
-     */
-    @Override
-    public Solmu etsiKeosta(int node) {
-        return nodelista[node];
-    }
-    /**
-     * Luo taulukon, jonka perusteella löydetään etsittävä Solmu.
-     * @param pituus taulukon pituus
-     */
-    @Override
-    public void luoPointteritaulukko(int pituus){
-        this.nodelista=new Solmu[pituus];
     }
 }

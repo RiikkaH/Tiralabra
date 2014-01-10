@@ -1,6 +1,7 @@
 
 package kekovertailu;
 
+import keot.Solmu;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -29,10 +30,16 @@ public class DijkstraTest {
     
     @Before
     public void setUp() {
-        dijkstra1=new Dijkstra(pieniVerkko(),0);
+        dijkstra1=new Dijkstra(pieniVerkko(),pienetEtaisyydet(),0);
     }
-    
-    public int[][] pieniVerkko(){
+    public Solmu[] pieniVerkko(){
+        Solmu[] solmut =new Solmu[6];
+        for(int i=0;i<6;i++){
+            solmut[i]=new Solmu(i);
+        }
+        return solmut;
+    }
+    public int[][] pienetEtaisyydet(){
         int[][] verkko=new int[6][6];
         verkko[0][1]=verkko[1][0]=7;
         verkko[0][2]=verkko[2][0]=9;

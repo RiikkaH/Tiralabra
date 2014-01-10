@@ -12,6 +12,9 @@ package keot;
  */
 public interface Keko {
     public void deleteMin(); 
+    public void insert(Solmu s);
     public void insert(int key);
     public int findMin();
+    public Solmu findMinSolmu();
+    public void decreaseKey(Solmu s, int d);
 }

@@ -4,7 +4,7 @@ package keot;
  *
  * @author Riikka
  */
-public class Binomikeko implements Keko,SolmullinenKeko{
+public class Binomikeko implements Keko{
 
     public Solmu keko;
     private Solmu[] nodelista;
@@ -122,22 +122,6 @@ public class Binomikeko implements Keko,SolmullinenKeko{
         Binomikeko k = new Binomikeko(s);
         merge(k);
     }
-    /**
-     * Lisää kekoon arvon key. Käytetään Dijkstran algoritmin kanssa, node
-     * merkitsee lisättävää solmua ja key etäisyyttä.
-     * @param key arvo, joka kekoon lisätään
-     * @param node kekoon lisättävän solmun arvo node
-     */
-    @Override
-    public void insertWithNode(int key, int node){
-        Solmu s=new Solmu(key,null,null,0);
-        s.setNode(node);
-        //pointteri 
-        nodelista[node]=s;
-        Binomikeko k=new Binomikeko(s);
-        merge(k);
-    }
-
     /**
      * Yhdistää kaksi binomikekoa.
      *
@@ -264,17 +248,9 @@ public class Binomikeko implements Keko,SolmullinenKeko{
     public Solmu getKeko() {
         return keko;
     }
-    
     @Override
-    public Solmu etsiKeosta(int node){
-        return nodelista[node];
-    }
-    /**
-     * Luo taulukon, jonka perusteella löydetään etsittävä Solmu.
-     * @param pituus taulukon pituus
-     */
-    @Override
-    public void luoPointteritaulukko(int pituus){
-        this.nodelista=new Solmu[pituus];
+    public void insert(Solmu s) {
+        Binomikeko k = new Binomikeko(s);
+        merge(k);
     }
 }

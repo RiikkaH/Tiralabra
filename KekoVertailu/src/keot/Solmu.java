@@ -33,6 +33,16 @@ public class Solmu {
         marked=0;
         node=0;
     }
+    public Solmu(int node){
+        this.arvo=0;
+        this.aste=0;
+        this.parent=null;
+        this.lapsi=null;
+        this.seuraava=null;
+        this.edellinen=null;
+        this.marked=0;
+        this.node=node;
+    }
 
     public int getAste() {
         return aste;
