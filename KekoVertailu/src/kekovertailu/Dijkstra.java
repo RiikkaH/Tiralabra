@@ -5,7 +5,6 @@ import keot.Binomikeko;
 import keot.Fibonaccikeko;
 import keot.Keko;
 import keot.Solmu;
-import keot.SolmutonKeko;
 import keot.darykeko;
 
 /**
@@ -70,7 +69,7 @@ public class Dijkstra {
         return etsiReittiBinomiTaiFibonacci(new Fibonaccikeko());
     }
     
-    private int[] etsiReittiBinaariTaiDarykeolla(Keko keko){
+    private int[] etsiReitti(Keko keko){
         //alustus
         int[] dist = new int[etaisyydet.length];//etäisyydet
         for (int i = 0; i < dist.length; i++) {
@@ -102,13 +101,13 @@ public class Dijkstra {
      * @return Taulukko, jonka kohdassa i on lyhyimmän matkan pituus siihen solmuun.
      */
     public int[] etsiReittiBinaarikeolla() {
-        return null;
+        return etsiReitti(new Binaarikeko());
     }
     /**
      * Etsii lyhyimpien reittien pituudet alkusolmusta kaikkiin solmuihin d-ary -keolla.
      * @return Taulukko, jonka kohdassa i on lyhyimmän matkan pituus siihen solmuun.
      */
     public int[] etsiReittiDarykeolla() {
-        return null;
+        return etsiReitti(new darykeko(4));
     }
 }

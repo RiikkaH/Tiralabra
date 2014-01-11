@@ -7,13 +7,14 @@ package keot;
 public class Solmu {
 
     private int arvo;
-    private int aste;
+    private int aste;//lasten lukimäärä
     private Solmu lapsi;
     private Solmu parent;
     private Solmu seuraava;
     private Solmu edellinen;
     private int marked;
     private int node;//dijkstraan, solmun 'nimi'. arvo=etäisyys
+    private int indeksi;//binäärikekoon ja d-arykekoon taulukon indeksi
 
     /**
      * Luo uuden solmun.
@@ -32,6 +33,7 @@ public class Solmu {
         this.edellinen = null;
         marked=0;
         node=0;
+        indeksi=0;
     }
     public Solmu(int node){
         this.arvo=0;
@@ -42,8 +44,13 @@ public class Solmu {
         this.edellinen=null;
         this.marked=0;
         this.node=node;
+        indeksi=0;
     }
 
+    public int getIndeksi(){
+        return indeksi;
+    }
+    
     public int getAste() {
         return aste;
     }
@@ -74,6 +81,10 @@ public class Solmu {
     
     public int getNode(){
         return node;
+    }
+    
+    public void setIndeksi(int i){
+        indeksi=i;
     }
     
     public void setNode(int n){

@@ -40,6 +40,7 @@ public class darykeko implements Keko{
     @Override
     public void deleteMin() {
         keko[0] = keko[heapSize - 1];
+        keko[0].setIndeksi(0);
         heapSize--;
         heapify(0);
     }
@@ -57,6 +58,8 @@ public class darykeko implements Keko{
                 Solmu apu = keko[i];
                 keko[i] = keko[parent(i)];
                 keko[parent(i)] = apu;
+                keko[i].setIndeksi(i);
+                keko[parent(i)].setIndeksi(parent(i));
                 i = parent(i);
             }
         }
@@ -98,6 +101,8 @@ public class darykeko implements Keko{
             Solmu apu = keko[indeksi];
             keko[indeksi] = keko[key];
             keko[key] = apu;
+            keko[indeksi].setIndeksi(indeksi);
+            keko[key].setIndeksi(key);
             heapify(indeksi);
         }
     }
@@ -142,9 +147,11 @@ public class darykeko implements Keko{
         int i = heapSize;
         while (i > 0 && keko[parent(i)].getArvo() > s.getArvo()) {
             keko[i] = keko[parent(i)];
+            keko[i].setIndeksi(i);
             i = parent(i);
         }
         keko[i]=s;
+        keko[i].setIndeksi(i);
         heapSize++;
     }
 
@@ -158,6 +165,6 @@ public class darykeko implements Keko{
 
     @Override
     public void decreaseKey(Solmu s, int d) {
-        //Solmuun kenttä indeksi?
+        decreaseKey(s.getIndeksi(),d);
     }
 }

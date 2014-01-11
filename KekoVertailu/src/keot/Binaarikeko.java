@@ -28,12 +28,16 @@ public class Binaarikeko implements Keko{
                 Solmu apu = keko[smallest];
                 keko[smallest] = keko[key];
                 keko[key] = apu;
+                keko[key].setIndeksi(key);
+                keko[smallest].setIndeksi(smallest);
                 heapify(smallest);
             }
         } else if (l == heapSize - 1 && keko[key].getArvo() > keko[l].getArvo()) {
             Solmu apu = keko[l];
             keko[l] = keko[key];
             keko[key] = apu;
+            keko[l].setIndeksi(l);
+            keko[key].setIndeksi(key);
         }
     }
 
@@ -57,6 +61,7 @@ public class Binaarikeko implements Keko{
     @Override
     public void deleteMin() {
         keko[0] = keko[heapSize - 1];
+        keko[0].setIndeksi(0);
         heapSize--;
         heapify(0);
     }
@@ -75,6 +80,8 @@ public class Binaarikeko implements Keko{
                 Solmu apu = keko[i];
                 keko[i] = keko[parent(i)];
                 keko[parent(i)] = apu;
+                keko[i].setIndeksi(i);
+                keko[parent(i)].setIndeksi(parent(i));
                 i = parent(i);
             }
         }
@@ -138,9 +145,11 @@ public class Binaarikeko implements Keko{
         int i = heapSize;
         while (i > 0 && keko[parent(i)].getArvo() > s.getArvo()) {
             keko[i] = keko[parent(i)];
+            keko[i].setIndeksi(i);
             i = parent(i);
         }
         keko[i]=s;
+        s.setIndeksi(i);
         heapSize++;
     }
 
@@ -155,6 +164,6 @@ public class Binaarikeko implements Keko{
 
     @Override
     public void decreaseKey(Solmu s, int d) {
-        //pitääkö solmussa olla muka muistissa taulukon indeksi jossa se on??
+        decreaseKey(s.getIndeksi(),d);
     }
 }
