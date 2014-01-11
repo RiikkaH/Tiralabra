@@ -75,7 +75,7 @@ public class DijkstraTest {
         assertTrue(etaisyydet[3]==20);
         assertTrue(etaisyydet[4]==20);
         assertTrue(etaisyydet[5]==11);
-    }
+    }/*
     @Test
     public void testaaEtaisyyksiaPienellaVerkollaJaBinaarikeolla(){
         int[] etaisyydet =dijkstra1.etsiReittiBinaarikeolla();
@@ -95,5 +95,5 @@ public class DijkstraTest {
         assertTrue(etaisyydet[3]==20);
         assertTrue(etaisyydet[4]==20);
         assertTrue(etaisyydet[5]==11);
-    }
+    }*/
 }

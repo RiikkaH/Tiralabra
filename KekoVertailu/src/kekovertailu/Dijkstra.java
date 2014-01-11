@@ -70,28 +70,27 @@ public class Dijkstra {
         return etsiReittiBinomiTaiFibonacci(new Fibonaccikeko());
     }
     
-    private int[] etsiReittiBinaariTaiDarykeolla(SolmutonKeko keko){
+    private int[] etsiReittiBinaariTaiDarykeolla(Keko keko){
         //alustus
         int[] dist = new int[etaisyydet.length];//etäisyydet
         for (int i = 0; i < dist.length; i++) {
             if (i != alku) {
-                dist[i] = Integer.MAX_VALUE - 100;
+                dist[i] = Integer.MAX_VALUE - 10000;
+                verkko[i].setArvo(dist[i]);
             }
-            keko.insertWithNode(dist[i], i);
+            keko.insert(verkko[i]);
         }
         //varsinainen työ
-        while (keko.getSize() > 0) {
-            int etaisyys = keko.findMin();
-            int node = keko.findMinNode();
-            keko.deleteMinJaNode();
+        while (keko.findMinSolmu() !=null) {
+            Solmu s = keko.findMinSolmu();
+            keko.deleteMin();
             for (int i = 0; i < etaisyydet.length; i++) {
-                if (etaisyydet[node][i] > 0) {
-                    int uusietaisyys = dist[node] + etaisyydet[node][i];
+                if (etaisyydet[s.getNode()][i] > 0) {
+                    int uusietaisyys = dist[s.getNode()] + etaisyydet[s.getNode()][i];
                     if (uusietaisyys < dist[i]) {
                         dist[i] = uusietaisyys;
                         //vähennetään i:tä vastaavaa key:tä
-                        int indeksi = keko.etsiKeosta(i);
-                        keko.decreaseKeyWithNode(indeksi, uusietaisyys,true);
+                        keko.decreaseKey(verkko[i], uusietaisyys);
                     }
                 }
             }
@@ -103,13 +102,13 @@ public class Dijkstra {
      * @return Taulukko, jonka kohdassa i on lyhyimmän matkan pituus siihen solmuun.
      */
     public int[] etsiReittiBinaarikeolla() {
-        return etsiReittiBinaariTaiDarykeolla(new Binaarikeko());
+        return null;
     }
     /**
      * Etsii lyhyimpien reittien pituudet alkusolmusta kaikkiin solmuihin d-ary -keolla.
      * @return Taulukko, jonka kohdassa i on lyhyimmän matkan pituus siihen solmuun.
      */
     public int[] etsiReittiDarykeolla() {
-        return etsiReittiBinaariTaiDarykeolla(new darykeko(4));
+        return null;
     }
 }

@@ -99,7 +99,7 @@ public class Kekovertailu {
     private static int[] luoSatunnainenTaulukko(int pituus) {
         int[] taulukko = new int[pituus];
         for (int i = 0; i < pituus; i++) {
-            taulukko[i] = (int) (Math.random() * pituus + 1);
+            taulukko[i] = (int) (Math.random() * 9998 + 1);
         }
         return taulukko;
     }

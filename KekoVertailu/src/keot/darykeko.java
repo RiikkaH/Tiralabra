@@ -4,12 +4,11 @@ package keot;
  *
  * @author Riikka
  */
-public class darykeko implements Keko, SolmutonKeko {
+public class darykeko implements Keko{
 
     private final int d;
     private int heapSize;
-    private int[] keko;
-    private int[] node;
+    private Solmu[] keko;
 
     /**
      * Luo uuden d-ary -keon, missä lasten lukumäärä on d
@@ -19,8 +18,7 @@ public class darykeko implements Keko, SolmutonKeko {
     public darykeko(int d) {
         this.d = d;
         this.heapSize = 0;
-        this.keko = new int[20];
-        this.node = new int[20];
+        this.keko = new Solmu[20];
     }
 
     /**
@@ -33,7 +31,7 @@ public class darykeko implements Keko, SolmutonKeko {
         if (heapSize == 0) {
             return -1;
         }
-        return keko[0];
+        return keko[0].getArvo();
     }
 
     /**
@@ -50,10 +48,18 @@ public class darykeko implements Keko, SolmutonKeko {
      * Vähentää indeksin i arvon d:ksi.
      *
      * @param i indeksi, josta arvo muutetaan
-     * @param d uusi arvo
+     * @param n uusi arvo
      */
     public void decreaseKey(int i, int n) {
-        decreaseKeyWithNode(i,n,false);
+        if (keko[i].getArvo() > n && n > 0) {
+            keko[i].setArvo(n);
+            while (i > 0 && keko[parent(i)].getArvo() > keko[i].getArvo()) {
+                Solmu apu = keko[i];
+                keko[i] = keko[parent(i)];
+                keko[parent(i)] = apu;
+                i = parent(i);
+            }
+        }
     }
 
     /**
@@ -63,7 +69,8 @@ public class darykeko implements Keko, SolmutonKeko {
      */
     @Override
     public void insert(int key) {
-        insertWithNode(key, -1);
+        Solmu s=new Solmu(key,null,null,0);
+        insert(s);
     }
 
     /**
@@ -82,34 +89,16 @@ public class darykeko implements Keko, SolmutonKeko {
      * @param key kohta, josta lähtien kekoehto korjataan
      */
     private void heapify(int key) {
-        heapifyWithNode(key, false);
-    }
-
-    /**
-     * Korjaa kekoehdon kohdasta key lähtien ja mahdollisesti pitää nodelistan
-     * ajan tasalla.
-     *
-     * @param key kohta, josta lähtien kekoehto korjataan
-     * @param onNode pitää listan ajantasalla
-     */
-    private void heapifyWithNode(int key, boolean onNode) {
         int[] lapset = new int[d];
         for (int i = 0; i < d; i++) {
             lapset[i] = d * key + 1 + i;
         }
         int indeksi = etsiPienin(lapset);
-        if (indeksi != -1 && keko[indeksi] < keko[key]) {
-            int apu = keko[indeksi];
+        if (indeksi != -1 && keko[indeksi].getArvo() < keko[key].getArvo()) {
+            Solmu apu = keko[indeksi];
             keko[indeksi] = keko[key];
             keko[key] = apu;
-            if (onNode) {
-                int apunode = node[indeksi];
-                node[indeksi] = node[key];
-                node[key] = apunode;
-                heapifyWithNode(indeksi, true);
-            } else {
-                heapifyWithNode(indeksi, false);
-            }
+            heapify(indeksi);
         }
     }
 
@@ -124,119 +113,51 @@ public class darykeko implements Keko, SolmutonKeko {
         int pienindeksi = -1;
         for (int i = 0; i < d; i++) {
             if (taulukko[i] < heapSize) {
-                if (keko[taulukko[i]] < pienin) {
-                    pienin = keko[taulukko[i]];
+                if (keko[taulukko[i]].getArvo() < pienin) {
+                    pienin = keko[taulukko[i]].getArvo();
                     pienindeksi = taulukko[i];
                 }
             }
         }
         return pienindeksi;
     }
-    public int[] getKeko() {
+
+    public Solmu[] getKeko() {
         return keko;
     }
-    @Override
+
     public int getSize() {
         return heapSize;
     }
-    /**
-     * Lisää kekoon arvon key ja sitä vastaavan noden n. Jos n==-1, nodea ei 
-     * lisätä.
-     * @param key Kekoon lisättävä arvo
-     * @param n noden arvo
-     */
+//
     @Override
-    public void insertWithNode(int key, int n) {
+    public void insert(Solmu s) {
         if (heapSize == keko.length) {
-            if (n == -1) {
-                int[] uusikeko = new int[keko.length * 2];
-                for (int i = 0; i < keko.length; i++) {
-                    uusikeko[i] = keko[i];
-                }
-                keko = uusikeko;
-            } else {
-                int[] uusikeko = new int[keko.length * 2];
-                int[] uusinode = new int[node.length * 2];
-                for (int i = 0; i < keko.length; i++) {
-                    uusikeko[i] = keko[i];
-                    uusinode[i] = node[i];
-                }
-                keko = uusikeko;
-                node = uusinode;
+            Solmu[] uusikeko = new Solmu[keko.length * 2];
+            for (int i = 0; i < keko.length; i++) {
+                uusikeko[i] = keko[i];
             }
+            keko = uusikeko;
         }
         int i = heapSize;
-        while (i > 0 && keko[parent(i)] > key) {
+        while (i > 0 && keko[parent(i)].getArvo() > s.getArvo()) {
             keko[i] = keko[parent(i)];
-            if (n != -1) {
-                node[i] = node[parent(i)];
-            }
             i = parent(i);
         }
-        keko[i] = key;
-        if (n != -1) {
-            node[i] = n;
-        }
+        keko[i]=s;
         heapSize++;
     }
-    /**
-     * Palauttaa keon pienintä arvoa vastaavan noden.
-     * @return pienintä arvoa vastaava node
-     */
+
     @Override
-    public int findMinNode() {
-        return node[0];
-    }
-    /**
-     * Poistaa keosta pienimmän alkion ja sitä vastaavan noden.
-     */
-    @Override
-    public void deleteMinJaNode() {
-        keko[0] = keko[heapSize - 1];
-        node[0] = node[heapSize - 1];
-        heapSize--;
-        heapifyWithNode(0, true);
+    public Solmu findMinSolmu() {
+        if(heapSize==0){
+            return null;
+        }
+        return keko[0];
     }
 
-    /**
-     * Etsii keosta indeksin, jossa noden arvo on n. Tätä käytetään Dijkstrassa
-     * ja tiedetään, että indeksi on olemassa.
-     *
-     * @param n noden arvo, jolla etsitään
-     * @return indeksi jossa n on
-     */
     @Override
-    public int etsiKeosta(int n) {
-        int indeksi = 0;
-        for (int i = 0; i < heapSize; i++) {
-            if (node[i] == n) {
-                indeksi = i;
-                return indeksi;
-            }
-        }
-        return indeksi;
-    }
-    /**
-     * Vähentää indeksin i arvon n:ksi ja päivittää nodelistan jos onNode==true.
-     * @param i indeksi, josta vähennetään
-     * @param n uusi arvo
-     * @param onNode kertoo päivitetäänkö nodelista
-     */
-    @Override
-    public void decreaseKeyWithNode(int i, int n, boolean onNode) {
-        if (keko[i] > n && n > 0) {
-            keko[i] = n;
-            while (i > 0 && keko[parent(i)] > keko[i]) {
-                int apu = keko[i];
-                keko[i] = keko[parent(i)];
-                keko[parent(i)] = apu;
-                if (onNode) {
-                    int apunode = node[i];
-                    node[i] = node[parent(i)];
-                    node[parent(i)] = apunode;
-                }
-                i = parent(i);
-            }
-        }
+    public void decreaseKey(Solmu s, int d) {
+        //Solmuun kenttä indeksi?
     }
 }

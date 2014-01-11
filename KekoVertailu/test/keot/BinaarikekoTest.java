@@ -49,10 +49,10 @@ public class BinaarikekoTest {
         keko.insert(4);
         keko.insert(16);
         keko.insert(2);
-        assertTrue(keko.getKeko()[0]==1);
-        assertTrue(keko.getKeko()[1]==2);
-        assertTrue(keko.getKeko()[2]==16);
-        assertTrue(keko.getKeko()[3]==4);
+        assertTrue(keko.getKeko()[0].getArvo()==1);
+        assertTrue(keko.getKeko()[1].getArvo()==2);
+        assertTrue(keko.getKeko()[2].getArvo()==16);
+        assertTrue(keko.getKeko()[3].getArvo()==4);
         assertTrue(keko.getSize()==4);
     }
     @Test
@@ -65,10 +65,10 @@ public class BinaarikekoTest {
         keko.insert(3);
         keko.insert(12);
         keko.insert(8);
-        assertTrue(keko.getKeko()[2]==3);
-        assertTrue(keko.getKeko()[5]==16);
-        assertTrue(keko.getKeko()[7]==8);
-        assertTrue(keko.getKeko()[3]==4);
+        assertTrue(keko.getKeko()[2].getArvo()==3);
+        assertTrue(keko.getKeko()[5].getArvo()==16);
+        assertTrue(keko.getKeko()[7].getArvo()==8);
+        assertTrue(keko.getKeko()[3].getArvo()==4);
         assertTrue(keko.getSize()==8);
     }
     @Test
@@ -94,9 +94,9 @@ public class BinaarikekoTest {
         keko.insert(16);
         keko.insert(2);
         keko.deleteMin();
-        assertTrue(keko.getKeko()[0]==2);
-        assertTrue(keko.getKeko()[1]==4);
-        assertTrue(keko.getKeko()[2]==16);
+        assertTrue(keko.getKeko()[0].getArvo()==2);
+        assertTrue(keko.getKeko()[1].getArvo()==4);
+        assertTrue(keko.getKeko()[2].getArvo()==16);
         assertTrue(keko.getSize()==3);
     }
     @Test
@@ -110,10 +110,10 @@ public class BinaarikekoTest {
         keko.insert(12);
         keko.insert(8);
         keko.deleteMin();
-        assertTrue(keko.getKeko()[0]==2);
-        assertTrue(keko.getKeko()[1]==4);
-        assertTrue(keko.getKeko()[3]==8);
-        assertTrue(keko.getKeko()[2]==3);
+        assertTrue(keko.getKeko()[0].getArvo()==2);
+        assertTrue(keko.getKeko()[1].getArvo()==4);
+        assertTrue(keko.getKeko()[3].getArvo()==8);
+        assertTrue(keko.getKeko()[2].getArvo()==3);
         assertTrue(keko.getSize()==7);
     }
     @Test
@@ -125,9 +125,9 @@ public class BinaarikekoTest {
         keko.decreaseKey(3, 1);
         assertTrue(keko.findMin()==1);
         assertTrue(keko.getSize()==4);
-        assertTrue(keko.getKeko()[1]==2);
-        assertTrue(keko.getKeko()[2]==4);
-        assertTrue(keko.getKeko()[3]==9);
+        assertTrue(keko.getKeko()[1].getArvo()==2);
+        assertTrue(keko.getKeko()[2].getArvo()==4);
+        assertTrue(keko.getKeko()[3].getArvo()==9);
     }
     @Test
     public void testaaToimiikoDecreaseKeyVahanIsommallaKeolla(){
@@ -142,9 +142,9 @@ public class BinaarikekoTest {
         keko.decreaseKey(3, 1);
         assertTrue(keko.findMin()==1);
         assertTrue(keko.getSize()==8);
-        assertTrue(keko.getKeko()[1]==2);
-        assertTrue(keko.getKeko()[3]==4);
-        assertTrue(keko.getKeko()[4]==9);
-        assertTrue(keko.getKeko()[7]==8);
+        assertTrue(keko.getKeko()[1].getArvo()==2);
+        assertTrue(keko.getKeko()[3].getArvo()==4);
+        assertTrue(keko.getKeko()[4].getArvo()==9);
+        assertTrue(keko.getKeko()[7].getArvo()==8);
     }
 }

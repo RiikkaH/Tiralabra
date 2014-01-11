@@ -4,61 +4,37 @@ package keot;
  *
  * @author Riikka
  */
-public class Binaarikeko implements Keko,SolmutonKeko {
+public class Binaarikeko implements Keko{
 
-    private int[] keko;
-    //ellen sitten tekisi vierekkäistä int[]:iä johon laittaisin solmujen numerot?
-    private int[] node;
+    private Solmu[] keko;
     private int heapSize;
 
     public Binaarikeko() {
-        keko = new int[20];
-        node = new int[20];
+        keko = new Solmu[20];
         heapSize = 0;
     }
 
-    private void heapifyWithNode(int key,boolean onNode) {
+    private void heapify(int key) {
         int l = left(key);
         int r = right(key);
         if (r < heapSize) {
             int smallest;
-            if (keko[l] < keko[r]) {
+            if (keko[l].getArvo() < keko[r].getArvo()) {
                 smallest = l;
             } else {
                 smallest = r;
             }
-            if (keko[key] > keko[smallest]) {
-                int apu = keko[smallest];
+            if (keko[key].getArvo() > keko[smallest].getArvo()) {
+                Solmu apu = keko[smallest];
                 keko[smallest] = keko[key];
                 keko[key] = apu;
-                if(onNode){
-                    int apunode = node[smallest];
-                    node[smallest] = node[key];
-                    node[key] = apunode;
-                    heapifyWithNode(smallest,true);
-                }else{
-                    heapifyWithNode(smallest,false);
-                }
+                heapify(smallest);
             }
-        } else if (l == heapSize - 1 && keko[key] > keko[l]) {
-            int apu = keko[l];
+        } else if (l == heapSize - 1 && keko[key].getArvo() > keko[l].getArvo()) {
+            Solmu apu = keko[l];
             keko[l] = keko[key];
             keko[key] = apu;
-            if(onNode){
-                int apunode = node[l];
-                node[l] = node[key];
-                node[key] = apunode;
-            }
         }
-    }
-
-    /**
-     * Korjaa kekoehdon solmusta key alaspäin.
-     *
-     * @param key somu, josta kekoehto halutaan korjata
-     */
-    private void heapify(int key) {
-        heapifyWithNode(key,false);
     }
 
     /**
@@ -70,15 +46,7 @@ public class Binaarikeko implements Keko,SolmutonKeko {
     @Override
     public int findMin() {
         if (heapSize > 0) {
-            return keko[0];
-        }
-        return -1;
-    }
-
-    @Override
-    public int findMinNode() {
-        if (heapSize > 0) {
-            return node[0];
+            return keko[0].getArvo();
         }
         return -1;
     }
@@ -93,14 +61,6 @@ public class Binaarikeko implements Keko,SolmutonKeko {
         heapify(0);
     }
 
-    @Override
-    public void deleteMinJaNode() {
-        keko[0] = keko[heapSize - 1];
-        node[0] = node[heapSize - 1];
-        heapSize--;
-        heapifyWithNode(0,true);
-    }
-
     /**
      * Korvaa keon somun i arvon d:llä (jos on pienempi kuin keon i:nnes alkio)
      * ja korjaa kekoehdon.
@@ -109,70 +69,15 @@ public class Binaarikeko implements Keko,SolmutonKeko {
      * @param d uusi arvo
      */
     public void decreaseKey(int i, int d) {
-        decreaseKeyWithNode(i,d,false);
-    }
-    /**
-     * Korvaa keon somun i arvon d:llä (jos on pienempi kuin keon i:nnes alkio)
-     * ja korjaa kekoehdon. Pitää nodetaulukon ajan tasalla.
-     * @param i solmu, jonka arvoa pienennetään
-     * @param d uusi arvo
-     * @param onkoNode päivitetäänkö nodetaulukko
-     */
-    @Override
-    public void decreaseKeyWithNode(int i, int d, boolean onkoNode) {
-        if (keko[i] > d && d > 0) {
-            keko[i] = d;
-            while (i > 0 && keko[parent(i)] > keko[i]) {
-                int apu = keko[i];
+        if (keko[i].getArvo() > d && d > 0) {
+            keko[i].setArvo(d);
+            while (i > 0 && keko[parent(i)].getArvo() > keko[i].getArvo()) {
+                Solmu apu = keko[i];
                 keko[i] = keko[parent(i)];
                 keko[parent(i)] = apu;
-                if(onkoNode){
-                    int apunode = node[i];
-                    node[i] = node[parent(i)];
-                    node[parent(i)] = apunode;
-                }
                 i = parent(i);
             }
         }
-    }
-    /**
-     * Lisää kekoon arvon key, ja vastaavan noden arvon n. Jos n on -1, nodea ei lisätä.
-     * @param key Kekoon lisättävä arvo
-     * @param n key:tä vastaava node-arvo
-     */
-    @Override
-    public void insertWithNode(int key, int n) {
-        if (heapSize == keko.length) {
-            if (n != -1) {
-                int[] uusikeko = new int[keko.length * 2];
-                int[] uusinode = new int[keko.length * 2];
-                for (int i = 0; i < keko.length; i++) {
-                    uusikeko[i] = keko[i];
-                    uusinode[i] = node[i];
-                }
-                keko = uusikeko;
-                node = uusinode;
-            } else {
-                int[] uusikeko = new int[keko.length * 2];
-                for (int i = 0; i < keko.length; i++) {
-                    uusikeko[i] = keko[i];
-                }
-                keko = uusikeko;
-            }
-        }
-        int i = heapSize;
-        while (i > 0 && keko[parent(i)] > key) {
-            keko[i] = keko[parent(i)];
-            if(n!=-1){
-                node[i] = node[parent(i)];
-            }
-            i = parent(i);
-        }
-        keko[i] = key;
-        if(n!=-1){
-            node[i] = n;
-        }
-        heapSize++;
     }
 
     /**
@@ -182,25 +87,8 @@ public class Binaarikeko implements Keko,SolmutonKeko {
      */
     @Override
     public void insert(int key) {
-        insertWithNode(key,-1);
-    }
-
-    /**
-     * Etsii keosta noden arvoa n vastaavan somun.
-     *
-     * @param n noden arvo jonka perusteella arvoa etsitään
-     * @return keon indeksi, josta n löytyy
-     */
-    @Override
-    public int etsiKeosta(int n) {
-        int indeksi = 0;
-        for (int i = 0; i < heapSize; i++) {
-            if (node[i] == n) {
-                indeksi = i;
-                return indeksi;
-            }
-        }
-        return indeksi;
+        Solmu lisattava=new Solmu(key,null,null,0);
+        insert(lisattava);
     }
 
     /**
@@ -234,18 +122,39 @@ public class Binaarikeko implements Keko,SolmutonKeko {
     }
     //metodi testejä varten
 
-    public int[] getKeko() {
+    public Solmu[] getKeko() {
         return keko;
     }
-    //metodi testejä varten
-
-    public int[] getNode() {
-        return node;
-    }
-    //metodi testejä varten
 
     @Override
-    public int getSize() {
+    public void insert(Solmu s) {
+        if (heapSize == keko.length) {
+            Solmu[] uusikeko = new Solmu[keko.length * 2];
+            for (int i = 0; i < keko.length; i++) {
+                uusikeko[i] = keko[i];
+            }
+            keko = uusikeko;
+        }
+        int i = heapSize;
+        while (i > 0 && keko[parent(i)].getArvo() > s.getArvo()) {
+            keko[i] = keko[parent(i)];
+            i = parent(i);
+        }
+        keko[i]=s;
+        heapSize++;
+    }
+
+    @Override
+    public Solmu findMinSolmu() {
+        return keko[0];
+    }
+    
+    public int getSize(){
         return heapSize;
+    }
+
+    @Override
+    public void decreaseKey(Solmu s, int d) {
+        //pitääkö solmussa olla muka muistissa taulukon indeksi jossa se on??
     }
 }
