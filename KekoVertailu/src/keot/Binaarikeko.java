@@ -4,7 +4,7 @@ package keot;
  *
  * @author Riikka
  */
-public class Binaarikeko implements Keko{
+public class Binaarikeko implements Keko {
 
     private Solmu[] keko;
     private int heapSize;
@@ -60,10 +60,14 @@ public class Binaarikeko implements Keko{
      */
     @Override
     public void deleteMin() {
-        keko[0] = keko[heapSize - 1];
-        keko[0].setIndeksi(0);
-        heapSize--;
-        heapify(0);
+        if (heapSize == 1) {
+            heapSize = 0;
+        } else if (heapSize > 1) {
+            keko[0] = keko[heapSize - 1];
+            keko[0].setIndeksi(0);
+            heapSize--;
+            heapify(0);
+        }
     }
 
     /**
@@ -94,7 +98,7 @@ public class Binaarikeko implements Keko{
      */
     @Override
     public void insert(int key) {
-        Solmu lisattava=new Solmu(key,null,null,0);
+        Solmu lisattava = new Solmu(key, null, null, 0);
         insert(lisattava);
     }
 
@@ -148,22 +152,25 @@ public class Binaarikeko implements Keko{
             keko[i].setIndeksi(i);
             i = parent(i);
         }
-        keko[i]=s;
+        keko[i] = s;
         s.setIndeksi(i);
         heapSize++;
     }
 
     @Override
     public Solmu findMinSolmu() {
+        if(heapSize==0){
+            return null;
+        }
         return keko[0];
     }
-    
-    public int getSize(){
+
+    public int getSize() {
         return heapSize;
     }
 
     @Override
     public void decreaseKey(Solmu s, int d) {
-        decreaseKey(s.getIndeksi(),d);
+        decreaseKey(s.getIndeksi(), d);
     }
 }

@@ -101,11 +101,6 @@ public class Binomikeko implements Keko{
                 s.setNode(s.getParent().getNode());
                 s.getParent().setArvo(apu);
                 s.getParent().setNode(apuNode);
-                if(nodelista!=null){
-                    Solmu apusolmu=nodelista[s.getNode()];
-                    nodelista[s.getNode()]=nodelista[s.getParent().getNode()];
-                    nodelista[s.getParent().getNode()]=apusolmu;
-                }
                 s=s.getParent();
             }
         }

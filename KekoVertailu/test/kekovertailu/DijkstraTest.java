@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
 public class DijkstraTest {
     
     private Dijkstra dijkstra1;
+    private Dijkstra dijkstra2;
     
     public DijkstraTest() {
     }
@@ -31,6 +32,7 @@ public class DijkstraTest {
     @Before
     public void setUp() {
         dijkstra1=new Dijkstra(pieniVerkko(),pienetEtaisyydet(),0);
+        dijkstra2=new Dijkstra(pieniVerkko(),toisetEtaisyydet(),0);
     }
     public Solmu[] pieniVerkko(){
         Solmu[] solmut =new Solmu[6];
@@ -38,6 +40,16 @@ public class DijkstraTest {
             solmut[i]=new Solmu(i);
         }
         return solmut;
+    }
+    public int[][] toisetEtaisyydet(){
+        return new int[][]
+                {{0,5,0,1,0,0},
+                {5,0,0,0,0,7},
+                {0,0,0,16,19,4},
+                {1,0,16,0,2,0},
+                {0,0,19,2,0,3},
+                {0,7,4,0,3,0}};
+    
     }
     public int[][] pienetEtaisyydet(){
         int[][] verkko=new int[6][6];
@@ -67,6 +79,16 @@ public class DijkstraTest {
         assertTrue(etaisyydet[5]==11);
     }
     @Test
+    public void testaaUudestaanPienellaVerkollaJaBinomikeolla(){
+        int[] etaisyydet=dijkstra2.etsiReittiBinomikeolla();
+        assertTrue(etaisyydet[0]==0);
+        assertTrue(etaisyydet[1]==5);
+        assertTrue(etaisyydet[2]==10);
+        assertTrue(etaisyydet[3]==1);
+        assertTrue(etaisyydet[4]==3);
+        assertTrue(etaisyydet[5]==6);
+    }
+    @Test
     public void testaaEtaisyyksiaPienellaVerkollaJaFibonaccikeolla(){
         int[] etaisyydet =dijkstra1.etsiReittiFibonaccikeolla();
         assertTrue(etaisyydet[0]==0);
@@ -76,6 +98,16 @@ public class DijkstraTest {
         assertTrue(etaisyydet[4]==20);
         assertTrue(etaisyydet[5]==11);
     }/*
+    @Test
+    public void testaaUudestaanPienellaVerkollaJaFibonaccikeolla(){
+        int[] etaisyydet=dijkstra2.etsiReittiFibonaccikeolla();
+        assertTrue(etaisyydet[0]==0);
+        assertTrue(etaisyydet[1]==5);
+        assertTrue(etaisyydet[2]==10);
+        assertTrue(etaisyydet[3]==1);
+        assertTrue(etaisyydet[4]==3);
+        assertTrue(etaisyydet[5]==6);
+    }*/
     @Test
     public void testaaEtaisyyksiaPienellaVerkollaJaBinaarikeolla(){
         int[] etaisyydet =dijkstra1.etsiReittiBinaarikeolla();
@@ -87,6 +119,16 @@ public class DijkstraTest {
         assertTrue(etaisyydet[5]==11);
     }
     @Test
+    public void testaaUudestaanPienellaVerkollaJaBinaarikeolla(){
+        int[] etaisyydet=dijkstra2.etsiReittiBinaarikeolla();
+        assertTrue(etaisyydet[0]==0);
+        assertTrue(etaisyydet[1]==5);
+        assertTrue(etaisyydet[2]==10);
+        assertTrue(etaisyydet[3]==1);
+        assertTrue(etaisyydet[4]==3);
+        assertTrue(etaisyydet[5]==6);
+    }
+    @Test
     public void testaaEtaisyyksiaPienellaVerkollaJaDarykeolla(){
         int[] etaisyydet=dijkstra1.etsiReittiDarykeolla();
         assertTrue(etaisyydet[0]==0);
@@ -95,5 +137,15 @@ public class DijkstraTest {
         assertTrue(etaisyydet[3]==20);
         assertTrue(etaisyydet[4]==20);
         assertTrue(etaisyydet[5]==11);
-    }*/
+    }
+    @Test
+    public void testaaUudestaanPienellaVerkollaJaDarykeolla(){
+        int[] etaisyydet=dijkstra2.etsiReittiDarykeolla();
+        assertTrue(etaisyydet[0]==0);
+        assertTrue(etaisyydet[1]==5);
+        assertTrue(etaisyydet[2]==10);
+        assertTrue(etaisyydet[3]==1);
+        assertTrue(etaisyydet[4]==3);
+        assertTrue(etaisyydet[5]==6);
+    }
 }

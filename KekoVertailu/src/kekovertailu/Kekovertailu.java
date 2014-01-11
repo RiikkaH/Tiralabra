@@ -1,5 +1,7 @@
 package kekovertailu;
 
+import keot.Solmu;
+
 /**
  *
  * @author Riikka
@@ -7,8 +9,8 @@ package kekovertailu;
 public class Kekovertailu {
 
     public static void main(String[] args) {
-        //mittaaDijkstranAikoja(10);
-        //mittaaJarjestamisenAikoja(10000);
+        mittaaDijkstranAikoja(10);
+        //mittaaJarjestamisenAikoja(1000);
     }
     
     /**
@@ -54,7 +56,7 @@ public class Kekovertailu {
         System.out.println("Fibonaccikeko: "+fibo+" ms");
     }
     
-    /*
+
     public static void mittaaDijkstranAikoja(int matriisinpituus){
         long binaari = 0;
         long dary = 0;
@@ -63,7 +65,7 @@ public class Kekovertailu {
         
         for(int i=0;i<10;i++){
             
-            Dijkstra dijkstra=new Dijkstra(null,luoSatunnainenMatriisi(matriisinpituus),0);
+            Dijkstra dijkstra=new Dijkstra(luoVerkko(matriisinpituus),luoSatunnainenMatriisi(matriisinpituus),0);
             
             long alku = System.nanoTime();
             dijkstra.etsiReittiBinaarikeolla();
@@ -95,7 +97,15 @@ public class Kekovertailu {
         System.out.println("Binomikeko: "+binomi+" ms");
         System.out.println("Fibonaccikeko: "+fibo+" ms");
     }
-    * */
+    
+    private static Solmu[] luoVerkko(int pituus){
+        Solmu[] verkko=new Solmu[pituus];
+        for(int i=0;i<pituus;i++){
+            verkko[i]=new Solmu(i);
+        }
+        return verkko;
+    }
+    
     private static int[] luoSatunnainenTaulukko(int pituus) {
         int[] taulukko = new int[pituus];
         for (int i = 0; i < pituus; i++) {
