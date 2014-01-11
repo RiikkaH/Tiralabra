@@ -237,6 +237,8 @@ public class Fibonaccikeko implements Keko {
                         jatkuu = false;
                     } else if (p.getMarked() == 1) {
                         p = leikkaaJaLiita(p);
+                    }else{
+                        jatkuu=false;
                     }
                 }
             }

@@ -44,8 +44,8 @@ public class Kekovertailu {
             jarjesta.jarjestaFibonaccikeolla();
             fibo += (System.nanoTime() - alku);
         }
-        binaari/=10*1000000;
-        binomi/=10*1000000;
+        binaari/=10*1000000;//jälkimmäisessä kuusi nollaa: millisekunnit, kolme nollaa: mikrosekunnit, 
+        binomi/=10*1000000;//ei nollia: nanosekunnit.
         fibo/=10*1000000;
         dary/=10*1000000;
         System.out.println("Järjestämiseen keskimäärin kuluneita aikoja eri keoilla kun "
@@ -86,8 +86,8 @@ public class Kekovertailu {
             System.out.println(i);
         }
         
-        binaari/=10*1000000;
-        binomi/=10*1000000;
+        binaari/=10*1000000;//jälkimmäisessä kuusi nollaa: millisekunnit, kolme nollaa: mikrosekunnit, 
+        binomi/=10*1000000;//ei nollia: nanosekunnit.
         fibo/=10*1000000;
         dary/=10*1000000;
         System.out.println("Lyhyimpien matkojen etsimiseen kuluneita aikoja eri "

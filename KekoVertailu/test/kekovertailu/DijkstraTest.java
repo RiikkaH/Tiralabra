@@ -97,7 +97,7 @@ public class DijkstraTest {
         assertTrue(etaisyydet[3]==20);
         assertTrue(etaisyydet[4]==20);
         assertTrue(etaisyydet[5]==11);
-    }/*
+    }/* Tämä testi jää vain junnaamaan
     @Test
     public void testaaUudestaanPienellaVerkollaJaFibonaccikeolla(){
         int[] etaisyydet=dijkstra2.etsiReittiFibonaccikeolla();
