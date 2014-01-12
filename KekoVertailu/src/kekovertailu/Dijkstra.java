@@ -47,16 +47,19 @@ public class Dijkstra {
                 verkko[i].setArvo(dist[i]);
             }
             keko.insert(verkko[i]);
+            //System.out.println("lisättiin solmu "+verkko[i].getArvo()+","+verkko[i].getNode());
         }
         //varsinainen työ
         while (keko.findMinSolmu() !=null) {
             Solmu s = keko.findMinSolmu();
             keko.deleteMin();
+            //System.out.println("poistetiin solmu "+s.getArvo()+","+s.getNode());
             for (int i = 0; i < etaisyydet.length; i++) {
                 if (etaisyydet[s.getNode()][i] > 0) {
                     int uusietaisyys = dist[s.getNode()] + etaisyydet[s.getNode()][i];
                     if (uusietaisyys < dist[i]) {
                         dist[i] = uusietaisyys;
+                        //System.out.println("on poistettu solmu "+s.getArvo()+","+s.getNode()+"vähennetään solmua"+verkko[i].getArvo()+","+verkko[i].getNode());
                         //vähennetään i:tä vastaavaa key:tä
                         keko.decreaseKey(verkko[i], uusietaisyys);
                     }

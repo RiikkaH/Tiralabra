@@ -9,7 +9,9 @@ import keot.Solmu;
 public class Kekovertailu {
 
     public static void main(String[] args) {
-        mittaaDijkstranAikoja(10);
+        //int eka=Integer.parseInt(args[0]);
+        //int toka=Integer.parseInt(args[1]);
+        mittaaDijkstranAikoja(5);
         //mittaaJarjestamisenAikoja(1000);
     }
     
@@ -63,10 +65,10 @@ public class Kekovertailu {
         long binomi = 0;
         long fibo = 0;
         
-        for(int i=0;i<10;i++){
+        //for(int i=0;i<10;i++){
             
             Dijkstra dijkstra=new Dijkstra(luoVerkko(matriisinpituus),luoSatunnainenMatriisi(matriisinpituus),0);
-            
+            /*
             long alku = System.nanoTime();
             dijkstra.etsiReittiBinaarikeolla();
             binaari += (System.nanoTime() - alku);
@@ -78,17 +80,16 @@ public class Kekovertailu {
             alku = System.nanoTime();
             dijkstra.etsiReittiBinomikeolla();
             binomi += (System.nanoTime() - alku);
-
-            alku = System.nanoTime();
+            */System.out.println("TÄSTÄ ALKAA YKSI DIJKSTRA FIBONACCIKEOLLA");
+            long alku = System.nanoTime();
             dijkstra.etsiReittiFibonaccikeolla();
             fibo += (System.nanoTime() - alku);
-            
-            System.out.println(i);
-        }
+            System.out.println("PÄÄTTYY TÄHÄN");
+        //}
         
         binaari/=10*1000000;//jälkimmäisessä kuusi nollaa: millisekunnit, kolme nollaa: mikrosekunnit, 
         binomi/=10*1000000;//ei nollia: nanosekunnit.
-        fibo/=10*1000000;
+        fibo/=10*10000;
         dary/=10*1000000;
         System.out.println("Lyhyimpien matkojen etsimiseen kuluneita aikoja eri "
                 + "\n keoilla, kun matriisin sivunpituus oli "+matriisinpituus+":");
@@ -110,6 +111,7 @@ public class Kekovertailu {
         int[] taulukko = new int[pituus];
         for (int i = 0; i < pituus; i++) {
             taulukko[i] = (int) (Math.random() * 9998 + 1);
+            System.out.print(taulukko[i]+" ");
         }
         return taulukko;
     }
@@ -118,6 +120,7 @@ public class Kekovertailu {
         int[][] matriisi=new int[pituus][pituus];
         for(int i=0;i<pituus;i++){
             matriisi[i]=luoSatunnainenTaulukko(pituus);
+            System.out.println("");
         }
         return matriisi;
     }
