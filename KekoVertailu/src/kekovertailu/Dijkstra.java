@@ -37,37 +37,6 @@ public class Dijkstra {
     public int[] etsiReittiFibonaccikeolla() {
         return etsiReitti(new Fibonaccikeko());
     }
-    
-    private int[] etsiReitti(Keko keko){
-        //alustus
-        int[] dist = new int[verkko.length];//etäisyydet
-        for (int i = 0; i < dist.length; i++) {
-            if (i != alku) {
-                dist[i] = Integer.MAX_VALUE - 10000;
-                verkko[i].setArvo(dist[i]);
-            }
-            keko.insert(verkko[i]);
-            //System.out.println("lisättiin solmu "+verkko[i].getArvo()+","+verkko[i].getNode());
-        }
-        //varsinainen työ
-        while (keko.findMinSolmu() !=null) {
-            Solmu s = keko.findMinSolmu();
-            keko.deleteMin();
-            //System.out.println("poistetiin solmu "+s.getArvo()+","+s.getNode());
-            for (int i = 0; i < etaisyydet.length; i++) {
-                if (etaisyydet[s.getNode()][i] > 0) {
-                    int uusietaisyys = dist[s.getNode()] + etaisyydet[s.getNode()][i];
-                    if (uusietaisyys < dist[i]) {
-                        dist[i] = uusietaisyys;
-                        //System.out.println("on poistettu solmu "+s.getArvo()+","+s.getNode()+"vähennetään solmua"+verkko[i].getArvo()+","+verkko[i].getNode());
-                        //vähennetään i:tä vastaavaa key:tä
-                        keko.decreaseKey(verkko[i], uusietaisyys);
-                    }
-                }
-            }
-        }
-        return dist;
-    }
     /**
      * Etsii lyhyimpien reittien pituudet alkusolmusta kaikkiin solmuihin binäärikeolla.
      * @return Taulukko, jonka kohdassa i on lyhyimmän matkan pituus siihen solmuun.
@@ -82,4 +51,33 @@ public class Dijkstra {
     public int[] etsiReittiDarykeolla() {
         return etsiReitti(new darykeko(4));
     }
+    
+    private int[] etsiReitti(Keko keko){
+        //alustus
+        int[] dist = new int[verkko.length];//etäisyydet
+        for (int i = 0; i < dist.length; i++) {
+            if (i != alku) {
+                dist[i] = Integer.MAX_VALUE - 10000;
+                verkko[i].setArvo(dist[i]);
+            }
+            keko.insert(verkko[i]);
+        }
+        //varsinainen työ
+        while (keko.findMinSolmu() !=null) {
+            Solmu s = keko.findMinSolmu();
+            keko.deleteMin();
+            for (int i = 0; i < etaisyydet.length; i++) {
+                if (etaisyydet[s.getNode()][i] > 0) {
+                    int uusietaisyys = dist[s.getNode()] + etaisyydet[s.getNode()][i];
+                    if (uusietaisyys < dist[i]) {
+                        dist[i] = uusietaisyys;
+                        //vähennetään i:tä vastaavaa key:tä
+                        keko.decreaseKey(verkko[i], uusietaisyys);
+                    }
+                }
+            }
+        }
+        return dist;
+    }
+    
 }

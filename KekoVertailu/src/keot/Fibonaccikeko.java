@@ -50,13 +50,10 @@ public class Fibonaccikeko implements Keko {
      */
     @Override
     public void deleteMin() {
-        //System.out.println("seuraavaksi poistetaan min "+min.getArvo()+","+min.getNode()+", solmuja "+solmuja);
         poistaMinLisaaLapset();
-        //System.out.println("min poistettu ja lapset lisätty. seuraavaksi tiivistetään keko");
         yhdistaKeonPuut();
         paivitaMin();
         solmuja--;
-        //System.out.println("min poistettu! solmuja "+solmuja);
     }
 
     /**
@@ -103,26 +100,21 @@ public class Fibonaccikeko implements Keko {
                 edellinen = uusi;
                 nyk = uusi;
             }
-            //System.out.println("looppina while, metodi yhdistaKeonPuut");
         }
         //päivitetään keko osoittamaan oikeaa kohtaa
         while (edellinen != null && edellinen.getEdellinen() != null) {
             edellinen = edellinen.getEdellinen();
-            //System.out.println("yhdistellään keon puita, jälkimmäinen looppi");
         }
-        //System.out.println("päästiin pois puiden yhdistämisestä");
         keko = edellinen;//edellinen==null vain jos keko==null alussa
     }
 
     private Solmu yhdistaPuut(Solmu s, Solmu t) {
-        //System.out.println("pitää yhdistää puita");
         if (s.getArvo() < t.getArvo()) {
             Solmu apu = s;
             s = t;
             t = apu;
         }
         lisaaLapsi(t, s);
-        //System.out.println("puut yhdstettiin");
         return t;
     }
 
@@ -135,17 +127,14 @@ public class Fibonaccikeko implements Keko {
     //lisättävä tulee aina lapsista viimeiseksi
     private void lisaaLapsi(Solmu p, Solmu l) {
         if (p.getLapsi() == null) {
-            //System.out.println("aste == 0");
             l.setParent(p);
             p.setLapsi(l);
             l.setEdellinen(null);
             l.setSeuraava(null);
         } else {
-            //System.out.println("else");
             Solmu s = p.getLapsi();
             while (s.getSeuraava() != null) {
                 s = s.getSeuraava();
-                //System.out.println("while... solmu on "+s.getArvo()+","+s.getAste());
             }
             l.setParent(p);
             s.setSeuraava(l);
@@ -170,7 +159,6 @@ public class Fibonaccikeko implements Keko {
                 uusimin = s;
             }
             s = s.getSeuraava();
-            //System.out.println("paivitaMin:in looppi");
         }
         //viimeisen solmun tarkistaminen voisi myös olla hyödyllistä
         if (s != null && s.getArvo() < uusimin.getArvo()) {
@@ -192,20 +180,15 @@ public class Fibonaccikeko implements Keko {
         min.setLapsi(null);
         Solmu s = null;
         if (ed != null) {
-            //System.out.println("ed: "+ed.getArvo()+","+ed.getNode());
             ed.setSeuraava(seur);
             s = ed;
-            //System.out.println("s = ed");
         }
         if (seur != null) {
-            //System.out.println("seur: "+seur.getArvo()+","+seur.getNode());
             seur.setEdellinen(ed);
             s = seur;
-            //System.out.println("s = seur");
         }
         //jos min oli ainoa solmu, voidaan uudetpuut laittaa suoraan keoksi
         if (s == null) {
-            //System.out.println("min oli ainoa");
             keko = uudetpuut;
             if (uudetpuut != null) {
                 //uusillapuilla ei tietenkään ole enää parent:ia.
@@ -213,7 +196,6 @@ public class Fibonaccikeko implements Keko {
                 while (uudetpuut.getSeuraava() != null) {
                     uudetpuut = uudetpuut.getSeuraava();
                     uudetpuut.setParent(null);
-                    //System.out.println("uudetpuut.parent=null");
                 }
             }
             return;
@@ -222,7 +204,6 @@ public class Fibonaccikeko implements Keko {
         //min ei ollut ainoa ja lapsia on
         //min on poistettu, laitetaan lapset listaan
         if (uudetpuut != null) {
-            //System.out.println("min ei ollut ainoa, uudetpuut!=null");
             seur=s.getSeuraava();
             s.setSeuraava(uudetpuut);
             uudetpuut.setEdellinen(s);
@@ -230,18 +211,15 @@ public class Fibonaccikeko implements Keko {
             while(uudetpuut.getSeuraava()!=null){
                 uudetpuut=uudetpuut.getSeuraava();
                 uudetpuut.setParent(null); 
-                //System.out.println("käydään uudetpuut läpi");
             }
             uudetpuut.setSeuraava(seur);
             if(seur!=null){
                 seur.setEdellinen(uudetpuut);
             }
         }
-        //System.out.println("enää kekopointterin päivitys");
         //päivitetään kekopointteri osoittamaan oikein
         while (tallennettu.getEdellinen() != null) {
             tallennettu = tallennettu.getEdellinen();
-            //System.out.println("while");
         }
         keko = tallennettu;
     }
