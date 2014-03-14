@@ -1,4 +1,4 @@
 Tiralabra
 =========
 
-Tämä ohjlema on kurssiin Tietorakenteet ja algoritmit liittyä harjoitustyö, jossa vertailen erilaisia kekoja. 
+Tämä on kurssiin Tietorakenteet ja algoritmit liittyä harjoitustyö, jossa vertailen erilaisia kekoja. 
